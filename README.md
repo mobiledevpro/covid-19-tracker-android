@@ -1,4 +1,3 @@
-# AppTemplate
-App template: MVVM + Clear Architecture. Kotlin, LiveData, Navigation Fragments, Databinding, Rx, Room, Crashlytics, Circle CI config, commons classes for UI
+# Live Tracker COVID-19. Android App
 
-[![Youtube Video](https://img.youtube.com/vi/GSLxv8ZGwLE/0.jpg)](https://www.youtube.com/watch?v=GSLxv8ZGwLE)
+Tracker based on the Johns Hopkins University(JHU) datasource https://systems.jhu.edu/research/public-health/ncov/
