@@ -1,0 +1,161 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.firebase.crashlytics'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.mobiledevpro.apptemplate.new"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+    }
+
+    dexOptions {
+        maxProcessCount 2
+        javaMaxHeapSize "2g"
+    }
+
+    signingConfigs {
+        //uses for CI
+        config {
+            keyAlias 'here alias value'
+            keyPassword System.getenv("SOME_APP_KEYPWD")
+            storeFile file('here key file name')
+            storePassword System.getenv("SOME_APP_KSTOREPWD")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            firebaseCrashlytics {
+                // False -  don't need crash reporting for debug build.
+                mappingFileUploadEnabled false
+            }
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        production {
+            dimension "default"
+            applicationId defaultConfig.applicationId
+            versionCode 1
+            versionName "1.0.0"
+
+            //it's for using the same flavors in modules/libraries
+            matchingFallbacks = ["production"]
+        }
+/*
+        demo {
+            dimension "default"
+            applicationId defaultConfig.applicationId
+            versionCode 1
+            versionName "1.0.0-demo"
+
+            //it's for using the same flavors in modules/libraries
+            matchingFallbacks = ["demo"]
+        }*/
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res/layouts/activity',
+                    'src/main/res/layouts/fragment',
+                    'src/main/res/layouts/adapter',
+                    'src/main/res/layouts/include',
+                    'src/main/res/layouts/preference',
+                    'src/main/res' //it should be the last item here (it affects on output directory in Assets Studio)
+            ]
+            java.srcDirs = ['src/main/java']
+        }
+    }
+
+    //set custom name to apk file
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                outputFileName = variant.productFlavors[0].applicationId + "-" +
+                        "v" + variant.productFlavors[0].versionName + "_" +
+                        "build" + variant.productFlavors[0].versionCode + "-" +
+                        variant.buildType.name +
+                        ".apk"
+            }
+        }
+    }
+
+    dataBinding.enabled = true
+
+    kapt.correctErrorTypes = true
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation deps.appcompat
+    implementation deps.material
+    implementation deps.preference
+    implementation deps.constraintLayout
+
+    implementation deps.multidex
+    implementation deps.coreKtx
+
+    //DI
+    implementation deps.koinScope
+    implementation deps.koinViewModel
+
+    //Navigation
+    implementation deps.navigationFragment
+    implementation deps.navigationUi
+
+    //Livedata
+    implementation deps.lifecycle
+    kapt deps.lifecycleCompiler
+
+    //commons-ui
+    implementation deps.commonsUi
+
+    //Firebase
+    implementation deps.firebaseCore
+    implementation deps.firebasePerformance
+    implementation deps.firebaseAnalytics
+    implementation deps.crashlytics
+
+    //memory leak detection in debug
+    debugImplementation deps.leakcanaryDebug
+
+    //Rx
+    implementation deps.rxAndroid
+    implementation deps.rxKotlin
+
+    //Glide
+    implementation deps.glide
+    kapt deps.glideCompiler
+
+    implementation project(":domain")
+    implementation project(":data")
+    implementation project(":data-local")
+}
+apply plugin: 'com.google.gms.google-services'
