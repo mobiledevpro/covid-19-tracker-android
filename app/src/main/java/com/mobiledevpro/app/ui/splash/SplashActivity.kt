@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
     companion object {
         private const val START_MAIN_SCREEN = 1
-        private const val SPLASH_DISPLAY_TIME = 1500L //in milliseconds
+        private const val SPLASH_DISPLAY_TIME = 2000L //in milliseconds
     }
 
     private val mStartNextActivityHandler = Handler()
