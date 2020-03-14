@@ -7,10 +7,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
-import com.mobiledevpro.app.BuildConfig
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.ui.mainscreen.view.MainActivity
-import kotlinx.android.synthetic.main.activity_splash.*
 import java.lang.ref.WeakReference
 
 
@@ -29,17 +27,12 @@ class SplashActivity : AppCompatActivity() {
 
         applyWindowInsets(findViewById(android.R.id.content))
 
-        tv_app_version.text =
-                String.format(resources.getString(R.string.app_version), BuildConfig.VERSION_NAME)
-
-
         //start login or main screen (depends on the app logic)
-        /*  mStartNextActivityHandler.postDelayed(
-                  SplashRunnable(this, START_MAIN_SCREEN),
-                  SPLASH_DISPLAY_TIME
-          )
+        mStartNextActivityHandler.postDelayed(
+                SplashRunnable(this, START_MAIN_SCREEN),
+                SPLASH_DISPLAY_TIME
+        )
 
-         */
 
     }
 
