@@ -22,6 +22,9 @@ android.productFlavors{
 }
 
 dependencies {
+
+    implementation project(":data")
+
     //Room
     implementation deps.room
     implementation deps.roomRx

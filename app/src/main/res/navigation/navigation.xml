@@ -6,17 +6,17 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.mobiledevpro.app.ui.mainscreen.view.MainFragment"
+        android:name="com.mobiledevpro.app.ui.mainscreen.view.TotalFragment"
         android:label="MainFragment">
         <action
             android:id="@+id/actionUserEdit"
-            app:destination="@id/userEditFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
+    <!--
     <fragment
         android:id="@+id/userEditFragment"
         android:name="com.mobiledevpro.app.ui.usereditscreen.view.UserEditFragment"
@@ -43,4 +43,6 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    -->
 </navigation>
