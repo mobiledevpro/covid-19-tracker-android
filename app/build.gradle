@@ -8,7 +8,7 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.mobiledevpro.apptemplate.new"
+        applicationId "com.mobiledevpro.livetracker.covid"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         vectorDrawables.useSupportLibrary = true

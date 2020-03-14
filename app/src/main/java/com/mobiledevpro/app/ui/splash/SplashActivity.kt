@@ -34,10 +34,12 @@ class SplashActivity : AppCompatActivity() {
 
 
         //start login or main screen (depends on the app logic)
-        mStartNextActivityHandler.postDelayed(
-                SplashRunnable(this, START_MAIN_SCREEN),
-                SPLASH_DISPLAY_TIME
-        )
+        /*  mStartNextActivityHandler.postDelayed(
+                  SplashRunnable(this, START_MAIN_SCREEN),
+                  SPLASH_DISPLAY_TIME
+          )
+
+         */
 
     }
 
