@@ -20,8 +20,14 @@ import java.util.*
  */
 class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(), LifecycleObserver {
 
-    private val _isShowProgress = MutableLiveData<Boolean>()
-    val isShowProgress: LiveData<Boolean> = _isShowProgress
+    private val _isShowProgressTotalConfirmed = MutableLiveData<Boolean>()
+    val isShowProgressTotalConfirmed: LiveData<Boolean> = _isShowProgressTotalConfirmed
+
+    private val _isShowProgressTotalDeaths = MutableLiveData<Boolean>()
+    val isShowProgressTotalDeaths: LiveData<Boolean> = _isShowProgressTotalDeaths
+
+    private val _isShowProgressTotalRecovered = MutableLiveData<Boolean>()
+    val isShowProgressTotalRecovered: LiveData<Boolean> = _isShowProgressTotalRecovered
 
     private val _totalConfirmed = MutableLiveData<String>()
     val totalConfirmed: LiveData<String> = _totalConfirmed
@@ -58,10 +64,9 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     private fun getTotalData() {
         interactor.observeTotalData()
                 .doOnSubscribe {
-                    _isShowProgress.value = true
-                }
-                .doOnNext {
-                    _isShowProgress.value = false
+                    _isShowProgressTotalConfirmed.value = true
+                    _isShowProgressTotalDeaths.value = true
+                    _isShowProgressTotalRecovered.value = true
                 }
                 .subscribeBy {
                     val formatter = DecimalFormat("#,###,###")
@@ -69,6 +74,15 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
                     _totalDeaths.value = formatter.format(it.deaths)
                     _totalRecovered.value = formatter.format(it.recovered)
                     _updateTime.value = "Updated on ${dateToString(it.updateTime)}"
+
+                    if (it.confirmed >= 0)
+                        _isShowProgressTotalConfirmed.value = false
+
+                    if (it.deaths >= 0)
+                        _isShowProgressTotalDeaths.value = false
+
+                    if (it.recovered >= 0)
+                        _isShowProgressTotalRecovered.value = false
                 }
                 .addTo(subscriptions)
     }

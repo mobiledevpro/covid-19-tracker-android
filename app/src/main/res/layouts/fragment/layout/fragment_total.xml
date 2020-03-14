@@ -59,7 +59,7 @@
                     android:layout_gravity="center"
                     android:indeterminate="true"
                     android:indeterminateDrawable="@drawable/progress_bar_circular_grey_small"
-                    android:visibility="@{totalViewModel.isShowProgress ? View.VISIBLE : View.INVISIBLE}" />
+                    android:visibility="@{totalViewModel.isShowProgressTotalConfirmed ? View.VISIBLE : View.INVISIBLE}" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                     android:text="@{totalViewModel.totalConfirmed}"
                     android:textColor="@color/colorTextPrimaryRed"
                     android:textSize="40sp"
-                    android:visibility="@{totalViewModel.isShowProgress ? View.INVISIBLE : View.VISIBLE}" />
+                    android:visibility="@{totalViewModel.isShowProgressTotalConfirmed ? View.INVISIBLE : View.VISIBLE}" />
 
             </FrameLayout>
 
@@ -92,7 +92,7 @@
                     android:layout_gravity="center"
                     android:indeterminate="true"
                     android:indeterminateDrawable="@drawable/progress_bar_circular_grey_small"
-                    android:visibility="@{totalViewModel.isShowProgress ? View.VISIBLE : View.INVISIBLE}" />
+                    android:visibility="@{totalViewModel.isShowProgressTotalDeaths ? View.VISIBLE : View.INVISIBLE}" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
                     android:text="@{totalViewModel.totalDeaths}"
                     android:textColor="@color/colorTextSecondary"
                     android:textSize="32sp"
-                    android:visibility="@{totalViewModel.isShowProgress ? View.INVISIBLE : View.VISIBLE}" />
+                    android:visibility="@{totalViewModel.isShowProgressTotalDeaths ? View.INVISIBLE : View.VISIBLE}" />
 
             </FrameLayout>
 
@@ -124,7 +124,7 @@
                     android:layout_gravity="center"
                     android:indeterminate="true"
                     android:indeterminateDrawable="@drawable/progress_bar_circular_grey_small"
-                    android:visibility="@{totalViewModel.isShowProgress ? View.VISIBLE : View.INVISIBLE}" />
+                    android:visibility="@{totalViewModel.isShowProgressTotalRecovered ? View.VISIBLE : View.INVISIBLE}" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
                     android:text="@{totalViewModel.totalRecovered}"
                     android:textColor="@color/colorTextPrimaryGreen"
                     android:textSize="36sp"
-                    android:visibility="@{totalViewModel.isShowProgress ? View.INVISIBLE : View.VISIBLE}" />
+                    android:visibility="@{totalViewModel.isShowProgressTotalRecovered ? View.INVISIBLE : View.VISIBLE}" />
 
             </FrameLayout>
 
@@ -149,7 +149,7 @@
             android:text="@{totalViewModel.updateTime}"
             android:textColor="@color/colorTextSecondary"
             android:textSize="14sp"
-            android:visibility="@{totalViewModel.isShowProgress ? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{totalViewModel.isShowProgressTotalConfirmed ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
