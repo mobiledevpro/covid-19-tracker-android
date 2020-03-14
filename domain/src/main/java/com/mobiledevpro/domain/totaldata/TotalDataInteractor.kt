@@ -1,6 +1,7 @@
 package com.mobiledevpro.domain.totaldata
 
 import com.mobiledevpro.domain.model.Total
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -17,5 +18,5 @@ interface TotalDataInteractor {
 
     fun observeTotalData(): Observable<Total>
 
-    fun refreshTotalData(): Single<Boolean>
+    fun refreshTotalData(): Completable
 }

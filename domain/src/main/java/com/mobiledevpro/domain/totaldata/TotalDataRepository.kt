@@ -1,6 +1,7 @@
 package com.mobiledevpro.domain.totaldata
 
 import com.mobiledevpro.domain.model.Total
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -21,7 +22,7 @@ interface TotalDataRepository {
 
     fun getLocalTotalDataObservable(): Observable<Total>
 
-    fun setLocalTotalData(total: Total): Single<Boolean>
+    fun setLocalTotalData(total: Total): Completable
 
-    fun createNetworkRequestTotal(outStatisticsId: Int): Single<Int>
+    fun getTotalData(): Single<Total>
 }

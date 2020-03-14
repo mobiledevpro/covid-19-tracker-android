@@ -21,9 +21,7 @@ public class ApiGetTotalDataNetwork {
 
     private fun RestApiVehicleModels() {}
 
-    public class Request {
-        var outStatisticsId = 0
-
+    public class Request(outStatisticsId: Int) {
         val format = PARAM_RESPONSE_FORMAT
         val where = "Confirmed>0"
         val geometry: Boolean = false
