@@ -7,8 +7,8 @@ import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
 import com.mobiledevpro.data.repository.userdata.CovidCache
 import com.mobiledevpro.data.repository.userdata.CovidRemote
 import com.mobiledevpro.data.repository.userdata.DefaultTotalDataRepository
-import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import com.mobiledevpro.domain.totaldata.DefaultTotalDataInteractor
+import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import com.mobiledevpro.domain.totaldata.TotalDataRepository
 import com.mobiledevpro.local.database.DefaultCovidCache
 import com.mobiledevpro.local.storage.PreferencesHelper
@@ -56,14 +56,14 @@ val dataRemoteModule = module {
     single { RemoteServiceFactory(get()).buildStackOverFlowApi() }
     single {
         OkHttpFactory().buildOkHttpClient(
-            listOf(
-                ApiResponseInterceptor(),
-                ApiRequestInterceptor()
-            ),
-            listOf(
-                StethoInterceptor(),
-                FlipperOkhttpInterceptor(App.flipperNetworkPlugin)
-            )
+                listOf(
+                        ApiResponseInterceptor(get()),
+                        ApiRequestInterceptor()
+                ),
+                listOf(
+                        StethoInterceptor(),
+                        FlipperOkhttpInterceptor(App.flipperNetworkPlugin)
+                )
         )
     }
 }
