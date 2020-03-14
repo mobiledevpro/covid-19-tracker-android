@@ -1,7 +1,6 @@
 package com.mobiledevpro.app.di
 
-import com.mobiledevpro.app.ui.mainscreen.viewmodel.MainViewModel
-import com.mobiledevpro.app.ui.mainscreen.viewmodel.UserDataViewModel
+import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
 import com.mobiledevpro.data.repository.userdata.UserDataRepositoryImpl
 import com.mobiledevpro.domain.userdata.UserDataInteractor
 import com.mobiledevpro.domain.userdata.UserDataInteractorImpl
@@ -25,8 +24,7 @@ import org.koin.dsl.module
  */
 
 val uiModule = module {
-    viewModel { MainViewModel() }
-    viewModel { UserDataViewModel(get()) }
+    viewModel { TotalViewModel() }
 }
 
 val domainModule = module {

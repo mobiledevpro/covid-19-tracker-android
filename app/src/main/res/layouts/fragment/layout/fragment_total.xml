@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="mainViewModel"
-            type="com.mobiledevpro.app.ui.mainscreen.viewmodel.MainViewModel" />
+            name="totalViewModel"
+            type="com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="144,863"
+                android:text="@{totalViewModel.totalRecovered}"
                 android:textColor="@color/colorTextPrimaryRed"
                 android:textSize="40sp" />
 
@@ -65,7 +65,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5,398"
+                android:text="@{totalViewModel.totalDeaths}"
                 android:textColor="@color/colorTextSecondary"
                 android:textSize="32sp" />
 
@@ -80,7 +80,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="70,249"
+                android:text="@{totalViewModel.totalRecovered}"
                 android:textColor="@color/colorTextPrimaryGreen"
                 android:textSize="36sp" />
 

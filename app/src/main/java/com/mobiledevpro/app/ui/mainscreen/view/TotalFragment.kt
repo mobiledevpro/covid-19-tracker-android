@@ -2,11 +2,9 @@ package com.mobiledevpro.app.ui.mainscreen.view
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import com.mobiledevpro.app.R
-import com.mobiledevpro.app.databinding.FragmentMainBinding
-import com.mobiledevpro.app.helper.showEditUserFragment
-import com.mobiledevpro.app.ui.mainscreen.viewmodel.MainViewModel
+import com.mobiledevpro.app.databinding.FragmentTotalBinding
+import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
 import com.mobiledevpro.commons.fragment.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,11 +20,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * #MobileDevPro
  */
 
-class MainFragment : BaseFragment() {
+class TotalFragment : BaseFragment() {
 
-    private val viewModel: MainViewModel by viewModel()
+    private val viewModel: TotalViewModel by viewModel()
 
-    override fun getLayoutResId() = R.layout.fragment_main
+    override fun getLayoutResId() = R.layout.fragment_total
 
     override fun getAppBarTitle() = R.string.app_name_main
 
@@ -34,20 +32,11 @@ class MainFragment : BaseFragment() {
 
     override fun populateView(view: View, savedInstanceState: Bundle?): View {
         //databinding
-        val binding = FragmentMainBinding.bind(view)
+        val binding = FragmentTotalBinding.bind(view)
                 .apply {
-                    mainViewModel = viewModel
+                    totalViewModel = viewModel
                 }
         binding.lifecycleOwner = viewLifecycleOwner
-
-
-        viewModel.editUserButton.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let { b ->
-                if (b)
-                //go to Edit User fragment
-                    view.showEditUserFragment()
-            }
-        })
 
         return binding.root
     }
