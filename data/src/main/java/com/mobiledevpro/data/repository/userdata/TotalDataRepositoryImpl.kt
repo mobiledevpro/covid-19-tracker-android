@@ -6,6 +6,7 @@ import com.mobiledevpro.domain.model.Total
 import com.mobiledevpro.domain.totaldata.TotalDataRepository
 import com.mobiledevpro.local.database.DatabaseHelper
 import com.mobiledevpro.local.database.model.TotalDataEntity
+import com.mobiledevpro.remote.RestApiClient
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -19,7 +20,8 @@ import io.reactivex.Single
  *
  * #MobileDevPro
  */
-class TotalDataRepositoryImpl(private val databaseHelper: DatabaseHelper) : TotalDataRepository {
+class TotalDataRepositoryImpl(private val databaseHelper: DatabaseHelper,
+                              private val restApiClient: RestApiClient) : TotalDataRepository {
 
     override fun getLocalTotalDataObservable(): Observable<Total> =
             databaseHelper.getTotalDataObservable()
@@ -31,6 +33,12 @@ class TotalDataRepositoryImpl(private val databaseHelper: DatabaseHelper) : Tota
                     .map(Total::toEntity)
                     .flatMap(databaseHelper::updateTotalData)
 
+
+    override fun createNetworkRequestTotal(outStatisticsId: Int): Single<Boolean> {
+        TODO("Not yet implemented")
+
+
+    }
 
     /*
     override fun getUser(): Single<User> =

@@ -22,4 +22,6 @@ interface TotalDataRepository {
     fun getLocalTotalDataObservable(): Observable<Total>
 
     fun setLocalTotalData(total: Total): Single<Boolean>
+
+    fun createNetworkRequestTotal(outStatisticsId: Int): Single<ApiGetTotalDataNetwork.Request>
 }

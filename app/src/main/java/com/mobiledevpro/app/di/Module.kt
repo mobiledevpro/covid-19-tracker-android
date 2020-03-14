@@ -11,6 +11,7 @@ import com.mobiledevpro.local.storage.PreferencesHelper
 import com.mobiledevpro.local.storage.PreferencesHelperImpl
 import com.mobiledevpro.local.storage.StorageHelper
 import com.mobiledevpro.local.storage.StorageHelperImpl
+import com.mobiledevpro.remote.RestApiClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -32,7 +33,7 @@ val domainModule = module {
 }
 
 val dataModule = module {
-    single { TotalDataRepositoryImpl(get()) as TotalDataRepository }
+    single { TotalDataRepositoryImpl(get(), get()) as TotalDataRepository }
 }
 
 val dataLocalModule = module {
@@ -42,6 +43,7 @@ val dataLocalModule = module {
 }
 
 val dataRemoteModule = module {
-    // TODO: 2/29/20 retrofit instance, firebase database, etc
+    // retrofit instance, firebase database, etc
+    single { RestApiClient(get()) }
 }
 

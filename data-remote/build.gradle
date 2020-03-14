@@ -1,18 +1,9 @@
 apply from: "$rootDir/common-android-library.gradle"
 
-
-android.productFlavors{
-    productFlavors {
-        production {
-
-        }
-
-        demo {
-
-        }
-    }
-}
-
 dependencies {
-    //Retrofit
+    //Retrofit & okhttp
+    implementation deps.retrofit
+    implementation deps.retrofitGsonConverter
+    implementation deps.retrofitRx
+    implementation deps.okhttpLoggingInterceptor
 }
