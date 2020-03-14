@@ -1,0 +1,18 @@
+apply from: "$rootDir/common-android-library.gradle"
+
+
+android.productFlavors{
+    productFlavors {
+        production {
+
+        }
+
+        demo {
+
+        }
+    }
+}
+
+dependencies {
+    //Retrofit
+}
