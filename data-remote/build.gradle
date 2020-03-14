@@ -1,0 +1,12 @@
+apply from: "$rootDir/common-android-library.gradle"
+
+dependencies {
+
+    implementation project(":data")
+
+    //Retrofit & okhttp
+    implementation deps.retrofit
+    implementation deps.retrofitGsonConverter
+    implementation deps.retrofitRx
+    implementation deps.okhttpLoggingInterceptor
+}

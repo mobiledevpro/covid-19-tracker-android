@@ -154,8 +154,17 @@ dependencies {
     implementation deps.glide
     kapt deps.glideCompiler
 
+    //Logs
+    implementation(deps.timber)
+    implementation(deps.stetho)
+    implementation(deps.flipper)
+    implementation(deps.stethoNetworkHelper)
+    implementation(deps.soloader)
+    //
+
     implementation project(":domain")
     implementation project(":data")
     implementation project(":data-local")
+    implementation project(":data-remote")
 }
 apply plugin: 'com.google.gms.google-services'

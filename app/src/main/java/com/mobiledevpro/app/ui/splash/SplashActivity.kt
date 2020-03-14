@@ -7,10 +7,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
-import com.mobiledevpro.app.BuildConfig
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.ui.mainscreen.view.MainActivity
-import kotlinx.android.synthetic.main.activity_splash.*
 import java.lang.ref.WeakReference
 
 
@@ -18,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
     companion object {
         private const val START_MAIN_SCREEN = 1
-        private const val SPLASH_DISPLAY_TIME = 1500L //in milliseconds
+        private const val SPLASH_DISPLAY_TIME = 2000L //in milliseconds
     }
 
     private val mStartNextActivityHandler = Handler()
@@ -29,10 +27,6 @@ class SplashActivity : AppCompatActivity() {
 
         applyWindowInsets(findViewById(android.R.id.content))
 
-        tv_app_version.text =
-                String.format(resources.getString(R.string.app_version), BuildConfig.VERSION_NAME)
-
-
         //start login or main screen (depends on the app logic)
         /*  mStartNextActivityHandler.postDelayed(
                   SplashRunnable(this, START_MAIN_SCREEN),
@@ -40,6 +34,7 @@ class SplashActivity : AppCompatActivity() {
           )
 
          */
+
 
     }
 
