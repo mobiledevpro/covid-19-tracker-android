@@ -1,10 +1,10 @@
 package com.mobiledevpro.app.di
 
 import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
-import com.mobiledevpro.data.repository.userdata.UserDataRepositoryImpl
-import com.mobiledevpro.domain.userdata.UserDataInteractor
-import com.mobiledevpro.domain.userdata.UserDataInteractorImpl
-import com.mobiledevpro.domain.userdata.UserDataRepository
+import com.mobiledevpro.data.repository.userdata.TotalDataRepositoryImpl
+import com.mobiledevpro.domain.totaldata.TotalDataInteractor
+import com.mobiledevpro.domain.totaldata.TotalDataInteractorImpl
+import com.mobiledevpro.domain.totaldata.TotalDataRepository
 import com.mobiledevpro.local.database.DatabaseHelper
 import com.mobiledevpro.local.database.DatabaseHelperImpl
 import com.mobiledevpro.local.storage.PreferencesHelper
@@ -24,15 +24,15 @@ import org.koin.dsl.module
  */
 
 val uiModule = module {
-    viewModel { TotalViewModel() }
+    viewModel { TotalViewModel(get()) }
 }
 
 val domainModule = module {
-    single { UserDataInteractorImpl(get()) as UserDataInteractor }
+    single { TotalDataInteractorImpl(get()) as TotalDataInteractor }
 }
 
 val dataModule = module {
-    single { UserDataRepositoryImpl(get()) as UserDataRepository }
+    single { TotalDataRepositoryImpl(get()) as TotalDataRepository }
 }
 
 val dataLocalModule = module {

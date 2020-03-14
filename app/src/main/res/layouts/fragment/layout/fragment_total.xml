@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:gravity="center"
-            android:text="@string/label_last_update_date"
+            android:text="@{totalViewModel.updateTime}"
             android:textColor="@color/colorTextSecondary"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"

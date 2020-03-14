@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mobiledevpro.local.BuildConfig
-import com.mobiledevpro.local.database.dao.UserDao
-import com.mobiledevpro.local.database.model.UserEntity
+import com.mobiledevpro.local.database.dao.TotalDataDao
+import com.mobiledevpro.local.database.model.TotalDataEntity
 
 /**
  * Room Database
@@ -20,14 +20,14 @@ import com.mobiledevpro.local.database.model.UserEntity
 
 @Database(
         entities = [
-            UserEntity::class
+            TotalDataEntity::class
         ],
         version = BuildConfig.RoomDatabaseVersion,
         exportSchema = true
 )
 
 internal abstract class AppDatabase : RoomDatabase() {
-    internal abstract val userDao: UserDao
+    internal abstract val totalDataDao: TotalDataDao
 
     companion object {
         @Volatile

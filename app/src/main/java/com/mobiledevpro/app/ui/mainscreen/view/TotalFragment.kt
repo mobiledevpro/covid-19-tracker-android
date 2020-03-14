@@ -42,7 +42,8 @@ class TotalFragment : BaseFragment() {
     }
 
     override fun initPresenters() {
-        //do nothing
+        //add lifecycle observer to viewmodel
+        lifecycle.addObserver(viewModel)
     }
 
 }

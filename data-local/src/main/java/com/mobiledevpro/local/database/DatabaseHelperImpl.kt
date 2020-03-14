@@ -1,7 +1,7 @@
 package com.mobiledevpro.local.database
 
 import android.content.Context
-import com.mobiledevpro.local.database.model.UserEntity
+import com.mobiledevpro.local.database.model.TotalDataEntity
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -16,24 +16,17 @@ import io.reactivex.Single
  */
 class DatabaseHelperImpl(private val appContext: Context) : DatabaseHelper {
 
-    override fun getUser(userId: Int): Single<UserEntity> {
-        return AppDatabase.getInstance(appContext)
-                .userDao
-                .getUserSingle(userId)
-    }
+    override fun getTotalDataObservable(): Observable<TotalDataEntity> =
+            AppDatabase.getInstance(appContext)
+                    .totalDataDao
+                    .getTotalDataObservable()
 
-    override fun getUserUpdatesObservable(): Observable<UserEntity> {
-        return AppDatabase.getInstance(appContext)
-                .userDao
-                .getUserObservable(0)
-    }
-
-    override fun updateUser(userEntity: UserEntity): Single<Boolean> {
+    override fun updateTotalData(totalDataEntity: TotalDataEntity): Single<Boolean> {
         return Single.create { emitter ->
 
             AppDatabase.getInstance(appContext)
-                    .userDao
-                    .insert(userEntity)
+                    .totalDataDao
+                    .insert(totalDataEntity)
 
             emitter.onSuccess(true)
         }

@@ -1,25 +1,28 @@
 package com.mobiledevpro.data
 
-import com.mobiledevpro.domain.model.User
-import com.mobiledevpro.local.database.model.UserEntity
+import com.mobiledevpro.domain.model.Total
+import com.mobiledevpro.local.database.model.TotalDataEntity
 
 /**
  * Extensions for mapping data level models to domain level models and vise versa
  *
- * Created by Dmitriy Chernysh on Feb 28, 2020.
+ * Created by Dmitriy Chernysh
  *
  * http://androiddev.pro
  *
  */
 
-fun UserEntity.toUser(): User = User(
-        id = id,
-        name = name,
-        age = age
+fun TotalDataEntity.toTotal(): Total = Total(
+        confirmed = confirmed,
+        deaths = deaths,
+        recovered = recovered,
+        updateTime = lastUpdateTime
 )
 
-fun User.toEntity(): UserEntity = UserEntity(
-        id = id,
-        name = name ?: "",
-        age = age
+fun Total.toEntity(): TotalDataEntity = TotalDataEntity(
+        id = 0,
+        confirmed = confirmed,
+        deaths = deaths,
+        recovered = recovered,
+        lastUpdateTime = updateTime
 )

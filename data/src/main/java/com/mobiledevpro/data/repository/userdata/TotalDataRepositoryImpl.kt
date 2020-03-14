@@ -1,16 +1,16 @@
 package com.mobiledevpro.data.repository.userdata
 
 import com.mobiledevpro.data.toEntity
-import com.mobiledevpro.data.toUser
-import com.mobiledevpro.domain.model.User
-import com.mobiledevpro.domain.userdata.UserDataRepository
+import com.mobiledevpro.data.toTotal
+import com.mobiledevpro.domain.model.Total
+import com.mobiledevpro.domain.totaldata.TotalDataRepository
 import com.mobiledevpro.local.database.DatabaseHelper
-import com.mobiledevpro.local.database.model.UserEntity
+import com.mobiledevpro.local.database.model.TotalDataEntity
 import io.reactivex.Observable
 import io.reactivex.Single
 
 /**
- * Repository for UserEdit screen
+ * Repository for Total data screen
  *
  *
  * Created by Dmitriy Chernysh
@@ -19,8 +19,20 @@ import io.reactivex.Single
  *
  * #MobileDevPro
  */
-class UserDataRepositoryImpl(private val databaseHelper: DatabaseHelper) : UserDataRepository {
+class TotalDataRepositoryImpl(private val databaseHelper: DatabaseHelper) : TotalDataRepository {
 
+    override fun getLocalTotalDataObservable(): Observable<Total> =
+            databaseHelper.getTotalDataObservable()
+                    .onErrorReturn { TotalDataEntity() }
+                    .map(TotalDataEntity::toTotal)
+
+    override fun setLocalTotalData(total: Total): Single<Boolean> =
+            Single.just(total)
+                    .map(Total::toEntity)
+                    .flatMap(databaseHelper::updateTotalData)
+
+
+    /*
     override fun getUser(): Single<User> =
             databaseHelper.getUser(0)
                     .onErrorReturn { UserEntity() }
@@ -36,5 +48,7 @@ class UserDataRepositoryImpl(private val databaseHelper: DatabaseHelper) : UserD
                     .map(User::toEntity)
                     .flatMap(databaseHelper::updateUser)
 
+
+     */
 }
 
