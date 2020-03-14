@@ -20,25 +20,24 @@ import io.reactivex.Single
  *
  * #MobileDevPro
  */
-class TotalDataRepositoryImpl(private val databaseHelper: DatabaseHelper,
-                              private val restApiClient: RestApiClient) : TotalDataRepository {
+class TotalDataRepositoryImpl(
+    private val databaseHelper: DatabaseHelper,
+    private val restApiClient: RestApiClient
+) : TotalDataRepository {
 
     override fun getLocalTotalDataObservable(): Observable<Total> =
-            databaseHelper.getTotalDataObservable()
-                    .onErrorReturn { TotalDataEntity() }
-                    .map(TotalDataEntity::toTotal)
+        databaseHelper.getTotalDataObservable()
+            .onErrorReturn { TotalDataEntity() }
+            .map(TotalDataEntity::toTotal)
 
     override fun setLocalTotalData(total: Total): Single<Boolean> =
-            Single.just(total)
-                    .map(Total::toEntity)
-                    .flatMap(databaseHelper::updateTotalData)
+        Single.just(total)
+            .map(Total::toEntity)
+            .flatMap(databaseHelper::updateTotalData)
 
 
-    override fun createNetworkRequestTotal(outStatisticsId: Int): Single<Boolean> {
-        TODO("Not yet implemented")
-
-
-    }
+    override fun createNetworkRequestTotal(outStatisticsId: Int): Single<Int> =
+        TODO()
 
     /*
     override fun getUser(): Single<User> =

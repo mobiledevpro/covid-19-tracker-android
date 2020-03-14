@@ -23,5 +23,5 @@ interface TotalDataRepository {
 
     fun setLocalTotalData(total: Total): Single<Boolean>
 
-    fun createNetworkRequestTotal(outStatisticsId: Int): Single<ApiGetTotalDataNetwork.Request>
+    fun createNetworkRequestTotal(outStatisticsId: Int): Single<Int>
 }

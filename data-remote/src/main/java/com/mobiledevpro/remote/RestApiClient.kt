@@ -20,10 +20,10 @@ import java.util.concurrent.TimeUnit
  * #MobileDevPro
  */
 class RestApiClient(private val context: Context) {
-    var apiInterface: IRestApiClient
+    private var apiInterface: IRestApiClient
 
     companion object {
-        const val BASE_URL = "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/1/query"
+        const val BASE_URL = "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/1/query/"
         private const val HTTP_TIMEOUT = 30 //in seconds
     }
 
