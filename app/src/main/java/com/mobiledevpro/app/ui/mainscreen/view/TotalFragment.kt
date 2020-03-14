@@ -38,6 +38,7 @@ class TotalFragment : BaseFragment() {
                 }
         binding.lifecycleOwner = viewLifecycleOwner
 
+        observeEvents(view)
         return binding.root
     }
 
@@ -46,4 +47,7 @@ class TotalFragment : BaseFragment() {
         lifecycle.addObserver(viewModel)
     }
 
+    private fun observeEvents(view: View) {
+        //do something
+    }
 }

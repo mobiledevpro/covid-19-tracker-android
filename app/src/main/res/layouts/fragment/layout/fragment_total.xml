@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="totalViewModel"
             type="com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel" />
@@ -47,12 +49,29 @@
                 android:textColor="@color/colorTextPrimaryRed"
                 android:textSize="20sp" />
 
-            <TextView
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{totalViewModel.totalRecovered}"
-                android:textColor="@color/colorTextPrimaryRed"
-                android:textSize="40sp" />
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:indeterminateDrawable="@drawable/progress_bar_circular_grey_small"
+                    android:visibility="@{totalViewModel.isShowProgress ? View.VISIBLE : View.INVISIBLE}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@{totalViewModel.totalConfirmed}"
+                    android:textColor="@color/colorTextPrimaryRed"
+                    android:textSize="40sp"
+                    android:visibility="@{totalViewModel.isShowProgress ? View.INVISIBLE : View.VISIBLE}" />
+
+            </FrameLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,12 +81,29 @@
                 android:textColor="@color/colorTextSecondary"
                 android:textSize="16sp" />
 
-            <TextView
+
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{totalViewModel.totalDeaths}"
-                android:textColor="@color/colorTextSecondary"
-                android:textSize="32sp" />
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:indeterminateDrawable="@drawable/progress_bar_circular_grey_small"
+                    android:visibility="@{totalViewModel.isShowProgress ? View.VISIBLE : View.INVISIBLE}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@{totalViewModel.totalDeaths}"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="32sp"
+                    android:visibility="@{totalViewModel.isShowProgress ? View.INVISIBLE : View.VISIBLE}" />
+
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -77,12 +113,30 @@
                 android:textColor="@color/colorTextPrimaryGreen"
                 android:textSize="18sp" />
 
-            <TextView
+
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{totalViewModel.totalRecovered}"
-                android:textColor="@color/colorTextPrimaryGreen"
-                android:textSize="36sp" />
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:indeterminateDrawable="@drawable/progress_bar_circular_grey_small"
+                    android:visibility="@{totalViewModel.isShowProgress ? View.VISIBLE : View.INVISIBLE}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@{totalViewModel.totalRecovered}"
+                    android:textColor="@color/colorTextPrimaryGreen"
+                    android:textSize="36sp"
+                    android:visibility="@{totalViewModel.isShowProgress ? View.INVISIBLE : View.VISIBLE}" />
+
+            </FrameLayout>
+
 
         </LinearLayout>
 
@@ -95,6 +149,7 @@
             android:text="@{totalViewModel.updateTime}"
             android:textColor="@color/colorTextSecondary"
             android:textSize="14sp"
+            android:visibility="@{totalViewModel.isShowProgress ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

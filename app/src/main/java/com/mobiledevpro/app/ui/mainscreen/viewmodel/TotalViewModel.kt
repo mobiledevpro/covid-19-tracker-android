@@ -20,6 +20,8 @@ import java.util.*
  */
 class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(), LifecycleObserver {
 
+    private val _isShowProgress = MutableLiveData<Boolean>()
+    val isShowProgress: LiveData<Boolean> = _isShowProgress
 
     private val _totalConfirmed = MutableLiveData<String>()
     val totalConfirmed: LiveData<String> = _totalConfirmed
@@ -55,12 +57,18 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
 
     private fun getTotalData() {
         interactor.observeTotalData()
+                .doOnSubscribe {
+                    _isShowProgress.value = true
+                }
+                .doOnNext {
+                    _isShowProgress.value = false
+                }
                 .subscribeBy {
                     val formatter = DecimalFormat("#,###,###")
                     _totalConfirmed.value = formatter.format(it.confirmed)
                     _totalDeaths.value = formatter.format(it.deaths)
                     _totalRecovered.value = formatter.format(it.recovered)
-                    _updateTime.value = dateToString(it.updateTime)
+                    _updateTime.value = "Updated on ${dateToString(it.updateTime)}"
                 }
                 .addTo(subscriptions)
     }
