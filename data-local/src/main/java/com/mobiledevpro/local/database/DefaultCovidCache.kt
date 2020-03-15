@@ -1,10 +1,8 @@
 package com.mobiledevpro.local.database
 
 import android.content.Context
-import com.mobiledevpro.data.model.CountryEntity
 import com.mobiledevpro.data.model.TotalEntity
 import com.mobiledevpro.data.repository.userdata.CovidCache
-import com.mobiledevpro.local.database.model.CachedCounties
 import com.mobiledevpro.local.database.model.CachedTotal
 import com.mobiledevpro.local.mapper.toCached
 import com.mobiledevpro.local.mapper.toEntity
@@ -29,10 +27,13 @@ class DefaultCovidCache(private val appContext: Context) : CovidCache {
             .map(CachedTotal::toEntity)
 
     override fun updateTotalData(totalEntity: TotalEntity) = Completable
-        .create { emitter ->
-            AppDatabase.getInstance(appContext)
-                .totalDataDao
-                .insert(totalEntity.toCached())
+            .create { emitter ->
+                val dao = AppDatabase.getInstance(appContext)
+                        .totalDataDao
+
+                dao.deleteAllTotalValues()
+
+                dao.insert(totalEntity.toCached())
 
             emitter.onComplete()
         }

@@ -2,11 +2,14 @@ package com.mobiledevpro.app.ui.mainscreen.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentTotalBinding
+import com.mobiledevpro.app.helper.showCountiesList
+import com.mobiledevpro.app.ui.mainscreen.viewmodel.NAVIGATE_TO_COUNTRIES_LIST
 import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
 import com.mobiledevpro.commons.fragment.BaseFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 /**
@@ -22,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TotalFragment : BaseFragment() {
 
-    private val viewModel: TotalViewModel by viewModel()
+    private val viewModel: TotalViewModel by sharedViewModel()
 
     override fun getLayoutResId() = R.layout.fragment_total
 
@@ -48,6 +51,14 @@ class TotalFragment : BaseFragment() {
     }
 
     private fun observeEvents(view: View) {
-        //do something
+        //show toasts
+        viewModel.eventNavigateTo.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { id ->
+                when (id) {
+                    NAVIGATE_TO_COUNTRIES_LIST -> showCountiesList()
+                }
+
+            }
+        })
     }
 }
