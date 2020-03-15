@@ -2,47 +2,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/totalValuesFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/totalValuesFragment"
         android:name="com.mobiledevpro.app.ui.mainscreen.view.TotalFragment"
-        android:label="MainFragment">
+        android:label="fragment_total_values">
         <action
-            android:id="@+id/actionUserEdit"
+            android:id="@+id/actionShowCountriesList"
+            app:destination="@id/countriesListFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
-    <!--
     <fragment
-        android:id="@+id/userEditFragment"
-        android:name="com.mobiledevpro.app.ui.usereditscreen.view.UserEditFragment"
-        android:label="UserEditFragment">
-        <action
-            android:id="@+id/actionUserView"
-            app:destination="@id/userViewFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@+id/userEditFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        android:id="@+id/countriesListFragment"
+        android:name="com.mobiledevpro.app.ui.countries.CountriesListFragment"
+        android:label="fragment_countries"></fragment>
 
-    <fragment
-        android:id="@+id/userViewFragment"
-        android:name="com.mobiledevpro.app.ui.userviewscreen.view.UserViewFragment"
-        android:label="UserViewFragment">
-        <action
-            android:id="@+id/actionUserViewGoBack"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-
-    -->
 </navigation>

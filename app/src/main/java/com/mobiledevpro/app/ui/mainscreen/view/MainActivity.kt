@@ -13,7 +13,7 @@ class MainActivity : BaseActivity() {
 
     override fun getLayoutResId() = R.layout.activity_main
 
-    override fun isAdjustFontScaleToNormal() = true
+    override fun isAdjustFontScaleToNormal() = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //set navigation bar translucent

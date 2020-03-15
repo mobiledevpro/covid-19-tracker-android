@@ -1,6 +1,7 @@
 package com.mobiledevpro.app.ui.mainscreen.viewmodel
 
 import androidx.lifecycle.*
+import com.mobiledevpro.app.Event
 import com.mobiledevpro.app.ui.BaseViewModel
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.rxkotlin.addTo
@@ -18,6 +19,8 @@ import java.util.*
  *
  * #MobileDevPro
  */
+internal const val NAVIGATE_TO_COUNTRIES_LIST = 1
+
 class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(), LifecycleObserver {
 
     private val _isShowProgressTotalConfirmed = MutableLiveData<Boolean>()
@@ -41,8 +44,17 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     private val _updateTime = MutableLiveData<String>()
     val updateTime: LiveData<String> = _updateTime
 
+    private val _eventNavigateTo = MutableLiveData<Event<Int>>()
+    val eventNavigateTo: LiveData<Event<Int>> = _eventNavigateTo
+
 
     init {
+        getTotalData()
+    }
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun onStartView() {
         interactor.refreshTotalData()
                 .subscribeBy {
                     //do nothing
@@ -50,15 +62,13 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
                 .addTo(subscriptions)
     }
 
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onStartView() {
-        getTotalData()
-    }
-
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStopView() {
+        //do something if needed
+    }
 
+    fun onClickViewByCountry() {
+        _eventNavigateTo.value = Event(NAVIGATE_TO_COUNTRIES_LIST)
     }
 
     private fun getTotalData() {
