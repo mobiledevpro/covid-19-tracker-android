@@ -1,4 +1,4 @@
-package com.mobiledevpro.app
+package com.mobiledevpro.app.common
 
 import android.app.Application
 import com.facebook.flipper.android.AndroidFlipperClient
@@ -7,6 +7,7 @@ import com.facebook.flipper.plugins.inspector.InspectorFlipperPlugin
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.facebook.soloader.SoLoader
 import com.facebook.stetho.Stetho
+import com.mobiledevpro.app.BuildConfig
 import com.mobiledevpro.app.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin

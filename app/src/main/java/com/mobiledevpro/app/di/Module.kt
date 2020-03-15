@@ -2,7 +2,7 @@ package com.mobiledevpro.app.di
 
 import com.facebook.flipper.plugins.network.FlipperOkhttpInterceptor
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.mobiledevpro.app.App
+import com.mobiledevpro.app.common.App
 import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
 import com.mobiledevpro.data.repository.userdata.CovidCache
 import com.mobiledevpro.data.repository.userdata.CovidRemote

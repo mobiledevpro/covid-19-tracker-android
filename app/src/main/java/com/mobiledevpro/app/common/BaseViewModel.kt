@@ -1,4 +1,4 @@
-package com.mobiledevpro.app.ui
+package com.mobiledevpro.app.common
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable

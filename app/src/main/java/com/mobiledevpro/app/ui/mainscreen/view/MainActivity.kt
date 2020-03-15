@@ -41,10 +41,10 @@ class MainActivity : BaseActivity() {
         //Use Window Insets to set top and bottom paddings to our activity
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             v.updatePadding(
-                    left = insets.systemWindowInsetLeft,
-                    top = insets.systemWindowInsetTop,
-                    right = insets.systemWindowInsetRight,
-                    bottom = insets.systemWindowInsetBottom
+                left = insets.systemWindowInsetLeft,
+                top = insets.systemWindowInsetTop,
+                right = insets.systemWindowInsetRight,
+                bottom = insets.systemWindowInsetBottom
             )
             insets
         }
