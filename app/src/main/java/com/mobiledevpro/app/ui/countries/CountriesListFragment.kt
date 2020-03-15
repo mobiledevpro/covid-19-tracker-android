@@ -2,6 +2,7 @@ package com.mobiledevpro.app.ui.countries
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentCountriesListBinding
 import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
@@ -28,10 +29,12 @@ class CountriesListFragment : BaseFragment() {
     override fun populateView(view: View, savedInstanceState: Bundle?): View {
         //databinding
         val binding = FragmentCountriesListBinding.bind(view)
-                .apply {
-                    totalViewModel = viewModel
-                }
+            .apply {
+                totalViewModel = viewModel
+            }
         binding.lifecycleOwner = viewLifecycleOwner
+
+        initRecyclerView()
 
         observeEvents(view)
         return binding.root
@@ -41,7 +44,13 @@ class CountriesListFragment : BaseFragment() {
     }
 
     private fun observeEvents(view: View) {
-        //todo listen livedata changes here
+        viewModel.countriesList.observe(viewLifecycleOwner, Observer {
+            // todo update recycler view adapter here
+        })
 
+    }
+
+    private fun initRecyclerView() {
+//todo init recycler view adapter here
     }
 }

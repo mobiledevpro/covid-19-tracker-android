@@ -3,12 +3,14 @@ package com.mobiledevpro.app.ui.mainscreen.viewmodel
 import androidx.lifecycle.*
 import com.mobiledevpro.app.Event
 import com.mobiledevpro.app.ui.BaseViewModel
+import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * ViewModel for main fragment
@@ -44,6 +46,9 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     private val _updateTime = MutableLiveData<String>()
     val updateTime: LiveData<String> = _updateTime
 
+    private val _countriesList = MutableLiveData<ArrayList<Country>>()
+    val countriesList: LiveData<ArrayList<Country>> = _countriesList
+
     private val _eventNavigateTo = MutableLiveData<Event<Int>>()
     val eventNavigateTo: LiveData<Event<Int>> = _eventNavigateTo
 
@@ -56,10 +61,10 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStartView() {
         interactor.refreshTotalData()
-                .subscribeBy {
-                    //do nothing
-                }
-                .addTo(subscriptions)
+            .subscribeBy {
+                //do nothing
+            }
+            .addTo(subscriptions)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
@@ -73,28 +78,38 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
 
     private fun getTotalData() {
         interactor.observeTotalData()
-                .doOnSubscribe {
-                    _isShowProgressTotalConfirmed.value = true
-                    _isShowProgressTotalDeaths.value = true
-                    _isShowProgressTotalRecovered.value = true
-                }
-                .subscribeBy {
-                    val formatter = DecimalFormat("#,###,###")
-                    _totalConfirmed.value = formatter.format(it.confirmed)
-                    _totalDeaths.value = formatter.format(it.deaths)
-                    _totalRecovered.value = formatter.format(it.recovered)
-                    _updateTime.value = "Updated on ${dateToString(it.updateTime)}"
+            .doOnSubscribe {
+                _isShowProgressTotalConfirmed.value = true
+                _isShowProgressTotalDeaths.value = true
+                _isShowProgressTotalRecovered.value = true
+            }
+            .subscribeBy {
+                val formatter = DecimalFormat("#,###,###")
+                _totalConfirmed.value = formatter.format(it.confirmed)
+                _totalDeaths.value = formatter.format(it.deaths)
+                _totalRecovered.value = formatter.format(it.recovered)
+                _updateTime.value = "Updated on ${dateToString(it.updateTime)}"
 
-                    if (it.confirmed >= 0)
-                        _isShowProgressTotalConfirmed.value = false
+                if (it.confirmed >= 0)
+                    _isShowProgressTotalConfirmed.value = false
 
-                    if (it.deaths >= 0)
-                        _isShowProgressTotalDeaths.value = false
+                if (it.deaths >= 0)
+                    _isShowProgressTotalDeaths.value = false
 
-                    if (it.recovered >= 0)
-                        _isShowProgressTotalRecovered.value = false
-                }
-                .addTo(subscriptions)
+                if (it.recovered >= 0)
+                    _isShowProgressTotalRecovered.value = false
+            }
+            .addTo(subscriptions)
+
+
+        //TODO: for debugging, the countries list
+        val testList = ArrayList<Country>()
+        var country = Country(1, "Country_test_1", 100, 10, 90)
+        testList.add(country)
+        country = Country(2, "Country_test_2", 50, 5, 45)
+        testList.add(country)
+
+        // _countriesList.value = testList
     }
 
 
