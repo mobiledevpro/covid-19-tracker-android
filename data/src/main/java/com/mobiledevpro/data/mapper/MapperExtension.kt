@@ -1,6 +1,8 @@
 package com.mobiledevpro.data.mapper
 
+import com.mobiledevpro.data.model.CountryEntity
 import com.mobiledevpro.data.model.TotalEntity
+import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
 
 /**
@@ -13,13 +15,37 @@ import com.mobiledevpro.domain.model.Total
  */
 
 fun Total.toCacheEntity() = TotalEntity(
-        confirmed = confirmed,
-        deaths = deaths,
-        recovered = recovered
+    confirmed = confirmed,
+    deaths = deaths,
+    recovered = recovered
 )
 
 fun TotalEntity.toDomain() = Total(
-        confirmed = confirmed,
-        deaths = deaths,
-        recovered = recovered
+    confirmed = confirmed,
+    deaths = deaths,
+    recovered = recovered
+)
+
+fun CountryEntity.toDomain() = Country(
+    id = id,
+    country = country,
+    updated = updated,
+    latitude = latitude,
+    longitude = longitude,
+    confirmed = confirmed,
+    deaths = deaths,
+    recovered = recovered,
+    active = active
+)
+
+fun Country.toEntity() = CountryEntity(
+    id = id,
+    country = country,
+    updated = updated,
+    latitude = latitude,
+    longitude = longitude,
+    confirmed = confirmed,
+    deaths = deaths,
+    recovered = recovered,
+    active = active
 )

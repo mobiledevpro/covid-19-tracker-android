@@ -2,7 +2,10 @@ package com.mobiledevpro.data.repository.userdata
 
 import com.mobiledevpro.data.mapper.toCacheEntity
 import com.mobiledevpro.data.mapper.toDomain
+import com.mobiledevpro.data.mapper.toEntity
+import com.mobiledevpro.data.model.CountryEntity
 import com.mobiledevpro.data.model.TotalEntity
+import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
 import com.mobiledevpro.domain.totaldata.TotalDataRepository
 import io.reactivex.Completable
@@ -47,5 +50,18 @@ class DefaultTotalDataRepository(
                     recovered = countRecovered.count
                 )
             })
+
+    override fun getLocalCountriesObservable(): Observable<List<Country>> = covidCache
+        .getLocalCountriesObservable()
+        .map { it.map(CountryEntity::toDomain) }
+
+    override fun getCountries(): Single<List<Country>> = covidRemote
+        .getCountries()
+        .map { it.map(CountryEntity::toDomain) }
+
+    override fun setLocalCountriesData(countries: List<Country>): Completable = Single
+        .just(countries)
+        .map { it.map(Country::toEntity) }
+        .flatMapCompletable(covidCache::updateCountries)
 }
 

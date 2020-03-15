@@ -56,14 +56,14 @@ val dataRemoteModule = module {
     single { RemoteServiceFactory(get()).buildStackOverFlowApi() }
     single {
         OkHttpFactory().buildOkHttpClient(
-                listOf(
-                        ApiResponseInterceptor(get()),
-                        ApiRequestInterceptor()
-                ),
-                listOf(
-                        StethoInterceptor(),
-                        FlipperOkhttpInterceptor(App.flipperNetworkPlugin)
-                )
+            listOf(
+                ApiResponseInterceptor(get()),
+                ApiRequestInterceptor()
+            ),
+            listOf(
+                StethoInterceptor(),
+                FlipperOkhttpInterceptor(App.flipperNetworkPlugin)
+            )
         )
     }
 }

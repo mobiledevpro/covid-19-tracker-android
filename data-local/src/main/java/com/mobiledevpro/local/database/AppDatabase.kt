@@ -5,7 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mobiledevpro.local.BuildConfig
+import com.mobiledevpro.local.database.dao.CountryDataDao
 import com.mobiledevpro.local.database.dao.TotalDataDao
+import com.mobiledevpro.local.database.model.CachedCounties
 import com.mobiledevpro.local.database.model.CachedTotal
 
 /**
@@ -19,13 +21,17 @@ import com.mobiledevpro.local.database.model.CachedTotal
  */
 
 @Database(
-    entities = [CachedTotal::class],
+    entities = [
+        CachedTotal::class,
+        CachedCounties::class
+    ],
     version = BuildConfig.RoomDatabaseVersion,
     exportSchema = true
 )
 
 internal abstract class AppDatabase : RoomDatabase() {
     internal abstract val totalDataDao: TotalDataDao
+    internal abstract val countiesDataDao: CountryDataDao
 
     companion object {
         @Volatile

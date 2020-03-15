@@ -75,7 +75,7 @@ interface RestApiClient {
     ): Single<TotalResponse>
 
     @GET(".")
-    fun getCountriesList(
+    fun getCountries(
         @Query(value = "f", encoded = true) format: String = "json",
         @Query(value = "where", encoded = true) where: String = "Confirmed>0",
         @Query(value = "returnGeometry", encoded = true) geometry: Boolean = false,
