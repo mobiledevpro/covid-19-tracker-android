@@ -20,6 +20,6 @@
     <fragment
         android:id="@+id/countriesListFragment"
         android:name="com.mobiledevpro.app.ui.countries.CountriesListFragment"
-        android:label="fragment_countries"></fragment>
+        android:label="fragment_countries" />
 
 </navigation>

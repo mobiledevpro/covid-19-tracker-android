@@ -101,8 +101,7 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     private fun dateToString(date: Long): String {
         val dateFormat = SimpleDateFormat(" E, dd MMM yyyy HH:mm:ss z", Locale.getDefault())
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
-        val today: Date = Calendar.getInstance().getTime()
-        return dateFormat.format(today);
+        return dateFormat.format(date)
     }
 
 

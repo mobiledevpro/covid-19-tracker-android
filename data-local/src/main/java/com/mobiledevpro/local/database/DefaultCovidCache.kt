@@ -21,17 +21,20 @@ import io.reactivex.Observable
 class DefaultCovidCache(private val appContext: Context) : CovidCache {
 
     override fun getTotalDataObservable(): Observable<TotalEntity> =
-        AppDatabase.getInstance(appContext)
-            .totalDataDao
-            .getTotalDataObservable()
-            .map(CachedTotal::toEntity)
+            AppDatabase.getInstance(appContext)
+                    .totalDataDao
+                    .getTotalDataObservable()
+                    .map(CachedTotal::toEntity)
 
     override fun updateTotalData(totalEntity: TotalEntity) = Completable
-        .create { emitter ->
-            AppDatabase.getInstance(appContext)
-                .totalDataDao
-                .insert(totalEntity.toCached())
+            .create { emitter ->
+                val dao = AppDatabase.getInstance(appContext)
+                        .totalDataDao
 
-            emitter.onComplete()
-        }
+                dao.deleteAllTotalValues()
+
+                dao.insert(totalEntity.toCached())
+
+                emitter.onComplete()
+            }
 }

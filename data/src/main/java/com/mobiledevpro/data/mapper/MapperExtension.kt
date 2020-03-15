@@ -2,6 +2,7 @@ package com.mobiledevpro.data.mapper
 
 import com.mobiledevpro.data.model.TotalEntity
 import com.mobiledevpro.domain.model.Total
+import java.util.*
 
 /**
  * Extensions for mapping data level models to domain level models and vise versa
@@ -15,11 +16,13 @@ import com.mobiledevpro.domain.model.Total
 fun Total.toCacheEntity() = TotalEntity(
         confirmed = confirmed,
         deaths = deaths,
-        recovered = recovered
+        recovered = recovered,
+        lastUpdateTime = if (updateTime <= 0) Date().time else updateTime
 )
 
 fun TotalEntity.toDomain() = Total(
         confirmed = confirmed,
         deaths = deaths,
-        recovered = recovered
+        recovered = recovered,
+        updateTime = lastUpdateTime
 )
