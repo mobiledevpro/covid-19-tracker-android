@@ -1,16 +1,18 @@
 package com.mobiledevpro.app.ui.mainscreen.viewmodel
 
-import androidx.lifecycle.*
-import com.mobiledevpro.app.Event
-import com.mobiledevpro.app.ui.BaseViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
+import com.mobiledevpro.app.common.Event
+import com.mobiledevpro.app.common.BaseViewModel
+import com.mobiledevpro.app.utils.dateToSting
+import com.mobiledevpro.app.utils.toDecimalFormat
 import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
-import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * ViewModel for main fragment
@@ -21,9 +23,8 @@ import kotlin.collections.ArrayList
  *
  * #MobileDevPro
  */
-internal const val NAVIGATE_TO_COUNTRIES_LIST = 1
-
-class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(), LifecycleObserver {
+class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(),
+    LifecycleObserver {
 
     private val _isShowProgressTotalConfirmed = MutableLiveData<Boolean>()
     val isShowProgressTotalConfirmed: LiveData<Boolean> = _isShowProgressTotalConfirmed
@@ -49,8 +50,8 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     private val _countriesList = MutableLiveData<ArrayList<Country>>()
     val countriesList: LiveData<ArrayList<Country>> = _countriesList
 
-    private val _eventNavigateTo = MutableLiveData<Event<Int>>()
-    val eventNavigateTo: LiveData<Event<Int>> = _eventNavigateTo
+    private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
+    val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
 
 
     init {
@@ -78,7 +79,8 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     }
 
     fun onClickViewByCountry() {
-        _eventNavigateTo.value = Event(NAVIGATE_TO_COUNTRIES_LIST)
+        _eventNavigateTo.value =
+            Event(Navigation.NAVIGATE_TO_COUNTRIES_LIST)
     }
 
     private fun getTotalData() {
@@ -88,39 +90,32 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
                 _isShowProgressTotalDeaths.value = true
                 _isShowProgressTotalRecovered.value = true
             }
-            .subscribeBy {
-                val formatter = DecimalFormat("#,###,###")
-                _totalConfirmed.value = formatter.format(it.confirmed)
-                _totalDeaths.value = formatter.format(it.deaths)
-                _totalRecovered.value = formatter.format(it.recovered)
-                _updateTime.value = "Updated on ${dateToString(it.updateTime)}"
+            .subscribeBy { total ->
+                total.apply {
+                    _totalConfirmed.value = confirmed.toDecimalFormat()
+                    _totalDeaths.value = deaths.toDecimalFormat()
+                    _totalRecovered.value = recovered.toDecimalFormat()
+                    _updateTime.value = "Updated on ${updateTime.dateToSting()}"
 
-                if (it.confirmed >= 0)
-                    _isShowProgressTotalConfirmed.value = false
-
-                if (it.deaths >= 0)
-                    _isShowProgressTotalDeaths.value = false
-
-                if (it.recovered >= 0)
-                    _isShowProgressTotalRecovered.value = false
+                    _isShowProgressTotalConfirmed.value = confirmed >= 0
+                    _isShowProgressTotalDeaths.value = deaths >= 0
+                    _isShowProgressTotalRecovered.value = recovered >= 0
+                }
             }
             .addTo(subscriptions)
     }
 
     private fun getCountiesList() {
         interactor.observeCountriesListData()
-            .subscribeBy {
-                _countriesList.value = ArrayList(it)
+            .map { ArrayList(it) }
+            .subscribeBy { countries ->
+                _countriesList.value = countries
             }
             .addTo(subscriptions)
     }
 
 
-    private fun dateToString(date: Long): String {
-        val dateFormat = SimpleDateFormat(" E, dd MMM yyyy HH:mm:ss z", Locale.getDefault())
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
-        return dateFormat.format(date)
+    enum class Navigation {
+        NAVIGATE_TO_COUNTRIES_LIST
     }
-
-
 }
