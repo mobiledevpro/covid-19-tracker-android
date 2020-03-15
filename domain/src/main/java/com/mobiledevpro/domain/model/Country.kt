@@ -9,12 +9,13 @@ package com.mobiledevpro.domain.model
  *
  */
 data class Country(
-    var id: Int = 0, //API:features.attributes.OBJECTID
-    var name: String = "", //API: features.attributes.Country_Region
-    var confirmed: Int = 0,  //API: features.attributes.Confirmed
-    var deaths: Int = 0,  //API: features.attributes.Deaths
-    var recovered: Int = 0,  //API: features.attributes.Recovered
-    var updateTime: Long = 0,  //API: features.attributes.Last_Update
-    var lat: Double = 0.0,  //API: features.attributes.Lat
-    var long: Double = 0.0  //API: features.attributes.Long_
+    val id: Int,
+    val country: String,
+    val updated: Long,
+    val latitude: Double,
+    val longitude: Double,
+    val confirmed: Int,
+    val deaths: Int,
+    val recovered: Int,
+    val active: Int
 )

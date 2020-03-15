@@ -10,4 +10,7 @@ internal interface CountryDataDao : BaseDao<CachedCounties> {
 
     @Query("SELECT * FROM counties")
     fun getCountiesDataObservable(): Observable<List<CachedCounties>>
+
+    @Query("DELETE FROM counties")
+    fun deleteAllCountriesValues()
 }

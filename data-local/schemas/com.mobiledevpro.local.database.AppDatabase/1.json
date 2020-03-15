@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "92cd76c32b45357366880f3270955abc",
+    "identityHash": "9befb3d61b0cda1b54cffc86175caacf",
     "entities": [
       {
         "tableName": "total",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "counties",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `country` TEXT NOT NULL, `updated` INTEGER NOT NULL, `latitude` INTEGER NOT NULL, `longitude` INTEGER NOT NULL, `confirmed` INTEGER NOT NULL, `deaths` INTEGER NOT NULL, `recovered` INTEGER NOT NULL, `active` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `country` TEXT NOT NULL, `updated` INTEGER NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `confirmed` INTEGER NOT NULL, `deaths` INTEGER NOT NULL, `recovered` INTEGER NOT NULL, `active` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -73,13 +73,13 @@
           {
             "fieldPath": "latitude",
             "columnName": "latitude",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "longitude",
             "columnName": "longitude",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -120,7 +120,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '92cd76c32b45357366880f3270955abc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9befb3d61b0cda1b54cffc86175caacf')"
     ]
   }
 }

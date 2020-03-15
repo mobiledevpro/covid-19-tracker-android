@@ -26,6 +26,10 @@ class DefaultTotalDataIRemote(
 
     override fun getCountries(): Single<List<CountryEntity>> = api
         .getCountries()
-        .map { it.countries.first().attribute }
-        .map { it.map(CountryResponse::toEntity) }
+        .map { it.countries }
+        .map {
+            it.map { countryResponse ->
+                countryResponse.attribute.toEntity()
+            }
+        }
 }

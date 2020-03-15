@@ -12,6 +12,6 @@ internal interface TotalDataDao : BaseDao<CachedTotal> {
     fun getTotalDataObservable(): Observable<CachedTotal>
 
     @Query("DELETE FROM total")
-    fun deleteAllTotalValues(): Int
+    fun deleteAllTotalValues()
 
 }

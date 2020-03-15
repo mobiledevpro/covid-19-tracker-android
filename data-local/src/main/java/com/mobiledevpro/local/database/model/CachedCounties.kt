@@ -13,9 +13,9 @@ data class CachedCounties(
 
     var updated: Long = 0,
 
-    var latitude: Long = 0,
+    var latitude: Double = 0.0,
 
-    var longitude: Long = 0,
+    var longitude: Double = 0.0,
 
     var confirmed: Int = 0,
 

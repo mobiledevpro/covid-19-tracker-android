@@ -55,16 +55,21 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
 
     init {
         getTotalData()
+        getCountiesList()
     }
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStartView() {
-        interactor.refreshTotalData()
-            .subscribeBy {
-                //do nothing
-            }
-            .addTo(subscriptions)
+        interactor.apply {
+            refreshTotalData()
+                .subscribeBy { /* do nothing */ }
+                .addTo(subscriptions)
+
+            refreshCountriesData()
+                .subscribeBy { /* do nothing */ }
+                .addTo(subscriptions)
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
@@ -100,16 +105,14 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
                     _isShowProgressTotalRecovered.value = false
             }
             .addTo(subscriptions)
+    }
 
-
-        //TODO: for debugging, the countries list
-        val testList = ArrayList<Country>()
-        var country = Country(1, "Country_test_1", 100, 10, 90)
-        testList.add(country)
-        country = Country(2, "Country_test_2", 50, 5, 45)
-        testList.add(country)
-
-        // _countriesList.value = testList
+    private fun getCountiesList() {
+        interactor.observeCountriesListData()
+            .subscribeBy {
+                _countriesList.value = ArrayList(it)
+            }
+            .addTo(subscriptions)
     }
 
 
