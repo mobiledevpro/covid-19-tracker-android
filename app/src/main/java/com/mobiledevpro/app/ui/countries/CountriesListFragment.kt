@@ -52,9 +52,14 @@ class CountriesListFragment : BaseFragment() {
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(requireActivity())
 
+        val dividerDrawable = requireActivity().getDrawable(R.drawable.list_item_divider);
+        val divider = DividerItemDecoration(context, layoutManager.orientation);
+        if (dividerDrawable != null)
+            divider.setDrawable(dividerDrawable)
+
         rv_countries_list?.layoutManager = layoutManager
         rv_countries_list?.setHasFixedSize(true)
         rv_countries_list?.adapter = CountriesListAdapter()
-        rv_countries_list.addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
+        rv_countries_list.addItemDecoration(divider)
     }
 }

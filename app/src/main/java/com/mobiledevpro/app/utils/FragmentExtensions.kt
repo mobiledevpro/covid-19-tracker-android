@@ -1,4 +1,4 @@
-package com.mobiledevpro.app.helper
+package com.mobiledevpro.app.utils
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController

@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.mobiledevpro.app.utils.FormatExtensionsKt" />
+
         <variable
             name="item"
             type="com.mobiledevpro.domain.model.Country" />
@@ -12,17 +14,55 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="8dp"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingBottom="8dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tv_country_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{item.country}"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{item.country}"
             tools:text="China" />
+
+
+        <TextView
+            android:id="@+id/tv_confirmed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{FormatExtensionsKt.toDecimalFormat(item.confirmed)}"
+            android:textColor="@color/colorTextPrimaryRed"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="80,000" />
+
+        <TextView
+            android:id="@+id/tv_recovered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.format(@string/label_recovered, FormatExtensionsKt.toDecimalFormat(item.recovered))}"
+            android:textColor="@color/colorTextPrimaryGreen"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_confirmed"
+            tools:text="Recovered 40,000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:text="@{String.format(@string/label_deaths, FormatExtensionsKt.toDecimalFormat(item.deaths))}"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_recovered"
+            app:layout_constraintTop_toBottomOf="@id/tv_confirmed"
+            tools:text="Deaths 1,000" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
