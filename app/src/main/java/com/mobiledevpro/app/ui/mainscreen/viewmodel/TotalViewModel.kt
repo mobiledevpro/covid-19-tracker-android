@@ -1,10 +1,6 @@
 package com.mobiledevpro.app.ui.mainscreen.viewmodel
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
@@ -97,12 +93,9 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
                     _totalRecovered.value = recovered.toDecimalFormat()
                     _updateTime.value = "Updated on ${updateTime.dateToSting()}"
 
-                    if (confirmed >= 0)
-                        _isShowProgressTotalConfirmed.value = false
-                    if (deaths >= 0)
-                        _isShowProgressTotalDeaths.value = false
-                    if (recovered >= 0)
-                        _isShowProgressTotalRecovered.value = false
+                    _isShowProgressTotalConfirmed.value = confirmed < 0
+                    _isShowProgressTotalDeaths.value = confirmed < 0
+                    _isShowProgressTotalRecovered.value = confirmed < 0
                 }
             }
             .addTo(subscriptions)
