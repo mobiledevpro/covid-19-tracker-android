@@ -8,7 +8,7 @@ import io.reactivex.Observable
 @Dao
 internal interface CountryDataDao : BaseDao<CachedCounties> {
 
-    @Query("SELECT * FROM counties")
+    @Query("SELECT * FROM counties ORDER BY confirmed DESC")
     fun getCountiesDataObservable(): Observable<List<CachedCounties>>
 
     @Query("DELETE FROM counties")
