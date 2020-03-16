@@ -51,8 +51,8 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
 
 
     init {
-        getTotalData()
-        getCountiesList()
+        observeTotalValues()
+        observeCountriesList()
     }
 
 
@@ -79,7 +79,7 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
             Event(Navigation.NAVIGATE_TO_COUNTRIES_LIST)
     }
 
-    private fun getTotalData() {
+    private fun observeTotalValues() {
         interactor.observeTotalData()
             .doOnSubscribe {
                 _isShowProgressTotalConfirmed.value = true
@@ -101,9 +101,8 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
             .addTo(subscriptions)
     }
 
-    private fun getCountiesList() {
+    private fun observeCountriesList() {
         interactor.observeCountriesListData()
-            .map { ArrayList(it) }
             .subscribeBy { countries ->
                 _countriesList.value = countries
             }

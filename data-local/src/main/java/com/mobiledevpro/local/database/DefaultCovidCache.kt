@@ -29,13 +29,13 @@ class DefaultCovidCache(private val appContext: Context) : CovidCache {
             .map(CachedTotal::toEntity)
 
     override fun updateTotalData(totalEntity: TotalEntity) = Completable
-            .create { emitter ->
-                val dao = AppDatabase.getInstance(appContext)
-                        .totalDataDao
+        .create { emitter ->
+            val dao = AppDatabase.getInstance(appContext)
+                .totalDataDao
 
-                dao.deleteAllTotalValues()
+            dao.deleteAllTotalValues()
 
-                dao.insert(totalEntity.toCached())
+            dao.insert(totalEntity.toCached())
 
             emitter.onComplete()
         }

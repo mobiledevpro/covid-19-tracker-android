@@ -32,7 +32,7 @@ class DefaultTotalDataInteractor(
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
 
-    override fun observeCountriesListData(): Observable<List<Country>> = totalDataRepository
+    override fun observeCountriesListData(): Observable<ArrayList<Country>> = totalDataRepository
         .getLocalCountriesObservable()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())

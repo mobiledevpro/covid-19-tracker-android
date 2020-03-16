@@ -51,9 +51,11 @@ class DefaultTotalDataRepository(
                 )
             })
 
-    override fun getLocalCountriesObservable(): Observable<List<Country>> = covidCache
+    override fun getLocalCountriesObservable(): Observable<ArrayList<Country>> = covidCache
         .getLocalCountriesObservable()
         .map { it.map(CountryEntity::toDomain) }
+        .flatMap { list -> Observable.just(ArrayList(list)) }
+        .onErrorReturn { ArrayList() }
 
     override fun getCountries(): Single<List<Country>> = covidRemote
         .getCountries()

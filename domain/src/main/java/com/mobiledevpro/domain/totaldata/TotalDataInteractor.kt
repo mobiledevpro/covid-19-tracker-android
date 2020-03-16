@@ -4,7 +4,6 @@ import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.Single
 
 /**
  * Interactor for total values screen
@@ -21,7 +20,7 @@ interface TotalDataInteractor {
 
     fun refreshTotalData(): Completable
 
-    fun observeCountriesListData(): Observable<List<Country>>
+    fun observeCountriesListData(): Observable<ArrayList<Country>>
 
     fun refreshCountriesData(): Completable
 }
