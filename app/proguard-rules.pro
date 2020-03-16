@@ -49,6 +49,8 @@
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
 }
+-dontwarn com.squareup.okhttp3.**
+-keep class com.squareup.okhttp3.** { *;}
 -dontwarn okio.**
 
 #keep gson
@@ -91,10 +93,4 @@
 }
 -keep class * extends androidx.lifecycle.AndroidViewModel {
     <init>(android.app.Application);
-}
--keep class * extends com.mobiledevpro.app.common.BaseViewModel {
-    <init>();
-}
--keep class  com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel {
-    <init>();
 }
