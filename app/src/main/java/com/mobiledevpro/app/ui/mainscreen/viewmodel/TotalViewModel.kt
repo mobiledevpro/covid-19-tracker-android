@@ -1,13 +1,14 @@
 package com.mobiledevpro.app.ui.mainscreen.viewmodel
 
 import androidx.lifecycle.*
-import com.mobiledevpro.app.ui.BaseViewModel
+import com.mobiledevpro.app.common.BaseViewModel
+import com.mobiledevpro.app.common.Event
+import com.mobiledevpro.app.utils.dateToSting
+import com.mobiledevpro.app.utils.toDecimalFormat
+import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
-import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * ViewModel for main fragment
@@ -18,7 +19,8 @@ import java.util.*
  *
  * #MobileDevPro
  */
-class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(), LifecycleObserver {
+class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(),
+    LifecycleObserver {
 
     private val _isShowProgressTotalConfirmed = MutableLiveData<Boolean>()
     val isShowProgressTotalConfirmed: LiveData<Boolean> = _isShowProgressTotalConfirmed
@@ -41,59 +43,74 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     private val _updateTime = MutableLiveData<String>()
     val updateTime: LiveData<String> = _updateTime
 
+    private val _countriesList = MutableLiveData<ArrayList<Country>>()
+    val countriesList: LiveData<ArrayList<Country>> = _countriesList
+
+    private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
+    val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
+
 
     init {
-        interactor.refreshTotalData()
-                .subscribeBy {
-                    //do nothing
-                }
-                .addTo(subscriptions)
+        observeTotalValues()
+        observeCountriesList()
     }
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStartView() {
-        getTotalData()
+        interactor.apply {
+            refreshTotalData()
+                .subscribeBy { /* do nothing */ }
+                .addTo(subscriptions)
+
+            refreshCountriesData()
+                .subscribeBy { /* do nothing */ }
+                .addTo(subscriptions)
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStopView() {
-
+        //do something if needed
     }
 
-    private fun getTotalData() {
+    fun onClickViewByCountry() {
+        _eventNavigateTo.value =
+            Event(Navigation.NAVIGATE_TO_COUNTRIES_LIST)
+    }
+
+    private fun observeTotalValues() {
         interactor.observeTotalData()
-                .doOnSubscribe {
-                    _isShowProgressTotalConfirmed.value = true
-                    _isShowProgressTotalDeaths.value = true
-                    _isShowProgressTotalRecovered.value = true
+            .doOnSubscribe {
+                _isShowProgressTotalConfirmed.value = true
+                _isShowProgressTotalDeaths.value = true
+                _isShowProgressTotalRecovered.value = true
+            }
+            .subscribeBy { total ->
+                total.apply {
+                    _totalConfirmed.value = confirmed.toDecimalFormat()
+                    _totalDeaths.value = deaths.toDecimalFormat()
+                    _totalRecovered.value = recovered.toDecimalFormat()
+                    _updateTime.value = updateTime.dateToSting()
+
+                    _isShowProgressTotalConfirmed.value = confirmed < 0
+                    _isShowProgressTotalDeaths.value = confirmed < 0
+                    _isShowProgressTotalRecovered.value = confirmed < 0
                 }
-                .subscribeBy {
-                    val formatter = DecimalFormat("#,###,###")
-                    _totalConfirmed.value = formatter.format(it.confirmed)
-                    _totalDeaths.value = formatter.format(it.deaths)
-                    _totalRecovered.value = formatter.format(it.recovered)
-                    _updateTime.value = "Updated on ${dateToString(it.updateTime)}"
+            }
+            .addTo(subscriptions)
+    }
 
-                    if (it.confirmed >= 0)
-                        _isShowProgressTotalConfirmed.value = false
-
-                    if (it.deaths >= 0)
-                        _isShowProgressTotalDeaths.value = false
-
-                    if (it.recovered >= 0)
-                        _isShowProgressTotalRecovered.value = false
-                }
-                .addTo(subscriptions)
+    private fun observeCountriesList() {
+        interactor.observeCountriesListData()
+            .subscribeBy { countries ->
+                _countriesList.value = countries
+            }
+            .addTo(subscriptions)
     }
 
 
-    private fun dateToString(date: Long): String {
-        val dateFormat = SimpleDateFormat(" E, dd MMM yyyy HH:mm:ss z", Locale.getDefault())
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
-        val today: Date = Calendar.getInstance().getTime()
-        return dateFormat.format(today);
+    enum class Navigation {
+        NAVIGATE_TO_COUNTRIES_LIST
     }
-
-
 }

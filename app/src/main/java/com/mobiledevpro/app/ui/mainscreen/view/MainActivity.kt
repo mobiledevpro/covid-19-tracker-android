@@ -13,7 +13,7 @@ class MainActivity : BaseActivity() {
 
     override fun getLayoutResId() = R.layout.activity_main
 
-    override fun isAdjustFontScaleToNormal() = true
+    override fun isAdjustFontScaleToNormal() = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //set navigation bar translucent
@@ -41,10 +41,10 @@ class MainActivity : BaseActivity() {
         //Use Window Insets to set top and bottom paddings to our activity
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             v.updatePadding(
-                    left = insets.systemWindowInsetLeft,
-                    top = insets.systemWindowInsetTop,
-                    right = insets.systemWindowInsetRight,
-                    bottom = insets.systemWindowInsetBottom
+                left = insets.systemWindowInsetLeft,
+                top = insets.systemWindowInsetTop,
+                right = insets.systemWindowInsetRight,
+                bottom = insets.systemWindowInsetBottom
             )
             insets
         }

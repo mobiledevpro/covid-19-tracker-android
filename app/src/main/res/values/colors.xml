@@ -13,11 +13,13 @@
     <color name="colorTextPrimaryRed">#E60000</color>
     <color name="colorTextPrimaryGreen">#7bb974</color>
 
-    <color name="colorDivider">#999999</color>
+    <color name="colorDivider">#33999999</color>
     <color name="colorWindowBackground">#222327</color>
     <color name="colorStateDisabled">#999999</color>
 
     <color name="colorButtonActive">@color/colorAccent</color>
     <color name="colorButtonPressed">@color/colorAccent</color>
     <color name="colorButtonDisabled">@color/colorStateDisabled</color>
+
+    <color name="colorProgressBar">#999999</color>
 </resources>

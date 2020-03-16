@@ -7,15 +7,15 @@ data class CountriesResponse(
 )
 
 data class CountriesAttributeResponse(
-    @SerializedName("attributes") val attribute: List<CountryResponse>
+    @SerializedName("attributes") val attribute: CountryResponse
 )
 
 data class CountryResponse(
     @SerializedName("OBJECTID") val id: Int,
     @SerializedName("Country_Region") val country: String,
     @SerializedName("Last_Update") val updated: Long,
-    @SerializedName("Lat") val latitude: Long,
-    @SerializedName("Long_") val longitude: Long,
+    @SerializedName("Lat") val latitude: Double,
+    @SerializedName("Long_") val longitude: Double,
     @SerializedName("Confirmed") val confirmed: Int,
     @SerializedName("Deaths") val deaths: Int,
     @SerializedName("Recovered") val recovered: Int,

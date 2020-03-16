@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">COVID-19 Live Tracker </string>
 
-    <string name="app_name_main">Tracking COVID-19 outbreak</string>
+    <string name="app_name_main">COVID-19 outbreak</string>
+    <string name="app_name_countries_list">Confirmed per Country</string>
     <string name="app_version">v%s</string>
     <string name="appbar_title_edit_user">Edit User</string>
     <string name="appbar_title_edit_view">User</string>
@@ -13,5 +14,8 @@
     <string name="label_total_confirmed">Total Confirmed</string>
     <string name="label_total_deaths">Total Deaths</string>
     <string name="label_total_recovered">Total Recovered</string>
-    <string name="label_last_update_date">Updated on Mar 14, 2020 | 0:00 AM</string>
+    <string name="label_last_update_date">Updated on %s</string>
+    <string name="label_view_by_country">View by country</string>
+    <string name="label_recovered">Recovered: %s</string>
+    <string name="label_deaths">Deaths: %s</string>
 </resources>

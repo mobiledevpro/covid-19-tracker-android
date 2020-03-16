@@ -9,7 +9,7 @@
         android:shape="ring"
         android:thickness="2dp"
         android:useLevel="true">
-        <solid android:color="@color/colorDivider" />
+        <solid android:color="@color/colorProgressBar" />
         <size
             android:width="32dp"
             android:height="32dp" />
