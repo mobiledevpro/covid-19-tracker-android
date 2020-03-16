@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9befb3d61b0cda1b54cffc86175caacf",
+    "identityHash": "23b119626e6b490a655e581f235f504a",
     "entities": [
       {
         "tableName": "total",
@@ -113,14 +113,23 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_counties_id",
+            "unique": false,
+            "columnNames": [
+              "id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_counties_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9befb3d61b0cda1b54cffc86175caacf')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '23b119626e6b490a655e581f235f504a')"
     ]
   }
 }

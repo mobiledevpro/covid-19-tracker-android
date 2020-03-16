@@ -1,12 +1,15 @@
 package com.mobiledevpro.local.database.model
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.Index
 
-@Entity(tableName = "counties")
+@Entity(
+    tableName = "counties",
+    indices = [Index(value = ["id"])],
+    primaryKeys = ["id"]
+)
 data class CachedCounties(
 
-    @PrimaryKey
     var id: Int = 0,
 
     var country: String = "",

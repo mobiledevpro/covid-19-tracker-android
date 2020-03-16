@@ -1,10 +1,8 @@
 package com.mobiledevpro.remote.service.api
 
-import com.mobiledevpro.remote.model.ApiGetTotalDataNetwork
 import com.mobiledevpro.remote.model.response.CountriesResponse
 import com.mobiledevpro.remote.model.response.TotalResponse
 import io.reactivex.Single
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -84,10 +82,10 @@ interface RestApiClient {
             encoded = true
         ) spatialRel: String = "esriSpatialRelIntersects",
         @Query(value = "outFields", encoded = true) outFields: String = "*",
-        @Query(value = "orderByFields", encoded = true) orderByFields: String = "Confirmed%20desc",
+        @Query(value = "orderByFields", encoded = true) orderByFields: String = "Confirmed desc",
         @Query(value = "outSR", encoded = true) outSR: Int = 102100,
         @Query(value = "resultOffset", encoded = true) resultOffset: Int = 0,
-        @Query(value = "resultRecordCount", encoded = true) resultRecordCount: Int = 100,
+        @Query(value = "resultRecordCount", encoded = true) resultRecordCount: Int = 1000,
         @Query(value = "cacheHint", encoded = true) cacheHint: Boolean = true
     ): Single<CountriesResponse>
 
