@@ -29,8 +29,5 @@ android {
     productFlavors {
         production {
         }
-
-        demo {
-        }
     }
 }

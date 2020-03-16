@@ -26,13 +26,6 @@
     #public static int e(...);
 }
 
-# Keep EventBus
--keepattributes *Annotation*
--keepclassmembers class ** {
-    @org.greenrobot.eventbus.Subscribe <methods>;
-}
--keep enum org.greenrobot.eventbus.ThreadMode { *; }
-
 #Crashlytics
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
@@ -85,4 +78,23 @@
 -keepclassmembers class android.support.graphics.drawable.VectorDrawableCompat$* {
    void set*(***);
    *** get*();
+}
+
+#keep Databinding
+-dontwarn android.databinding.**
+-keep class android.databinding.** { *; }
+
+#Keep ViewModels
+
+-keep class * extends androidx.lifecycle.ViewModel {
+    <init>();
+}
+-keep class * extends androidx.lifecycle.AndroidViewModel {
+    <init>(android.app.Application);
+}
+-keep class * extends com.mobiledevpro.app.common.BaseViewModel {
+    <init>();
+}
+-keep class  com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel {
+    <init>();
 }

@@ -1,12 +1,6 @@
 package com.mobiledevpro.app.common
 
 import android.app.Application
-import com.facebook.flipper.android.AndroidFlipperClient
-import com.facebook.flipper.plugins.inspector.DescriptorMapping
-import com.facebook.flipper.plugins.inspector.InspectorFlipperPlugin
-import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
-import com.facebook.soloader.SoLoader
-import com.facebook.stetho.Stetho
 import com.mobiledevpro.app.BuildConfig
 import com.mobiledevpro.app.di.*
 import org.koin.android.ext.koin.androidContext
@@ -30,9 +24,15 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         initKoin()
-        initStetho()
-        initFlipper()
         initTimber()
+
+        /*
+        if (BuildConfig.DEBUG) {
+            initStetho()
+            initFlipper()
+        }
+
+         */
     }
 
     private fun initKoin() {
@@ -50,19 +50,23 @@ class App : Application() {
         dataRemoteModule
     )
 
+    /*
     private fun initStetho() {
         Stetho.initializeWithDefaults(this)
     }
 
+
+     */
+    /*
     private fun initFlipper() {
-        if (BuildConfig.DEBUG) {
-            SoLoader.init(this, false)
-            val client = AndroidFlipperClient.getInstance(this)
-            client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))
-            client.addPlugin(flipperNetworkPlugin)
-            client.start()
-        }
+        SoLoader.init(this, false)
+        val client = AndroidFlipperClient.getInstance(this)
+        client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))
+        client.addPlugin(flipperNetworkPlugin)
+        client.start()
     }
+
+     */
 
     private fun initTimber() {
         if (BuildConfig.DEBUG) {
@@ -72,7 +76,10 @@ class App : Application() {
         }
     }
 
+    /*
     companion object {
-        val flipperNetworkPlugin = NetworkFlipperPlugin()
+        val flipperNetworkPlugin = if (BuildConfig.DEBUG) Т() else null
     }
+
+     */
 }
