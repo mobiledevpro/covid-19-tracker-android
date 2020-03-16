@@ -91,17 +91,19 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
                 _isShowProgressTotalRecovered.value = true
             }
             .subscribeBy { total ->
-                _totalConfirmed.value = total.confirmed.toDecimalFormat()
-                _totalDeaths.value = total.deaths.toDecimalFormat()
-                _totalRecovered.value = total.recovered.toDecimalFormat()
-                _updateTime.value = "Updated on ${total.updateTime.dateToSting()}"
+                total.apply {
+                    _totalConfirmed.value = confirmed.toDecimalFormat()
+                    _totalDeaths.value = deaths.toDecimalFormat()
+                    _totalRecovered.value = recovered.toDecimalFormat()
+                    _updateTime.value = "Updated on ${updateTime.dateToSting()}"
 
-                if (total.confirmed >= 0)
-                    _isShowProgressTotalConfirmed.value = false
-                if (total.deaths >= 0)
-                    _isShowProgressTotalDeaths.value = false
-                if (total.recovered >= 0)
-                    _isShowProgressTotalRecovered.value = false
+                    if (confirmed >= 0)
+                        _isShowProgressTotalConfirmed.value = false
+                    if (deaths >= 0)
+                        _isShowProgressTotalDeaths.value = false
+                    if (recovered >= 0)
+                        _isShowProgressTotalRecovered.value = false
+                }
             }
             .addTo(subscriptions)
     }
