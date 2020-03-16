@@ -9,13 +9,13 @@ package com.mobiledevpro.domain.model
  *
  */
 data class Country(
-    val id: Int,
-    val country: String,
-    val updated: Long,
-    val latitude: Double,
-    val longitude: Double,
-    val confirmed: Int,
-    val deaths: Int,
-    val recovered: Int,
-    val active: Int
+    val id: Int = 0,
+    val country: String = "",
+    val updated: Long = 0,
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
+    val confirmed: Int = 0,
+    val deaths: Int = 0,
+    val recovered: Int = 0,
+    val active: Int = 0
 )

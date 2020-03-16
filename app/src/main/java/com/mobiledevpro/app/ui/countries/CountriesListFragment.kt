@@ -2,11 +2,14 @@ package com.mobiledevpro.app.ui.countries
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentCountriesListBinding
+import com.mobiledevpro.app.ui.countries.adapter.CountriesListAdapter
 import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
 import com.mobiledevpro.commons.fragment.BaseFragment
+import kotlinx.android.synthetic.main.fragment_countries_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -34,23 +37,24 @@ class CountriesListFragment : BaseFragment() {
             }
         binding.lifecycleOwner = viewLifecycleOwner
 
-        initRecyclerView()
-
-        observeEvents(view)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
     }
 
     override fun initPresenters() {
     }
 
-    private fun observeEvents(view: View) {
-        viewModel.countriesList.observe(viewLifecycleOwner, Observer {
-            // todo update recycler view adapter here
-        })
-
-    }
 
     private fun initRecyclerView() {
-//todo init recycler view adapter here
+        val layoutManager = LinearLayoutManager(requireActivity())
+
+        rv_countries_list?.layoutManager = layoutManager
+        rv_countries_list?.setHasFixedSize(true)
+        rv_countries_list?.adapter = CountriesListAdapter()
+        rv_countries_list.addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
     }
 }

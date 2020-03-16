@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="android.view.View" />
 
         <variable
             name="totalViewModel"
@@ -17,28 +16,11 @@
         tools:context="com.mobiledevpro.app.ui.mainscreen.view.MainActivity"
         tools:showIn="@layout/activity_main">
 
-        <!-- TODO: RecyclerView here -->
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_countries_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!--
-        <TextView
-            android:id="@+id/tv_main_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:gravity="center"
-            android:text="@string/message_main"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        -->
-
+            android:layout_height="match_parent"
+            app:items="@{totalViewModel.countriesList}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
