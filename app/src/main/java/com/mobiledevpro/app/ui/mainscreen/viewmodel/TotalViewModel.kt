@@ -91,7 +91,7 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
                     _totalConfirmed.value = confirmed.toDecimalFormat()
                     _totalDeaths.value = deaths.toDecimalFormat()
                     _totalRecovered.value = recovered.toDecimalFormat()
-                    _updateTime.value = "Updated on ${updateTime.dateToSting()}"
+                    _updateTime.value = updateTime.dateToSting()
 
                     _isShowProgressTotalConfirmed.value = confirmed < 0
                     _isShowProgressTotalDeaths.value = confirmed < 0

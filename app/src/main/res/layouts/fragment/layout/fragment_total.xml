@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:gravity="center"
-            android:text="@{totalViewModel.updateTime}"
+            android:text="@{String.format(@string/label_last_update_date, totalViewModel.updateTime)}"
             android:textColor="@color/colorTextSecondary"
             android:textSize="14sp"
             android:visibility="@{totalViewModel.isShowProgressTotalConfirmed ? View.INVISIBLE : View.VISIBLE}"
