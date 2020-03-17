@@ -1,7 +1,9 @@
 package com.mobiledevpro.app.ui.countries
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobiledevpro.app.R
@@ -48,6 +50,20 @@ class CountriesListFragment : BaseFragment() {
     override fun initPresenters() {
     }
 
+    override fun getOptionsMenuResId(): Int = R.menu.menu_search
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = true
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                viewModel.getCountiesByQuery(query ?: "")
+                return true
+            }
+        })
+    }
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(requireActivity())

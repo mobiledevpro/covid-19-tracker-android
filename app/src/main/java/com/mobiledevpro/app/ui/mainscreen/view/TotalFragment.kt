@@ -36,9 +36,9 @@ class TotalFragment : BaseFragment() {
     override fun populateView(view: View, savedInstanceState: Bundle?): View {
         //databinding
         val binding = FragmentTotalBinding.bind(view)
-                .apply {
-                    totalViewModel = viewModel
-                }
+            .apply {
+                totalViewModel = viewModel
+            }
         binding.lifecycleOwner = viewLifecycleOwner
 
         observeEvents()

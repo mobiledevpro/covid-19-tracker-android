@@ -5,9 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.ItemCountryBinding
+import com.mobiledevpro.app.utils.diff.CountiesDiffUtil
 import com.mobiledevpro.domain.model.Country
 
 /**
@@ -33,10 +35,12 @@ class CountriesListAdapter : RecyclerView.Adapter<CountriesListAdapter.ViewHolde
 
     override fun getItemCount() = countriesList.size
 
-    fun populateList(list: ArrayList<Country>) {
+    fun populateList(update: ArrayList<Country>) {
+        val callback = CountiesDiffUtil(countriesList, update)
+        val result = DiffUtil.calculateDiff(callback)
         countriesList.clear()
-        countriesList.addAll(list)
-        notifyDataSetChanged()
+        countriesList.addAll(update)
+        result.dispatchUpdatesTo(this)
     }
 
     //it uses to bind items via xml layout (see attribute app:items in <RecyclerView/>)

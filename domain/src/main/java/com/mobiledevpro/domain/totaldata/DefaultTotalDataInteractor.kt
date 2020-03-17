@@ -6,6 +6,8 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Interactor for UserEdit screen
@@ -32,10 +34,18 @@ class DefaultTotalDataInteractor(
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
 
-    override fun observeCountriesListData(): Observable<ArrayList<Country>> = totalDataRepository
-        .getLocalCountriesObservable()
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeOn(Schedulers.io())
+    override fun observeCountriesListData(query: String): Observable<ArrayList<Country>> =
+        totalDataRepository
+            .getLocalCountriesObservable()
+            .map {
+                it.filter { county ->
+                    county.country.toLowerCase(Locale.getDefault())
+                        .contains(query.toLowerCase(Locale.getDefault()))
+                }
+            }
+            .map { ArrayList(it) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
 
     override fun refreshCountriesData(): Completable = totalDataRepository
         .getCountries()

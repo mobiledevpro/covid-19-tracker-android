@@ -1,14 +1,21 @@
 package com.mobiledevpro.app.ui.mainscreen.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
 import com.mobiledevpro.app.utils.toDecimalFormat
 import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
+import timber.log.Timber
 
 /**
  * ViewModel for main fragment
@@ -21,6 +28,8 @@ import io.reactivex.rxkotlin.subscribeBy
  */
 class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(),
     LifecycleObserver {
+
+    private val localSubscriptions = CompositeDisposable()
 
     private val _isShowProgressTotalConfirmed = MutableLiveData<Boolean>()
     val isShowProgressTotalConfirmed: LiveData<Boolean> = _isShowProgressTotalConfirmed
@@ -48,7 +57,6 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
 
     private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
     val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
-
 
     init {
         observeTotalValues()
@@ -79,6 +87,11 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
             Event(Navigation.NAVIGATE_TO_COUNTRIES_LIST)
     }
 
+    fun getCountiesByQuery(query: String) {
+        localSubscriptions.clear()
+        observeCountriesList(query)
+    }
+
     private fun observeTotalValues() {
         interactor.observeTotalData()
             .doOnSubscribe {
@@ -101,14 +114,18 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
             .addTo(subscriptions)
     }
 
-    private fun observeCountriesList() {
-        interactor.observeCountriesListData()
+    private fun observeCountriesList(query: String = "") {
+        interactor.observeCountriesListData(query)
             .subscribeBy { countries ->
                 _countriesList.value = countries
             }
-            .addTo(subscriptions)
+            .addTo(localSubscriptions)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        localSubscriptions.clear()
+    }
 
     enum class Navigation {
         NAVIGATE_TO_COUNTRIES_LIST

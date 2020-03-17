@@ -20,7 +20,7 @@ interface TotalDataInteractor {
 
     fun refreshTotalData(): Completable
 
-    fun observeCountriesListData(): Observable<ArrayList<Country>>
+    fun observeCountriesListData(query: String): Observable<ArrayList<Country>>
 
     fun refreshCountriesData(): Completable
 }
