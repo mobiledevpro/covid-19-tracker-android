@@ -4,8 +4,6 @@
     <string name="app_name_main">COVID-19 outbreak</string>
     <string name="app_name_countries_list">Confirmed per Country</string>
     <string name="app_version">v%s</string>
-    <string name="appbar_title_edit_user">Edit User</string>
-    <string name="appbar_title_edit_view">User</string>
 
     <string name="message_splash">Global Data \non the COVID-19 (Corona Virus) outbreak</string>
     <string name="message_dont_panic">Please, don\'t panic. Everything will be fine.</string>
