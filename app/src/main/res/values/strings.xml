@@ -18,4 +18,6 @@
     <string name="label_view_by_country">View by country</string>
     <string name="label_recovered">Recovered: %s</string>
     <string name="label_deaths">Deaths: %s</string>
+
+    <string name="menu_search">Search</string>
 </resources>
