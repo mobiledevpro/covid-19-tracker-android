@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">COVID-19 Live Tracker</string>
+
+    <string name="app_name_main">COVID-19 поширення</string>
+    <string name="app_name_countries_list">Зараження по країнам</string>
+    <string name="app_version">v%s</string>
+
+    <string name="message_splash">Глобальні дані \nпо поширенню COVID-19 (Corona Virus)</string>
+    <string name="message_dont_panic">Будь ласка, не панікуйте. Усе буде добре.</string>
+    <string name="message_main">Цей трекер відображає статус поширення Корона Вірус майже в реальному часі, з джерел Університету Джона Хопкінса (JNU).</string>
+
+    <string name="label_total_confirmed">Усього Заражених</string>
+    <string name="label_total_deaths">Усього Смертей</string>
+    <string name="label_total_recovered">Усього Вилікувано</string>
+    <string name="label_last_update_date">Оновлено на %s</string>
+    <string name="label_view_by_country">Дивитися по країнам</string>
+    <string name="label_recovered">Вилікувано: %s</string>
+    <string name="label_deaths">Смертей: %s</string>
+
+    <string name="menu_search">Пошук</string>
+    <string name="search_country_hint">Введіть країну (EN)</string>
+</resources>
