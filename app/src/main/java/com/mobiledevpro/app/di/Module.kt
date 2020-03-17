@@ -1,6 +1,6 @@
 package com.mobiledevpro.app.di
 
-import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
+import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
 import com.mobiledevpro.data.repository.userdata.CovidCache
 import com.mobiledevpro.data.repository.userdata.CovidRemote
 import com.mobiledevpro.data.repository.userdata.DefaultTotalDataRepository

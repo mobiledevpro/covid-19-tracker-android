@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         tools:replace="android:allowBackup">
         <activity
-            android:name="com.mobiledevpro.app.ui.splash.SplashActivity"
+            android:name="com.mobiledevpro.app.ui.common.SplashActivity"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mobiledevpro.app.ui.mainscreen.view.MainActivity"
+            android:name="com.mobiledevpro.app.ui.common.MainActivity"
             android:configChanges="keyboard|screenSize|screenLayout|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

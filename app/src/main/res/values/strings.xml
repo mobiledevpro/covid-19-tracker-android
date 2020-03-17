@@ -20,4 +20,5 @@
     <string name="label_deaths">Deaths: %s</string>
 
     <string name="menu_search">Search</string>
+    <string name="search_country_hint">Enter country name</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.mobiledevpro.app.ui.splash
+package com.mobiledevpro.app.ui.common
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import com.mobiledevpro.app.R
-import com.mobiledevpro.app.ui.mainscreen.view.MainActivity
 import java.lang.ref.WeakReference
 
 
@@ -28,7 +27,10 @@ class SplashActivity : AppCompatActivity() {
 
         //start login or main screen (depends on the app logic)
         mStartNextActivityHandler.postDelayed(
-            SplashRunnable(this, Navigation.START_MAIN_SCREEN),
+            SplashRunnable(
+                this,
+                Navigation.START_MAIN_SCREEN
+            ),
             SPLASH_DISPLAY_TIME
         )
 

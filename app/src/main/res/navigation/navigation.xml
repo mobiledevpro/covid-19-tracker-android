@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/totalValuesFragment"
-        android:name="com.mobiledevpro.app.ui.mainscreen.view.TotalFragment"
+        android:name="com.mobiledevpro.app.ui.total.TotalFragment"
         android:label="fragment_total_values">
         <action
             android:id="@+id/actionShowCountriesList"
