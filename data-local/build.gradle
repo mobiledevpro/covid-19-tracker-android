@@ -9,15 +9,9 @@ android.defaultConfig.javaCompileOptions {
     }
 }
 
-android.productFlavors{
-    productFlavors {
-        production {
-            buildConfigField "int", "RoomDatabaseVersion", "1"
-        }
-
-        demo {
-            buildConfigField "int", "RoomDatabaseVersion", "1"
-        }
+android.productFlavors {
+    production {
+        buildConfigField "int", "RoomDatabaseVersion", "1"
     }
 }
 

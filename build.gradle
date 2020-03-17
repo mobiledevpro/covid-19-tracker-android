@@ -62,8 +62,8 @@ ext {
     koinVersion = '2.1.1'
     timberVersion = '4.7.1'
     stethoVersion = '1.5.0'
-    flipperVersion = '0.8.1'
-    soloaderVersion = "0.6.0+"
+    flipperVersion = '0.33.1'
+    soloaderVersion = "0.8.2"
 
     deps = [
             "multidex"                : "androidx.multidex:multidex:$multidexVersion",
@@ -113,9 +113,10 @@ ext {
 
             //Logs
             "timber"                  : "com.jakewharton.timber:timber:$timberVersion",
-            "stetho"                  :"com.facebook.stetho:stetho:$stethoVersion",
-            "flipper"                 :"com.facebook.flipper:flipper:$flipperVersion",
-            "stethoNetworkHelper"     :"com.facebook.stetho:stetho-okhttp3:$stethoVersion",
-            "soloader"                :"com.facebook.soloader:soloader:$soloaderVersion"
+            "stetho"                  : "com.facebook.stetho:stetho:$stethoVersion",
+            "flipper"                 : "com.facebook.flipper:flipper:$flipperVersion",
+            "flipperNoop"             : "com.facebook.flipper:flipper-noop:$flipperVersion",
+            "stethoNetworkHelper"     : "com.facebook.stetho:stetho-okhttp3:$stethoVersion",
+            "soloader"                : "com.facebook.soloader:soloader:$soloaderVersion"
     ]
 }

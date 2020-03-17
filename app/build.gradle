@@ -23,10 +23,10 @@ android {
     signingConfigs {
         //uses for CI
         config {
-            keyAlias 'here alias value'
-            keyPassword System.getenv("SOME_APP_KEYPWD")
-            storeFile file('here key file name')
-            storePassword System.getenv("SOME_APP_KSTOREPWD")
+            keyAlias 'app-key'
+            keyPassword System.getenv("COVID19_KEYPWD")
+            storeFile file('covid19-live-tracker.jks')
+            storePassword System.getenv("COVID19_KSTOREPWD")
         }
     }
 
@@ -49,7 +49,9 @@ android {
         }
         release {
             debuggable false
-            minifyEnabled true
+            minifyEnabled false
+            shrinkResources false
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -155,11 +157,13 @@ dependencies {
     kapt deps.glideCompiler
 
     //Logs
-    implementation(deps.timber)
-    implementation(deps.stetho)
-    implementation(deps.flipper)
-    implementation(deps.stethoNetworkHelper)
-    implementation(deps.soloader)
+    implementation deps.timber
+   // debugImplementation deps.stetho
+  //  debugImplementation deps.flipper
+ //   debugImplementation deps.stethoNetworkHelper
+   // debugImplementation deps.soloader
+
+   // releaseImplementation deps.flipperNoop
     //
 
     implementation project(":domain")
