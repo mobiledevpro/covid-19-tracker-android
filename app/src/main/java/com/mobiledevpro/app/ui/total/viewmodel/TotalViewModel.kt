@@ -1,4 +1,4 @@
-package com.mobiledevpro.app.ui.mainscreen.viewmodel
+package com.mobiledevpro.app.ui.total.viewmodel
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -12,10 +12,8 @@ import com.mobiledevpro.app.utils.toDecimalFormat
 import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
-import timber.log.Timber
 
 /**
  * ViewModel for main fragment

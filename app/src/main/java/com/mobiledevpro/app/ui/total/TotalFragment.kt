@@ -1,12 +1,12 @@
-package com.mobiledevpro.app.ui.mainscreen.view
+package com.mobiledevpro.app.ui.total
 
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentTotalBinding
-import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
-import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel.Navigation
+import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
+import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel.*
 import com.mobiledevpro.app.utils.showCountiesList
 import com.mobiledevpro.commons.fragment.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel

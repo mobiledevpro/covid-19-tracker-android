@@ -1,4 +1,4 @@
-package com.mobiledevpro.app.ui.mainscreen.view
+package com.mobiledevpro.app.ui.common
 
 import android.os.Bundle
 import android.view.View

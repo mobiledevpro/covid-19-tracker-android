@@ -1,6 +1,7 @@
 package com.mobiledevpro.app.ui.countries
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.SearchView
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentCountriesListBinding
 import com.mobiledevpro.app.ui.countries.adapter.CountriesListAdapter
-import com.mobiledevpro.app.ui.mainscreen.viewmodel.TotalViewModel
+import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
 import com.mobiledevpro.commons.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_countries_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -54,15 +55,18 @@ class CountriesListFragment : BaseFragment() {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.apply {
+            queryHint = getString(R.string.search_country_hint)
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = true
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean = true
 
-            override fun onQueryTextChange(query: String?): Boolean {
-                viewModel.getCountiesByQuery(query ?: "")
-                return true
-            }
-        })
+                override fun onQueryTextChange(query: String?): Boolean {
+                    viewModel.getCountiesByQuery(query ?: "")
+                    return true
+                }
+            })
+        }
     }
 
     private fun initRecyclerView() {
