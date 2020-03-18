@@ -5,7 +5,10 @@ import androidx.room.Index
 
 @Entity(
     tableName = "counties",
-    indices = [Index(value = ["id"])],
+    indices = [
+        Index(value = ["id"]),
+        Index(value = ["country"])
+    ],
     primaryKeys = ["id"]
 )
 data class CachedCounties(

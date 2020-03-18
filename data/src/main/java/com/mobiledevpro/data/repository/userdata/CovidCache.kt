@@ -12,7 +12,7 @@ interface CovidCache {
 
     fun updateTotalData(totalEntity: TotalEntity): Completable
 
-    fun getLocalCountriesObservable(): Observable<List<CountryEntity>>
+    fun getLocalCountriesObservable(query: String): Observable<List<CountryEntity>>
 
     fun updateCountries(countriesEntity: List<CountryEntity>): Completable
 }

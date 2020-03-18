@@ -40,10 +40,10 @@ class DefaultCovidCache(private val appContext: Context) : CovidCache {
             emitter.onComplete()
         }
 
-    override fun getLocalCountriesObservable(): Observable<List<CountryEntity>> =
+    override fun getLocalCountriesObservable(query: String): Observable<List<CountryEntity>> =
         AppDatabase.getInstance(appContext)
             .countiesDataDao
-            .getCountiesDataObservable()
+            .getCountiesDataObservable(query)
             .map { it.map(CachedCounties::toEntity) }
 
     override fun updateCountries(countriesEntity: List<CountryEntity>) = Completable

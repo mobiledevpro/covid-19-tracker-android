@@ -29,6 +29,8 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
 
     private val localSubscriptions = CompositeDisposable()
 
+    private var query: String = ""
+
     private val _isShowProgressTotalConfirmed = MutableLiveData<Boolean>()
     val isShowProgressTotalConfirmed: LiveData<Boolean> = _isShowProgressTotalConfirmed
 
@@ -85,9 +87,11 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
             Event(Navigation.NAVIGATE_TO_COUNTRIES_LIST)
     }
 
+    fun getQuery() = query
+
     fun getCountiesByQuery(query: String) {
-        localSubscriptions.clear()
-        observeCountriesList(query)
+        this.query = query
+        observeCountriesList()
     }
 
     private fun observeTotalValues() {
@@ -112,7 +116,9 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
             .addTo(subscriptions)
     }
 
-    private fun observeCountriesList(query: String = "") {
+    private fun observeCountriesList() {
+        localSubscriptions.clear()
+
         interactor.observeCountriesListData(query)
             .subscribeBy { countries ->
                 _countriesList.value = countries

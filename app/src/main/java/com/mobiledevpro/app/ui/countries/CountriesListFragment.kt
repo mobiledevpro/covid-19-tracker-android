@@ -1,7 +1,6 @@
 package com.mobiledevpro.app.ui.countries
 
 import android.os.Bundle
-import android.text.InputType
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.SearchView
@@ -56,7 +55,15 @@ class CountriesListFragment : BaseFragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
         searchView.apply {
+
             queryHint = getString(R.string.search_country_hint)
+
+            viewModel.getQuery().apply {
+                if (this.isNotEmpty()) {
+                    onActionViewExpanded()
+                    setQuery(this, true)
+                }
+            }
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean = true
