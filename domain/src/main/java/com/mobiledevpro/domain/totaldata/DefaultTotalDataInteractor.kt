@@ -36,14 +36,14 @@ class DefaultTotalDataInteractor(
 
     override fun observeCountriesListData(query: String): Observable<ArrayList<Country>> =
         totalDataRepository
-            .getLocalCountriesObservable()
-            .map {
-                it.filter { county ->
-                    county.country.toLowerCase(Locale.getDefault())
-                        .contains(query.toLowerCase(Locale.getDefault()))
-                }
-            }
-            .map { ArrayList(it) }
+            .getLocalCountriesObservable(query)
+//            .map {
+//                it.filter { county ->
+//                    county.country.toLowerCase(Locale.getDefault())
+//                        .contains(query.toLowerCase(Locale.getDefault()))
+//                }
+//            }
+//            .map { ArrayList(it) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
 
