@@ -166,6 +166,9 @@ dependencies {
    // releaseImplementation deps.flipperNoop
     //
 
+    //Beta testing
+    implementation deps.testfairy
+
     implementation project(":domain")
     implementation project(":data")
     implementation project(":data-local")

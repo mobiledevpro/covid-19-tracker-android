@@ -64,6 +64,7 @@ ext {
     stethoVersion = '1.5.0'
     flipperVersion = '0.33.1'
     soloaderVersion = "0.8.2"
+    testfairyVersion = '1.+@aar'
 
     deps = [
             "multidex"                : "androidx.multidex:multidex:$multidexVersion",
@@ -117,6 +118,9 @@ ext {
             "flipper"                 : "com.facebook.flipper:flipper:$flipperVersion",
             "flipperNoop"             : "com.facebook.flipper:flipper-noop:$flipperVersion",
             "stethoNetworkHelper"     : "com.facebook.stetho:stetho-okhttp3:$stethoVersion",
-            "soloader"                : "com.facebook.soloader:soloader:$soloaderVersion"
+            "soloader"                : "com.facebook.soloader:soloader:$soloaderVersion",
+
+            //Beta testing
+            "testfairy"               : "testfairy:testfairy-android-sdk:$testfairyVersion"
     ]
 }
