@@ -15,6 +15,7 @@ import com.mobiledevpro.remote.service.RemoteServiceFactory
 import com.mobiledevpro.remote.service.http.OkHttpFactory
 import com.mobiledevpro.remote.service.interceptor.ApiRequestInterceptor
 import com.mobiledevpro.remote.service.interceptor.ApiResponseInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -51,11 +52,11 @@ val dataRemoteModule = module {
     single {
         OkHttpFactory().buildOkHttpClient(
             listOf(
-                ApiResponseInterceptor(get()),
+                ApiResponseInterceptor(),
                 ApiRequestInterceptor()
-            ),
-            emptyList()
+            )
         )
     }
+    single { androidContext().resources }
 }
 

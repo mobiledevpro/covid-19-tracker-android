@@ -1,38 +1,39 @@
 package com.mobiledevpro.remote.service.interceptor
 
-import android.content.Context
+import com.mobiledevpro.data.model.AccessDeniedThrowableEntity
+import com.mobiledevpro.data.model.NetworkThrowableEntity
+import com.mobiledevpro.data.model.NotFoundThrowableEntity
+import com.mobiledevpro.data.model.ServiceUnavailableThrowableEntity
+import com.mobiledevpro.data.model.UnknownThrowableEntity
 import okhttp3.Interceptor
 import okhttp3.Response
-
-class ApiResponseInterceptor(private val appContext: Context) : Interceptor {
-
-    override fun intercept(chain: Interceptor.Chain): Response {
-
-        val builder = chain.request().newBuilder()
-
-        val response = chain.proceed(builder.build())
-
-        // There you can check response code
-        // like response.code() == 432
+import java.net.ConnectException
+import java.net.HttpURLConnection
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 
-        //TODO: Need to add this
+class ApiResponseInterceptor : Interceptor {
 
-        /*
+    @Throws(Throwable::class)
+    override fun intercept(chain: Interceptor.Chain): Response = try {
 
-
-    @Override
-    public Response intercept(Chain chain) throws IOException {
-        try {
-            return chain.proceed(chain.request());
-        } catch (ConnectException | SocketTimeoutException | UnknownHostException e) {
-            throw new IOException(
-                    appContext.getResources().getString(R.string.message_check_internet_connection)
-            );
+        val request = chain.request()
+        val response = chain.proceed(request)
+        when (response.code) {
+            HttpURLConnection.HTTP_OK -> response
+            HttpURLConnection.HTTP_NOT_FOUND -> throw NotFoundThrowableEntity()
+            HttpURLConnection.HTTP_FORBIDDEN -> throw AccessDeniedThrowableEntity()
+            HttpURLConnection.HTTP_UNAVAILABLE -> throw ServiceUnavailableThrowableEntity()
+            else -> throw UnknownThrowableEntity()
         }
-    }
-         */
+    } catch (e: Throwable) {
+        throw when (e){
+            is UnknownHostException -> NetworkThrowableEntity()
+            is SocketTimeoutException -> NetworkThrowableEntity()
+            is ConnectException -> NetworkThrowableEntity()
+            else -> UnknownThrowableEntity()
+        }
 
-        return response
     }
 }

@@ -1,9 +1,19 @@
 package com.mobiledevpro.data.mapper
 
+import com.mobiledevpro.data.model.AccessDeniedThrowableEntity
 import com.mobiledevpro.data.model.CountryEntity
+import com.mobiledevpro.data.model.NetworkThrowableEntity
+import com.mobiledevpro.data.model.NotFoundThrowableEntity
+import com.mobiledevpro.data.model.ServiceUnavailableThrowableEntity
 import com.mobiledevpro.data.model.TotalEntity
+import com.mobiledevpro.data.model.UnknownThrowableEntity
+import com.mobiledevpro.domain.model.AccessDeniedThrowable
 import com.mobiledevpro.domain.model.Country
+import com.mobiledevpro.domain.model.NetworkThrowable
+import com.mobiledevpro.domain.model.NotFoundThrowable
+import com.mobiledevpro.domain.model.ServiceUnavailableThrowable
 import com.mobiledevpro.domain.model.Total
+import com.mobiledevpro.domain.model.UnknownThrowable
 import java.util.*
 
 /**
@@ -16,17 +26,17 @@ import java.util.*
  */
 
 fun Total.toCacheEntity() = TotalEntity(
-        confirmed = confirmed,
-        deaths = deaths,
-        recovered = recovered,
-        lastUpdateTime = if (updateTime <= 0) Date().time else updateTime
+    confirmed = confirmed,
+    deaths = deaths,
+    recovered = recovered,
+    lastUpdateTime = if (updateTime <= 0) Date().time else updateTime
 )
 
 fun TotalEntity.toDomain() = Total(
-        confirmed = confirmed,
-        deaths = deaths,
-        recovered = recovered,
-        updateTime = lastUpdateTime
+    confirmed = confirmed,
+    deaths = deaths,
+    recovered = recovered,
+    updateTime = lastUpdateTime
 )
 
 fun CountryEntity.toDomain() = Country(
@@ -52,3 +62,12 @@ fun Country.toEntity() = CountryEntity(
     recovered = recovered,
     active = active
 )
+
+fun Throwable.throwableToDomain() = when (this) {
+    is NetworkThrowableEntity -> NetworkThrowable()
+    is NotFoundThrowableEntity -> NotFoundThrowable()
+    is AccessDeniedThrowableEntity -> AccessDeniedThrowable()
+    is ServiceUnavailableThrowableEntity -> ServiceUnavailableThrowable()
+    is UnknownThrowableEntity -> UnknownThrowable()
+    else -> UnknownThrowable()
+}

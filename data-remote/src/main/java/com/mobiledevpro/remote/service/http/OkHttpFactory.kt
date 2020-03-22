@@ -7,8 +7,7 @@ import java.util.concurrent.TimeUnit
 class OkHttpFactory {
 
     fun buildOkHttpClient(
-        interceptors: List<Interceptor>,
-        networkInterceptors: List<Interceptor>
+        interceptors: List<Interceptor>
     ): OkHttpClient {
 
         val builder = OkHttpClient.Builder()
@@ -16,7 +15,6 @@ class OkHttpFactory {
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
 
         interceptors.forEach { builder.addInterceptor(it) }
-        networkInterceptors.forEach { builder.addInterceptor(it) }
 
         return builder.build()
     }

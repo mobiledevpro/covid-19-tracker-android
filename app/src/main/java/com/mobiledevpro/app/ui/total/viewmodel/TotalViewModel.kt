@@ -10,6 +10,8 @@ import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
 import com.mobiledevpro.app.utils.toDecimalFormat
 import com.mobiledevpro.domain.model.Country
+import com.mobiledevpro.domain.model.ErrorView
+import com.mobiledevpro.domain.model.Result
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -24,8 +26,9 @@ import io.reactivex.rxkotlin.subscribeBy
  *
  * #MobileDevPro
  */
-class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(),
-    LifecycleObserver {
+class TotalViewModel(
+    private val interactor: TotalDataInteractor
+) : BaseViewModel(), LifecycleObserver {
 
     private val localSubscriptions = CompositeDisposable()
 
@@ -101,16 +104,21 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
                 _isShowProgressTotalDeaths.value = true
                 _isShowProgressTotalRecovered.value = true
             }
-            .subscribeBy { total ->
-                total.apply {
-                    _totalConfirmed.value = confirmed.toDecimalFormat()
-                    _totalDeaths.value = deaths.toDecimalFormat()
-                    _totalRecovered.value = recovered.toDecimalFormat()
-                    _updateTime.value = updateTime.dateToSting()
+            .subscribeBy { result ->
+                when (result) {
+                    is Result.Success -> result.data.apply {
+                        _totalConfirmed.value = confirmed.toDecimalFormat()
+                        _totalDeaths.value = deaths.toDecimalFormat()
+                        _totalRecovered.value = recovered.toDecimalFormat()
+                        _updateTime.value = updateTime.dateToSting()
 
-                    _isShowProgressTotalConfirmed.value = confirmed < 0
-                    _isShowProgressTotalDeaths.value = confirmed < 0
-                    _isShowProgressTotalRecovered.value = confirmed < 0
+                        _isShowProgressTotalConfirmed.value = confirmed < 0
+                        _isShowProgressTotalDeaths.value = confirmed < 0
+                        _isShowProgressTotalRecovered.value = confirmed < 0
+                    }
+                    is Result.Failure -> {
+                        //TODO: add error implementation
+                    }
                 }
             }
             .addTo(subscriptions)
@@ -120,8 +128,13 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
         localSubscriptions.clear()
 
         interactor.observeCountriesListData(query)
-            .subscribeBy { countries ->
-                _countriesList.value = countries
+            .subscribeBy { result ->
+                when (result) {
+                    is Result.Success -> _countriesList.value = result.data
+                    is Result.Failure -> {
+                        //TODO: add error implementation
+                    }
+                }
             }
             .addTo(localSubscriptions)
     }

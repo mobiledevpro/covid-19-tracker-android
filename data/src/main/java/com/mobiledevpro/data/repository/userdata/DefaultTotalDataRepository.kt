@@ -1,6 +1,7 @@
 package com.mobiledevpro.data.repository.userdata
 
 import com.mobiledevpro.data.mapper.toCacheEntity
+import com.mobiledevpro.data.mapper.throwableToDomain
 import com.mobiledevpro.data.mapper.toDomain
 import com.mobiledevpro.data.mapper.toEntity
 import com.mobiledevpro.data.model.CountryEntity
@@ -11,6 +12,7 @@ import com.mobiledevpro.domain.totaldata.TotalDataRepository
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.exceptions.CompositeException
 import io.reactivex.functions.Function3
 
 /**
@@ -31,12 +33,13 @@ class DefaultTotalDataRepository(
     override fun getLocalTotalDataObservable(): Observable<Total> = covidCache
         .getTotalDataObservable()
         .map(TotalEntity::toDomain)
-        .onErrorReturn { Total() }
+        .throwableToDomain()
 
     override fun setLocalTotalData(total: Total): Completable = Single
         .just(total)
         .map(Total::toCacheEntity)
         .flatMapCompletable(covidCache::updateTotalData)
+        .throwableToDomain()
 
     override fun getTotalData(): Single<Total> = Single
         .zip(
@@ -50,20 +53,25 @@ class DefaultTotalDataRepository(
                     recovered = countRecovered.count
                 )
             })
+    //TODO: add convert logic for throwable
+//        .throwableToDomain()
 
-    override fun getLocalCountriesObservable(query: String): Observable<ArrayList<Country>> = covidCache
+
+
+    override fun getLocalCountriesObservable(query: String): Observable<List<Country>> = covidCache
         .getLocalCountriesObservable(query)
         .map { it.map(CountryEntity::toDomain) }
-        .flatMap { list -> Observable.just(ArrayList(list)) }
-        .onErrorReturn { ArrayList() }
+        .throwableToDomain()
 
     override fun getCountries(): Single<List<Country>> = covidRemote
         .getCountries()
         .map { it.map(CountryEntity::toDomain) }
+        .throwableToDomain()
 
     override fun setLocalCountriesData(countries: List<Country>): Completable = Single
         .just(countries)
         .map { it.map(Country::toEntity) }
         .flatMapCompletable(covidCache::updateCountries)
+        .throwableToDomain()
 }
 
