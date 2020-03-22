@@ -1,18 +1,18 @@
 package com.mobiledevpro.data.repository.userdata
 
-import com.mobiledevpro.data.mapper.toCacheEntity
 import com.mobiledevpro.data.mapper.throwableToDomain
+import com.mobiledevpro.data.mapper.toCacheEntity
 import com.mobiledevpro.data.mapper.toDomain
 import com.mobiledevpro.data.mapper.toEntity
 import com.mobiledevpro.data.model.CountryEntity
 import com.mobiledevpro.data.model.TotalEntity
+import com.mobiledevpro.data.model.TotalValueEntity
 import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
 import com.mobiledevpro.domain.totaldata.TotalDataRepository
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.exceptions.CompositeException
 import io.reactivex.functions.Function3
 
 /**
@@ -42,7 +42,7 @@ class DefaultTotalDataRepository(
         .throwableToDomain()
 
     override fun getTotalData(): Single<Total> = Single
-        .zip(
+        .zip<TotalValueEntity, TotalValueEntity, TotalValueEntity, Total>(
             covidRemote.getTotalConfirmed(),
             covidRemote.getTotalDeaths(),
             covidRemote.getTotalRecovered(),
@@ -53,9 +53,7 @@ class DefaultTotalDataRepository(
                     recovered = countRecovered.count
                 )
             })
-    //TODO: add convert logic for throwable
-//        .throwableToDomain()
-
+        .throwableToDomain()
 
 
     override fun getLocalCountriesObservable(query: String): Observable<List<Country>> = covidCache
