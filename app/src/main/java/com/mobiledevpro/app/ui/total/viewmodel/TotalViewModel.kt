@@ -1,10 +1,6 @@
 package com.mobiledevpro.app.ui.total.viewmodel
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
@@ -61,6 +57,9 @@ class TotalViewModel(
     private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
     val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
 
+    private val _eventShowError = MutableLiveData<Event<String>>()
+    val eventShowError: LiveData<Event<String>> = _eventShowError
+
     init {
         observeTotalValues()
         observeCountriesList()
@@ -71,7 +70,21 @@ class TotalViewModel(
     fun onStartView() {
         interactor.apply {
             refreshTotalData()
-                .subscribeBy { /* do nothing */ }
+                .subscribeBy { result ->
+                    when (result) {
+                        is Result.Success -> {/*do nothing*/
+                        }
+                        is Result.Failure -> {
+                            val errMsg = when (result.error) {
+                                is ErrorView.Network -> (result.error as ErrorView.Network).message
+                                is ErrorView.Unknown -> (result.error as ErrorView.Unknown).message
+                                else -> "WTF??"
+                            }
+
+                            _eventShowError.value = Event(errMsg)
+                        }
+                    }
+                }
                 .addTo(subscriptions)
 
             refreshCountriesData()

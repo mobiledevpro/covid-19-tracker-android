@@ -2,11 +2,12 @@ package com.mobiledevpro.app.ui.total
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentTotalBinding
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
-import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel.*
+import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel.Navigation
 import com.mobiledevpro.app.utils.showCountiesList
 import com.mobiledevpro.commons.fragment.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -51,7 +52,6 @@ class TotalFragment : BaseFragment() {
     }
 
     private fun observeEvents() {
-        //show toasts
         viewModel.eventNavigateTo.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { navigateTo ->
                 when (navigateTo) {
@@ -60,5 +60,12 @@ class TotalFragment : BaseFragment() {
 
             }
         })
+
+        viewModel.eventShowError.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { msg ->
+                Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show();
+            }
+        })
+
     }
 }
