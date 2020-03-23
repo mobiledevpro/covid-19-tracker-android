@@ -11,6 +11,7 @@ import java.net.ConnectException
 import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.net.UnknownServiceException
 
 
 class ApiResponseInterceptor : Interceptor {
@@ -32,6 +33,7 @@ class ApiResponseInterceptor : Interceptor {
             is UnknownHostException -> NetworkThrowableEntity()
             is SocketTimeoutException -> NetworkThrowableEntity()
             is ConnectException -> NetworkThrowableEntity()
+            is UnknownServiceException -> NotFoundThrowableEntity()
             else -> UnknownThrowableEntity()
         }
 

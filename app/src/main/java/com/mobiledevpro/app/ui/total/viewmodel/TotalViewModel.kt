@@ -1,13 +1,17 @@
 package com.mobiledevpro.app.ui.total.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
+import com.mobiledevpro.app.utils.provider.ResourceProvider
 import com.mobiledevpro.app.utils.toDecimalFormat
+import com.mobiledevpro.domain.common.Result
 import com.mobiledevpro.domain.model.Country
-import com.mobiledevpro.domain.model.ErrorView
-import com.mobiledevpro.domain.model.Result
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -23,7 +27,8 @@ import io.reactivex.rxkotlin.subscribeBy
  * #MobileDevPro
  */
 class TotalViewModel(
-    private val interactor: TotalDataInteractor
+    private val interactor: TotalDataInteractor,
+    private val resourceProvider: ResourceProvider
 ) : BaseViewModel(), LifecycleObserver {
 
     private val localSubscriptions = CompositeDisposable()
@@ -72,15 +77,9 @@ class TotalViewModel(
             refreshTotalData()
                 .subscribeBy { result ->
                     when (result) {
-                        is Result.Success -> {/*do nothing*/
-                        }
+                        is Result.Success -> { /*do nothing*/ }
                         is Result.Failure -> {
-                            val errMsg = when (result.error) {
-                                is ErrorView.Network -> (result.error as ErrorView.Network).message
-                                is ErrorView.Unknown -> (result.error as ErrorView.Unknown).message
-                                else -> "WTF??"
-                            }
-
+                            val errMsg = resourceProvider.getErrorMessage(result.error)
                             _eventShowError.value = Event(errMsg)
                         }
                     }

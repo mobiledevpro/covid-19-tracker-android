@@ -1,11 +1,11 @@
 package com.mobiledevpro.data.model
 
-    class NetworkThrowableEntity : Throwable()
+class NetworkThrowableEntity : Throwable()
 
-    class NotFoundThrowableEntity : Throwable()
+class NotFoundThrowableEntity : Throwable()
 
-    class AccessDeniedThrowableEntity : Throwable()
+class AccessDeniedThrowableEntity : Throwable()
 
-    class ServiceUnavailableThrowableEntity : Throwable()
+class ServiceUnavailableThrowableEntity : Throwable()
 
-    class UnknownThrowableEntity : Throwable()
+class UnknownThrowableEntity : Throwable()

@@ -7,13 +7,13 @@ import com.mobiledevpro.data.model.NotFoundThrowableEntity
 import com.mobiledevpro.data.model.ServiceUnavailableThrowableEntity
 import com.mobiledevpro.data.model.TotalEntity
 import com.mobiledevpro.data.model.UnknownThrowableEntity
-import com.mobiledevpro.domain.model.AccessDeniedThrowable
+import com.mobiledevpro.domain.error.AccessDeniedThrowable
+import com.mobiledevpro.domain.error.NetworkThrowable
+import com.mobiledevpro.domain.error.NotFoundThrowable
+import com.mobiledevpro.domain.error.ServiceUnavailableThrowable
+import com.mobiledevpro.domain.error.UnknownThrowable
 import com.mobiledevpro.domain.model.Country
-import com.mobiledevpro.domain.model.NetworkThrowable
-import com.mobiledevpro.domain.model.NotFoundThrowable
-import com.mobiledevpro.domain.model.ServiceUnavailableThrowable
 import com.mobiledevpro.domain.model.Total
-import com.mobiledevpro.domain.model.UnknownThrowable
 import java.util.*
 
 /**

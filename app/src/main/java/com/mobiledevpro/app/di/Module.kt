@@ -1,6 +1,8 @@
 package com.mobiledevpro.app.di
 
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
+import com.mobiledevpro.app.utils.provider.DefaultResourceProvider
+import com.mobiledevpro.app.utils.provider.ResourceProvider
 import com.mobiledevpro.data.repository.userdata.CovidCache
 import com.mobiledevpro.data.repository.userdata.CovidRemote
 import com.mobiledevpro.data.repository.userdata.DefaultTotalDataRepository
@@ -29,7 +31,9 @@ import org.koin.dsl.module
  */
 
 val uiModule = module {
-    viewModel { TotalViewModel(get()) }
+    viewModel { TotalViewModel(get(), get()) }
+
+    single { DefaultResourceProvider(androidContext().resources) as ResourceProvider }
 }
 
 val domainModule = module {
@@ -57,6 +61,5 @@ val dataRemoteModule = module {
             )
         )
     }
-    single { androidContext().resources }
 }
 

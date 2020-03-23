@@ -28,5 +28,6 @@ class RemoteServiceFactory(
     companion object {
         private const val BASE_URL =
             "https://services1.arcgi.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query/"
+        //TODO: return true URL
     }
 }
