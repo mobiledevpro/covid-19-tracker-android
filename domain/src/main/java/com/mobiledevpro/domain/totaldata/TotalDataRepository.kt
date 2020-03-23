@@ -27,7 +27,7 @@ interface TotalDataRepository {
 
     fun getTotalData(): Single<Total>
 
-    fun getLocalCountriesObservable(query: String): Observable<ArrayList<Country>>
+    fun getLocalCountriesObservable(query: String): Observable<List<Country>>
 
     fun getCountries(): Single<List<Country>>
 

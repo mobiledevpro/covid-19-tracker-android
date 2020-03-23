@@ -19,4 +19,10 @@
 
     <string name="menu_search">Пошук</string>
     <string name="search_country_hint">Введіть країну (EN)</string>
+
+    <string name="network_error">Помилка мережі</string>
+    <string name="not_found_error">Сервер не знайдено</string>
+    <string name="access_denied_error">Доступ заборонено</string>
+    <string name="service_unavailable_error">Сервіс недоступний</string>
+    <string name="unknown_error">Невідома помилка</string>
 </resources>

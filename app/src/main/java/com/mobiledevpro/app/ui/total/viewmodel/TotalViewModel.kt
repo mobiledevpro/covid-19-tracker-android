@@ -8,7 +8,9 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
+import com.mobiledevpro.app.utils.provider.ResourceProvider
 import com.mobiledevpro.app.utils.toDecimalFormat
+import com.mobiledevpro.domain.common.Result
 import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.disposables.CompositeDisposable
@@ -24,8 +26,10 @@ import io.reactivex.rxkotlin.subscribeBy
  *
  * #MobileDevPro
  */
-class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(),
-    LifecycleObserver {
+class TotalViewModel(
+    private val interactor: TotalDataInteractor,
+    private val resourceProvider: ResourceProvider
+) : BaseViewModel(), LifecycleObserver {
 
     private val localSubscriptions = CompositeDisposable()
 
@@ -58,6 +62,9 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
     val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
 
+    private val _eventShowError = MutableLiveData<Event<String>>()
+    val eventShowError: LiveData<Event<String>> = _eventShowError
+
     init {
         observeTotalValues()
         observeCountriesList()
@@ -68,7 +75,15 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     fun onStartView() {
         interactor.apply {
             refreshTotalData()
-                .subscribeBy { /* do nothing */ }
+                .subscribeBy { result ->
+                    when (result) {
+                        is Result.Success -> { /*do nothing*/ }
+                        is Result.Failure -> {
+                            val errMsg = resourceProvider.getErrorMessage(result.error)
+                            _eventShowError.value = Event(errMsg)
+                        }
+                    }
+                }
                 .addTo(subscriptions)
 
             refreshCountriesData()
@@ -101,16 +116,21 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
                 _isShowProgressTotalDeaths.value = true
                 _isShowProgressTotalRecovered.value = true
             }
-            .subscribeBy { total ->
-                total.apply {
-                    _totalConfirmed.value = confirmed.toDecimalFormat()
-                    _totalDeaths.value = deaths.toDecimalFormat()
-                    _totalRecovered.value = recovered.toDecimalFormat()
-                    _updateTime.value = updateTime.dateToSting()
+            .subscribeBy { result ->
+                when (result) {
+                    is Result.Success -> result.data.apply {
+                        _totalConfirmed.value = confirmed.toDecimalFormat()
+                        _totalDeaths.value = deaths.toDecimalFormat()
+                        _totalRecovered.value = recovered.toDecimalFormat()
+                        _updateTime.value = updateTime.dateToSting()
 
-                    _isShowProgressTotalConfirmed.value = confirmed < 0
-                    _isShowProgressTotalDeaths.value = confirmed < 0
-                    _isShowProgressTotalRecovered.value = confirmed < 0
+                        _isShowProgressTotalConfirmed.value = confirmed < 0
+                        _isShowProgressTotalDeaths.value = confirmed < 0
+                        _isShowProgressTotalRecovered.value = confirmed < 0
+                    }
+                    is Result.Failure -> {
+                        //TODO: add error implementation
+                    }
                 }
             }
             .addTo(subscriptions)
@@ -120,8 +140,13 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
         localSubscriptions.clear()
 
         interactor.observeCountriesListData(query)
-            .subscribeBy { countries ->
-                _countriesList.value = countries
+            .subscribeBy { result ->
+                when (result) {
+                    is Result.Success -> _countriesList.value = result.data
+                    is Result.Failure -> {
+                        //TODO: add error implementation
+                    }
+                }
             }
             .addTo(localSubscriptions)
     }

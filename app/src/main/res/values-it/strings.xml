@@ -19,4 +19,10 @@
 
     <string name="menu_search">Search</string>
     <string name="search_country_hint">Enter country name</string>
+
+    <string name="network_error">Network Error</string>
+    <string name="not_found_error">Not Found Error</string>
+    <string name="access_denied_error">Access Denied</string>
+    <string name="service_unavailable_error">Service Unavailable</string>
+    <string name="unknown_error">Unknown Error</string>
 </resources>

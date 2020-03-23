@@ -1,6 +1,8 @@
 package com.mobiledevpro.app.di
 
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
+import com.mobiledevpro.app.utils.provider.DefaultResourceProvider
+import com.mobiledevpro.app.utils.provider.ResourceProvider
 import com.mobiledevpro.data.repository.userdata.CovidCache
 import com.mobiledevpro.data.repository.userdata.CovidRemote
 import com.mobiledevpro.data.repository.userdata.DefaultTotalDataRepository
@@ -15,6 +17,7 @@ import com.mobiledevpro.remote.service.RemoteServiceFactory
 import com.mobiledevpro.remote.service.http.OkHttpFactory
 import com.mobiledevpro.remote.service.interceptor.ApiRequestInterceptor
 import com.mobiledevpro.remote.service.interceptor.ApiResponseInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -28,7 +31,9 @@ import org.koin.dsl.module
  */
 
 val uiModule = module {
-    viewModel { TotalViewModel(get()) }
+    viewModel { TotalViewModel(get(), get()) }
+
+    single { DefaultResourceProvider(androidContext().resources) as ResourceProvider }
 }
 
 val domainModule = module {
@@ -51,10 +56,9 @@ val dataRemoteModule = module {
     single {
         OkHttpFactory().buildOkHttpClient(
             listOf(
-                ApiResponseInterceptor(get()),
+                ApiResponseInterceptor(),
                 ApiRequestInterceptor()
-            ),
-            emptyList()
+            )
         )
     }
 }
