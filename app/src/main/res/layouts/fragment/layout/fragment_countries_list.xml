@@ -6,21 +6,21 @@
     <data>
 
         <variable
-            name="totalViewModel"
+            name="viewModel"
             type="com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.mobiledevpro.app.ui.common.MainActivity"
+        tools:context="com.mobiledevpro.app.ui.main.MainActivity"
         tools:showIn="@layout/activity_main">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_countries_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:items="@{totalViewModel.countriesList}" />
+            app:items="@{viewModel.countriesList}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
