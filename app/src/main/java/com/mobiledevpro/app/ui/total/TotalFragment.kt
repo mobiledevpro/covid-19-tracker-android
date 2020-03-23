@@ -63,7 +63,7 @@ class TotalFragment : BaseFragment() {
 
         viewModel.eventShowError.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let { msg ->
-                Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity(), msg, Toast.LENGTH_LONG).show();
             }
         })
 
