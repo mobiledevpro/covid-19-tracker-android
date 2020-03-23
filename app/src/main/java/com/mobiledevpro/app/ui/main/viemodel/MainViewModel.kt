@@ -1,13 +1,11 @@
 package com.mobiledevpro.app.ui.main.viemodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.FabActionNavigation
 import com.mobiledevpro.app.utils.Navigation
-import com.mobiledevpro.data.LOG_TAG_DEBUG
 
 
 /**
@@ -25,15 +23,6 @@ class MainViewModel : BaseViewModel() {
 
     private val _eventFabAction = MutableLiveData<Event<FabActionNavigation>>()
     val eventFabAction: LiveData<Event<FabActionNavigation>> = _eventFabAction
-
-    init {
-        Log.d(LOG_TAG_DEBUG, "MainViewModel init");
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.d(LOG_TAG_DEBUG, "MainViewModel onCleared");
-    }
 
     fun showCountriesList() {
         _eventNavigateTo.value =

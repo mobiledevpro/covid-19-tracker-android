@@ -112,7 +112,9 @@ class CountriesListFragment : BaseFragment() {
                 if (navigateTo == Navigation.NAVIGATE_TO_SEARCH_COUNTRY) {
                     searchView.apply {
                         onActionViewExpanded()
-                        setQuery("", false)
+                        totalViewModel.getQuery().apply {
+                            setQuery(this, true)
+                        }
                     }
                 }
             }
