@@ -1,5 +1,6 @@
 package com.mobiledevpro.app.di
 
+import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
 import com.mobiledevpro.app.utils.provider.DefaultResourceProvider
 import com.mobiledevpro.app.utils.provider.ResourceProvider
@@ -32,6 +33,7 @@ import org.koin.dsl.module
 
 val uiModule = module {
     viewModel { TotalViewModel(get(), get()) }
+    viewModel { MainViewModel() }
 
     single { DefaultResourceProvider(androidContext().resources) as ResourceProvider }
 }

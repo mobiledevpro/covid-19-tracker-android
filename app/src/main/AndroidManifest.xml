@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mobiledevpro.app.ui.common.MainActivity"
+            android:name="com.mobiledevpro.app.ui.main.MainActivity"
             android:configChanges="keyboard|screenSize|screenLayout|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

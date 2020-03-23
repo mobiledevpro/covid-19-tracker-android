@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import com.mobiledevpro.app.R
+import com.mobiledevpro.app.ui.main.MainActivity
 import java.lang.ref.WeakReference
 
 

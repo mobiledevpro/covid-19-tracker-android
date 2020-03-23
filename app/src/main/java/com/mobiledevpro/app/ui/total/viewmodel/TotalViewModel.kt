@@ -1,10 +1,6 @@
 package com.mobiledevpro.app.ui.total.viewmodel
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
@@ -59,9 +55,11 @@ class TotalViewModel(
     private val _countriesList = MutableLiveData<ArrayList<Country>>()
     val countriesList: LiveData<ArrayList<Country>> = _countriesList
 
-    private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
-    val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
+    /*  private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
+      val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
 
+
+     */
     private val _eventShowError = MutableLiveData<Event<String>>()
     val eventShowError: LiveData<Event<String>> = _eventShowError
 
@@ -95,11 +93,6 @@ class TotalViewModel(
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStopView() {
         //do something if needed
-    }
-
-    fun onClickViewByCountry() {
-        _eventNavigateTo.value =
-            Event(Navigation.NAVIGATE_TO_COUNTRIES_LIST)
     }
 
     fun getQuery() = query
@@ -154,9 +147,5 @@ class TotalViewModel(
     override fun onCleared() {
         super.onCleared()
         localSubscriptions.clear()
-    }
-
-    enum class Navigation {
-        NAVIGATE_TO_COUNTRIES_LIST
     }
 }

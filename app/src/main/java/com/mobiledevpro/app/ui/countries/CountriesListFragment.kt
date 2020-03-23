@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentCountriesListBinding
 import com.mobiledevpro.app.ui.countries.adapter.CountriesListAdapter
+import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
+import com.mobiledevpro.app.utils.Navigation
 import com.mobiledevpro.commons.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_countries_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -23,7 +26,10 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
  *
  */
 class CountriesListFragment : BaseFragment() {
-    private val viewModel: TotalViewModel by sharedViewModel()
+    private val totalViewModel: TotalViewModel by sharedViewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
+
+    private lateinit var searchView: SearchView
 
     override fun getLayoutResId() = R.layout.fragment_countries_list
 
@@ -35,7 +41,7 @@ class CountriesListFragment : BaseFragment() {
         //databinding
         val binding = FragmentCountriesListBinding.bind(view)
             .apply {
-                totalViewModel = viewModel
+                viewModel = totalViewModel
             }
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -45,6 +51,7 @@ class CountriesListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        observeEvents()
     }
 
     override fun initPresenters() {
@@ -53,12 +60,12 @@ class CountriesListFragment : BaseFragment() {
     override fun getOptionsMenuResId(): Int = R.menu.menu_search
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView = menu.findItem(R.id.action_search).actionView as SearchView
         searchView.apply {
 
             queryHint = getString(R.string.search_country_hint)
 
-            viewModel.getQuery().apply {
+            totalViewModel.getQuery().apply {
                 if (this.isNotEmpty()) {
                     onActionViewExpanded()
                     setQuery(this, true)
@@ -69,11 +76,16 @@ class CountriesListFragment : BaseFragment() {
                 override fun onQueryTextSubmit(query: String?): Boolean = true
 
                 override fun onQueryTextChange(query: String?): Boolean {
-                    viewModel.getCountiesByQuery(query ?: "")
+                    totalViewModel.getCountiesByQuery(query ?: "")
                     return true
                 }
             })
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.setFabActionShowCountrySearch()
     }
 
     private fun initRecyclerView() {
@@ -88,5 +100,16 @@ class CountriesListFragment : BaseFragment() {
         rv_countries_list?.setHasFixedSize(true)
         rv_countries_list?.adapter = CountriesListAdapter()
         rv_countries_list.addItemDecoration(divider)
+    }
+
+    private fun observeEvents() {
+        mainViewModel.eventNavigateTo.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { navigateTo ->
+                when (navigateTo) {
+                    Navigation.NAVIGATE_TO_SEARCH_COUNTRY -> searchView.isIconified = true
+                }
+            }
+        })
+
     }
 }
