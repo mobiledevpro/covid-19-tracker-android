@@ -61,6 +61,29 @@ class CountriesListFragment : BaseFragment() {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        initSearchView()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.setFabActionShowCountrySearch()
+    }
+
+    private fun initRecyclerView() {
+        val layoutManager = LinearLayoutManager(requireActivity())
+
+        val dividerDrawable = requireActivity().getDrawable(R.drawable.list_item_divider);
+        val divider = DividerItemDecoration(context, layoutManager.orientation);
+        if (dividerDrawable != null)
+            divider.setDrawable(dividerDrawable)
+
+        rv_countries_list?.layoutManager = layoutManager
+        rv_countries_list?.setHasFixedSize(true)
+        rv_countries_list?.adapter = CountriesListAdapter()
+        rv_countries_list.addItemDecoration(divider)
+    }
+
+    private fun initSearchView() {
         searchView.apply {
 
             queryHint = getString(R.string.search_country_hint)
@@ -83,30 +106,14 @@ class CountriesListFragment : BaseFragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        mainViewModel.setFabActionShowCountrySearch()
-    }
-
-    private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(requireActivity())
-
-        val dividerDrawable = requireActivity().getDrawable(R.drawable.list_item_divider);
-        val divider = DividerItemDecoration(context, layoutManager.orientation);
-        if (dividerDrawable != null)
-            divider.setDrawable(dividerDrawable)
-
-        rv_countries_list?.layoutManager = layoutManager
-        rv_countries_list?.setHasFixedSize(true)
-        rv_countries_list?.adapter = CountriesListAdapter()
-        rv_countries_list.addItemDecoration(divider)
-    }
-
     private fun observeEvents() {
         mainViewModel.eventNavigateTo.observe(viewLifecycleOwner, Observer {
-            it.getContentIfNotHandled()?.let { navigateTo ->
-                when (navigateTo) {
-                    Navigation.NAVIGATE_TO_SEARCH_COUNTRY -> searchView.isIconified = true
+            it.peekContent().let { navigateTo ->
+                if (navigateTo == Navigation.NAVIGATE_TO_SEARCH_COUNTRY) {
+                    searchView.apply {
+                        onActionViewExpanded()
+                        setQuery("", false)
+                    }
                 }
             }
         })
