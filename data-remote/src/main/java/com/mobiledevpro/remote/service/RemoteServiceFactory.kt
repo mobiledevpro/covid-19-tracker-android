@@ -12,9 +12,7 @@ class RemoteServiceFactory(
     client: OkHttpClient
 ) {
 
-    fun buildStackOverFlowApi(): RestApiClient = builder
-        .baseUrl(BASE_URL)
-    fun buildCovidDailyApi(): TotalRestApiClient = builder
+    fun buildCovidTotalApi(): TotalRestApiClient = builder
         .baseUrl(BASE_DAILY_URL)
         .build()
         .create(TotalRestApiClient::class.java)

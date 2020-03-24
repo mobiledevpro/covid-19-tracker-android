@@ -1,6 +1,10 @@
 package com.mobiledevpro.app.ui.total.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
@@ -23,11 +27,7 @@ import io.reactivex.rxkotlin.subscribeBy
  * #MobileDevPro
  */
 class TotalViewModel(
-    private val totalInteractor: TotalDataInteractor
-) : BaseViewModel(),
-    LifecycleObserver {
-class TotalViewModel(
-    private val interactor: TotalDataInteractor,
+    private val totalInteractor: TotalDataInteractor,
     private val resourceProvider: ResourceProvider
 ) : BaseViewModel(), LifecycleObserver {
 
@@ -137,9 +137,6 @@ class TotalViewModel(
         localSubscriptions.clear()
 
         totalInteractor.observeCountriesListData(query)
-            .subscribeBy { countries ->
-                _countriesList.value = countries
-        interactor.observeCountriesListData(query)
             .subscribeBy { result ->
                 when (result) {
                     is Result.Success -> _countriesList.value = result.data

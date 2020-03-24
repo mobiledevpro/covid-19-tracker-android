@@ -4,8 +4,6 @@ import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
 import com.mobiledevpro.app.utils.provider.DefaultResourceProvider
 import com.mobiledevpro.app.utils.provider.ResourceProvider
-import com.mobiledevpro.data.repository.userdata.CovidCache
-import com.mobiledevpro.data.repository.userdata.CovidRemote
 import com.mobiledevpro.data.repository.parcer.StatisticsParserHtml
 import com.mobiledevpro.data.repository.statistic.DefaultStatisticDataRepository
 import com.mobiledevpro.data.repository.statistic.StatisticCovidRemote
@@ -27,8 +25,8 @@ import com.mobiledevpro.remote.implementation.DefaultTotalCovidRemote
 import com.mobiledevpro.remote.service.RemoteServiceFactory
 import com.mobiledevpro.remote.service.http.OkHttpFactory
 import com.mobiledevpro.remote.service.interceptor.ApiResponseInterceptor
-import org.koin.android.ext.koin.androidContext
 import com.mobiledevpro.remote.service.interceptor.ApiStatisticsRequestInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -49,8 +47,8 @@ val uiModule = module {
     single { DefaultResourceProvider(androidContext().resources) as ResourceProvider }
     viewModel {
         TotalViewModel(
-//            statisticInteractor = get(),
-            totalInteractor = get()
+            totalInteractor = get(),
+            resourceProvider = get()
         )
     }
 }
@@ -87,7 +85,7 @@ val dataRemoteModule = module {
     single {
         RemoteServiceFactory(
             client = get(named(TOTAL_OK_HTTP_CLIENT))
-        ).buildCovidDailyApi()
+        ).buildCovidTotalApi()
     }
     single {
         RemoteServiceFactory(
@@ -98,9 +96,6 @@ val dataRemoteModule = module {
     single(named(STATISTIC_OK_HTTP_CLIENT)) {
         OkHttpFactory().buildOkHttpClient(
             listOf(
-                ApiResponseInterceptor(),
-                ApiRequestInterceptor()
-            )
                 ApiResponseInterceptor(),
                 ApiStatisticsRequestInterceptor()
             )

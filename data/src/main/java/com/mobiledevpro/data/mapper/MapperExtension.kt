@@ -1,19 +1,18 @@
 package com.mobiledevpro.data.mapper
 
 import com.mobiledevpro.data.model.AccessDeniedThrowableEntity
-import com.mobiledevpro.data.model.CountryEntity
+import com.mobiledevpro.data.model.CountryTotalEntity
 import com.mobiledevpro.data.model.NetworkThrowableEntity
 import com.mobiledevpro.data.model.NotFoundThrowableEntity
 import com.mobiledevpro.data.model.ServiceUnavailableThrowableEntity
-import com.mobiledevpro.data.model.CountryTotalEntity
 import com.mobiledevpro.data.model.TotalEntity
 import com.mobiledevpro.data.model.UnknownThrowableEntity
+import com.mobiledevpro.data.model.statistic.CountryStatisticEntity
 import com.mobiledevpro.domain.error.AccessDeniedThrowable
 import com.mobiledevpro.domain.error.NetworkThrowable
 import com.mobiledevpro.domain.error.NotFoundThrowable
 import com.mobiledevpro.domain.error.ServiceUnavailableThrowable
 import com.mobiledevpro.domain.error.UnknownThrowable
-import com.mobiledevpro.data.model.statistic.CountryStatisticEntity
 import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
 import java.util.*

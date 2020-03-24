@@ -122,8 +122,7 @@ ext {
             "soloader"                : "com.facebook.soloader:soloader:$soloaderVersion",
 
             //HTML parser
-            "jsoup"                   : "org.jsoup:jsoup:$jsoupVersion"
-            "soloader"                : "com.facebook.soloader:soloader:$soloaderVersion",
+            "jsoup"                   : "org.jsoup:jsoup:$jsoupVersion",
 
             //Beta testing
             "testfairy"               : "testfairy:testfairy-android-sdk:$testfairyVersion"
