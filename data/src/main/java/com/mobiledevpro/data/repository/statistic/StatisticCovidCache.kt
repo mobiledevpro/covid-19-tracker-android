@@ -1,0 +1,3 @@
+package com.mobiledevpro.data.repository.statistic
+
+interface StatisticCovidCache

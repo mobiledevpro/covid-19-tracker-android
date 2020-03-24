@@ -2,15 +2,15 @@ package com.mobiledevpro.remote.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class CountriesResponse(
-    @SerializedName("features") val countries: List<CountriesAttributeResponse>
+data class CountriesTotalResponse(
+    @SerializedName("features") val countries: List<CountriesTotalAttributeResponse>
 )
 
-data class CountriesAttributeResponse(
-    @SerializedName("attributes") val attribute: CountryResponse
+data class CountriesTotalAttributeResponse(
+    @SerializedName("attributes") val attribute: CountryTotalResponse
 )
 
-data class CountryResponse(
+data class CountryTotalResponse(
     @SerializedName("OBJECTID") val id: Int,
     @SerializedName("Country_Region") val country: String,
     @SerializedName("Last_Update") val updated: Long,

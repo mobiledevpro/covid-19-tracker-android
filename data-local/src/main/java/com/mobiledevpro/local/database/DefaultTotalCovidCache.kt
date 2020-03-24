@@ -1,9 +1,9 @@
 package com.mobiledevpro.local.database
 
 import android.content.Context
-import com.mobiledevpro.data.model.CountryEntity
+import com.mobiledevpro.data.model.CountryTotalEntity
 import com.mobiledevpro.data.model.TotalEntity
-import com.mobiledevpro.data.repository.userdata.CovidCache
+import com.mobiledevpro.data.repository.userdata.TotalCovidCache
 import com.mobiledevpro.local.database.model.CachedCounties
 import com.mobiledevpro.local.database.model.CachedTotal
 import com.mobiledevpro.local.mapper.toCached
@@ -20,7 +20,7 @@ import io.reactivex.Observable
  *
  * #MobileDevPro
  */
-class DefaultCovidCache(private val appContext: Context) : CovidCache {
+class DefaultTotalCovidCache(private val appContext: Context) : TotalCovidCache {
 
     override fun getTotalDataObservable(): Observable<TotalEntity> =
         AppDatabase.getInstance(appContext)
@@ -40,20 +40,20 @@ class DefaultCovidCache(private val appContext: Context) : CovidCache {
             emitter.onComplete()
         }
 
-    override fun getLocalCountriesObservable(query: String): Observable<List<CountryEntity>> =
+    override fun getLocalCountriesObservable(query: String): Observable<List<CountryTotalEntity>> =
         AppDatabase.getInstance(appContext)
             .countiesDataDao
             .getCountiesDataObservable(query)
             .map { it.map(CachedCounties::toEntity) }
 
-    override fun updateCountries(countriesEntity: List<CountryEntity>) = Completable
+    override fun updateCountries(countriesTotalEntity: List<CountryTotalEntity>) = Completable
         .create { emitter ->
             val dao = AppDatabase.getInstance(appContext)
                 .totalDataDao
 
             dao.deleteAllTotalValues()
 
-            val countriesCached = countriesEntity.map(CountryEntity::toCached)
+            val countriesCached = countriesTotalEntity.map(CountryTotalEntity::toCached)
             AppDatabase.getInstance(appContext)
                 .countiesDataDao
                 .insert(countriesCached)

@@ -1,7 +1,8 @@
 package com.mobiledevpro.data.mapper
 
-import com.mobiledevpro.data.model.CountryEntity
+import com.mobiledevpro.data.model.CountryTotalEntity
 import com.mobiledevpro.data.model.TotalEntity
+import com.mobiledevpro.data.model.statistic.CountryStatisticEntity
 import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
 import java.util.*
@@ -29,7 +30,7 @@ fun TotalEntity.toDomain() = Total(
         updateTime = lastUpdateTime
 )
 
-fun CountryEntity.toDomain() = Country(
+fun CountryTotalEntity.toDomain() = Country(
     id = id,
     country = country,
     updated = updated,
@@ -41,7 +42,7 @@ fun CountryEntity.toDomain() = Country(
     active = active
 )
 
-fun Country.toEntity() = CountryEntity(
+fun Country.toEntity() = CountryTotalEntity(
     id = id,
     country = country,
     updated = updated,
@@ -51,4 +52,12 @@ fun Country.toEntity() = CountryEntity(
     deaths = deaths,
     recovered = recovered,
     active = active
+)
+
+fun CountryStatisticEntity.toDomain() = Country(
+    id = id,
+    country = country,
+    updated = updated,
+    confirmed = confirmed.toInt(),
+    deaths = deaths.toInt()
 )

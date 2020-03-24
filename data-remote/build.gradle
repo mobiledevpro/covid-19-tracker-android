@@ -9,4 +9,7 @@ dependencies {
     implementation deps.retrofitGsonConverter
     implementation deps.retrofitRx
     implementation deps.okhttpLoggingInterceptor
+
+    //Parsing HTML
+    implementation(deps.jsoup)
 }

@@ -24,7 +24,9 @@ import io.reactivex.rxkotlin.subscribeBy
  *
  * #MobileDevPro
  */
-class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewModel(),
+class TotalViewModel(
+    private val totalInteractor: TotalDataInteractor
+) : BaseViewModel(),
     LifecycleObserver {
 
     private val localSubscriptions = CompositeDisposable()
@@ -66,7 +68,7 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStartView() {
-        interactor.apply {
+        totalInteractor.apply {
             refreshTotalData()
                 .subscribeBy { /* do nothing */ }
                 .addTo(subscriptions)
@@ -95,7 +97,7 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     }
 
     private fun observeTotalValues() {
-        interactor.observeTotalData()
+        totalInteractor.observeTotalData()
             .doOnSubscribe {
                 _isShowProgressTotalConfirmed.value = true
                 _isShowProgressTotalDeaths.value = true
@@ -119,7 +121,7 @@ class TotalViewModel(private val interactor: TotalDataInteractor) : BaseViewMode
     private fun observeCountriesList() {
         localSubscriptions.clear()
 
-        interactor.observeCountriesListData(query)
+        totalInteractor.observeCountriesListData(query)
             .subscribeBy { countries ->
                 _countriesList.value = countries
             }

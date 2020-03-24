@@ -1,6 +1,6 @@
 package com.mobiledevpro.remote.service.api
 
-import com.mobiledevpro.remote.model.response.CountriesResponse
+import com.mobiledevpro.remote.model.response.CountriesTotalResponse
 import com.mobiledevpro.remote.model.response.TotalResponse
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -16,7 +16,7 @@ import retrofit2.http.Query
  * https://instagr.am/mobiledevpro
  * #MobileDevPro
  */
-interface RestApiClient {
+interface TotalRestApiClient {
 
     @GET(".")
     fun getTotalConfirmed(
@@ -87,6 +87,6 @@ interface RestApiClient {
         @Query(value = "resultOffset", encoded = true) resultOffset: Int = 0,
         @Query(value = "resultRecordCount", encoded = true) resultRecordCount: Int = 1000,
         @Query(value = "cacheHint", encoded = true) cacheHint: Boolean = true
-    ): Single<CountriesResponse>
+    ): Single<CountriesTotalResponse>
 
 }
