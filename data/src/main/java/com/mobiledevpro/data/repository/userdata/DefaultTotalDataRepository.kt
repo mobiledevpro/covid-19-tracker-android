@@ -3,7 +3,7 @@ package com.mobiledevpro.data.repository.userdata
 import com.mobiledevpro.data.mapper.toCacheEntity
 import com.mobiledevpro.data.mapper.toDomain
 import com.mobiledevpro.data.mapper.toEntity
-import com.mobiledevpro.data.model.CountryTotalEntity
+import com.mobiledevpro.data.model.CountryEntity
 import com.mobiledevpro.data.model.TotalEntity
 import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
@@ -31,18 +31,20 @@ class DefaultTotalDataRepository(
     override fun getLocalTotalDataObservable(): Observable<Total> = totalCovidCache
         .getTotalDataObservable()
         .map(TotalEntity::toDomain)
-        .onErrorReturn { Total() }
+        .throwableToDomain()
 
     override fun setLocalTotalData(total: Total): Completable = Single
         .just(total)
         .map(Total::toCacheEntity)
         .flatMapCompletable(totalCovidCache::updateTotalData)
+        .flatMapCompletable(covidCache::updateTotalData)
+        .throwableToDomain()
 
     override fun getTotalData(): Single<Total> = Single
-        .zip(
-            totalCovidRemote.getTotalConfirmed(),
-            totalCovidRemote.getTotalDeaths(),
-            totalCovidRemote.getTotalRecovered(),
+        .zip<TotalValueEntity, TotalValueEntity, TotalValueEntity, Total>(
+            covidRemote.getTotalConfirmed(),
+            covidRemote.getTotalDeaths(),
+            covidRemote.getTotalRecovered(),
             Function3 { countConfirmed, countDeaths, countRecovered ->
                 Total(
                     confirmed = countConfirmed.count,
@@ -50,21 +52,23 @@ class DefaultTotalDataRepository(
                     recovered = countRecovered.count
                 )
             })
+        .throwableToDomain()
 
-    override fun getLocalCountriesObservable(query: String): Observable<ArrayList<Country>> =
-        totalCovidCache
-            .getLocalCountriesObservable(query)
-            .map { it.map(CountryTotalEntity::toDomain) }
-            .flatMap { list -> Observable.just(ArrayList(list)) }
-            .onErrorReturn { ArrayList() }
 
-    override fun getCountries(): Single<List<Country>> = totalCovidRemote
+    override fun getLocalCountriesObservable(query: String): Observable<List<Country>> = covidCache
+        .getLocalCountriesObservable(query)
+        .map { it.map(CountryEntity::toDomain) }
+        .throwableToDomain()
+
+    override fun getCountries(): Single<List<Country>> = covidRemote
         .getCountries()
-        .map { it.map(CountryTotalEntity::toDomain) }
+        .map { it.map(CountryEntity::toDomain) }
+        .throwableToDomain()
 
     override fun setLocalCountriesData(countries: List<Country>): Completable = Single
         .just(countries)
         .map { it.map(Country::toEntity) }
-        .flatMapCompletable(totalCovidCache::updateCountries)
+        .flatMapCompletable(covidCache::updateCountries)
+        .throwableToDomain()
 }
 

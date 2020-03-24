@@ -3,6 +3,7 @@ package com.mobiledevpro.app.common
 import android.app.Application
 import com.mobiledevpro.app.BuildConfig
 import com.mobiledevpro.app.di.*
+import com.testfairy.TestFairy
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -33,6 +34,9 @@ class App : Application() {
         }
 
          */
+
+        //Beta testing (where release is published)
+        TestFairy.begin(this, "6f9121c053a0dabdfa96dbb31c5c128860c119b3");
     }
 
     private fun initKoin() {

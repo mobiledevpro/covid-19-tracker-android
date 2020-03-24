@@ -1,14 +1,12 @@
 package com.mobiledevpro.app.ui.total.viewmodel
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
+import com.mobiledevpro.app.utils.provider.ResourceProvider
 import com.mobiledevpro.app.utils.toDecimalFormat
+import com.mobiledevpro.domain.common.Result
 import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.disposables.CompositeDisposable
@@ -28,6 +26,10 @@ class TotalViewModel(
     private val totalInteractor: TotalDataInteractor
 ) : BaseViewModel(),
     LifecycleObserver {
+class TotalViewModel(
+    private val interactor: TotalDataInteractor,
+    private val resourceProvider: ResourceProvider
+) : BaseViewModel(), LifecycleObserver {
 
     private val localSubscriptions = CompositeDisposable()
 
@@ -57,8 +59,13 @@ class TotalViewModel(
     private val _countriesList = MutableLiveData<ArrayList<Country>>()
     val countriesList: LiveData<ArrayList<Country>> = _countriesList
 
-    private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
-    val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
+    /*  private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
+      val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
+
+
+     */
+    private val _eventShowError = MutableLiveData<Event<String>>()
+    val eventShowError: LiveData<Event<String>> = _eventShowError
 
     init {
         observeTotalValues()
@@ -70,7 +77,15 @@ class TotalViewModel(
     fun onStartView() {
         totalInteractor.apply {
             refreshTotalData()
-                .subscribeBy { /* do nothing */ }
+                .subscribeBy { result ->
+                    when (result) {
+                        is Result.Success -> { /*do nothing*/ }
+                        is Result.Failure -> {
+                            val errMsg = resourceProvider.getErrorMessage(result.error)
+                            _eventShowError.value = Event(errMsg)
+                        }
+                    }
+                }
                 .addTo(subscriptions)
 
             refreshCountriesData()
@@ -82,11 +97,6 @@ class TotalViewModel(
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStopView() {
         //do something if needed
-    }
-
-    fun onClickViewByCountry() {
-        _eventNavigateTo.value =
-            Event(Navigation.NAVIGATE_TO_COUNTRIES_LIST)
     }
 
     fun getQuery() = query
@@ -103,16 +113,21 @@ class TotalViewModel(
                 _isShowProgressTotalDeaths.value = true
                 _isShowProgressTotalRecovered.value = true
             }
-            .subscribeBy { total ->
-                total.apply {
-                    _totalConfirmed.value = confirmed.toDecimalFormat()
-                    _totalDeaths.value = deaths.toDecimalFormat()
-                    _totalRecovered.value = recovered.toDecimalFormat()
-                    _updateTime.value = updateTime.dateToSting()
+            .subscribeBy { result ->
+                when (result) {
+                    is Result.Success -> result.data.apply {
+                        _totalConfirmed.value = confirmed.toDecimalFormat()
+                        _totalDeaths.value = deaths.toDecimalFormat()
+                        _totalRecovered.value = recovered.toDecimalFormat()
+                        _updateTime.value = updateTime.dateToSting()
 
-                    _isShowProgressTotalConfirmed.value = confirmed < 0
-                    _isShowProgressTotalDeaths.value = confirmed < 0
-                    _isShowProgressTotalRecovered.value = confirmed < 0
+                        _isShowProgressTotalConfirmed.value = confirmed < 0
+                        _isShowProgressTotalDeaths.value = confirmed < 0
+                        _isShowProgressTotalRecovered.value = confirmed < 0
+                    }
+                    is Result.Failure -> {
+                        //TODO: add error implementation
+                    }
                 }
             }
             .addTo(subscriptions)
@@ -124,6 +139,14 @@ class TotalViewModel(
         totalInteractor.observeCountriesListData(query)
             .subscribeBy { countries ->
                 _countriesList.value = countries
+        interactor.observeCountriesListData(query)
+            .subscribeBy { result ->
+                when (result) {
+                    is Result.Success -> _countriesList.value = result.data
+                    is Result.Failure -> {
+                        //TODO: add error implementation
+                    }
+                }
             }
             .addTo(localSubscriptions)
     }
@@ -131,9 +154,5 @@ class TotalViewModel(
     override fun onCleared() {
         super.onCleared()
         localSubscriptions.clear()
-    }
-
-    enum class Navigation {
-        NAVIGATE_TO_COUNTRIES_LIST
     }
 }

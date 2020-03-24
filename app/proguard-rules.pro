@@ -94,3 +94,8 @@
 -keep class * extends androidx.lifecycle.AndroidViewModel {
     <init>(android.app.Application);
 }
+
+#Keep Testfairy SDK
+-keep class com.testfairy.** { *; }
+-dontwarn com.testfairy.**
+-keepattributes Exceptions, Signature, LineNumberTable

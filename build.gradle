@@ -64,6 +64,7 @@ ext {
     stethoVersion = '1.5.0'
     flipperVersion = '0.33.1'
     soloaderVersion = "0.8.2"
+    testfairyVersion = '1.+@aar'
     jsoupVersion = "1.13.1"
 
     deps = [
@@ -122,5 +123,9 @@ ext {
 
             //HTML parser
             "jsoup"                   : "org.jsoup:jsoup:$jsoupVersion"
+            "soloader"                : "com.facebook.soloader:soloader:$soloaderVersion",
+
+            //Beta testing
+            "testfairy"               : "testfairy:testfairy-android-sdk:$testfairyVersion"
     ]
 }
