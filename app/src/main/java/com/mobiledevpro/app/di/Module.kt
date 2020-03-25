@@ -6,6 +6,7 @@ import com.mobiledevpro.app.utils.provider.DefaultResourceProvider
 import com.mobiledevpro.app.utils.provider.ResourceProvider
 import com.mobiledevpro.data.repository.parcer.StatisticsParserHtml
 import com.mobiledevpro.data.repository.statistic.DefaultStatisticDataRepository
+import com.mobiledevpro.data.repository.statistic.StatisticCovidCache
 import com.mobiledevpro.data.repository.statistic.StatisticCovidRemote
 import com.mobiledevpro.data.repository.userdata.DefaultTotalDataRepository
 import com.mobiledevpro.data.repository.userdata.TotalCovidCache
@@ -17,6 +18,7 @@ import com.mobiledevpro.domain.totaldata.DefaultTotalDataInteractor
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import com.mobiledevpro.domain.totaldata.TotalDataRepository
 import com.mobiledevpro.local.database.AppDatabase
+import com.mobiledevpro.local.database.statistic.DefaultStatisticsCovidCache
 import com.mobiledevpro.local.database.total.DefaultTotalCovidCache
 import com.mobiledevpro.local.storage.PreferencesHelper
 import com.mobiledevpro.local.storage.PreferencesHelperImpl
@@ -80,6 +82,7 @@ val dataLocalModule = module {
     single { DefaultTotalCovidCache(database = get()) as TotalCovidCache }
 
     single { DefaultStatisticCovidRemote(apiStatistic = get()) as StatisticCovidRemote }
+    single { DefaultStatisticsCovidCache(database = get()) as StatisticCovidCache }
 
     single { AppDatabase.getInstance(androidContext()) }
 
