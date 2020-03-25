@@ -19,7 +19,6 @@ class DefaultStatisticsCovidCache(
             val dayStatisticsCache = statistics.map { statisticEntity ->
                 statisticEntity.dayCounts.map { dayTotalEntity ->
                     CachedDayTotalCountryStatistic(
-                        province = statisticEntity.country.provinceName,
                         country = statisticEntity.country.countryName,
                         date = dayTotalEntity.date,
                         count = dayTotalEntity.count

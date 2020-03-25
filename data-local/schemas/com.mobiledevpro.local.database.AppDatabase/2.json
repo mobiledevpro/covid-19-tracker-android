@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "8a614d585daf02e28f2321769a55f127",
+    "identityHash": "dd1c61ef756fbd6bc5849815d636ee2f",
     "entities": [
       {
         "tableName": "total",
@@ -135,8 +135,14 @@
       },
       {
         "tableName": "countries_statistic",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`country` TEXT NOT NULL, `province` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, PRIMARY KEY(`country`, `province`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `country` TEXT NOT NULL, `province` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL)",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "country",
             "columnName": "country",
@@ -164,10 +170,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "country",
-            "province"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [
           {
@@ -183,8 +188,14 @@
       },
       {
         "tableName": "CachedStatisticCountryWithDailyStatistic",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`country` TEXT, `province` TEXT, `latitude` REAL, `longitude` REAL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `country` TEXT, `province` TEXT, `latitude` REAL, `longitude` REAL)",
         "fields": [
+          {
+            "fieldPath": "country.id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
           {
             "fieldPath": "country.country",
             "columnName": "country",
@@ -219,18 +230,12 @@
       },
       {
         "tableName": "day_total_country_statistic",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`province` TEXT NOT NULL, `country` TEXT NOT NULL, `date` TEXT NOT NULL, `count` INTEGER NOT NULL, PRIMARY KEY(`date`, `country`, `province`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `date` TEXT NOT NULL, `count` INTEGER NOT NULL, PRIMARY KEY(`date`, `id`), FOREIGN KEY(`date`) REFERENCES `countries_statistic`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "province",
-            "columnName": "province",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "country",
-            "columnName": "country",
-            "affinity": "TEXT",
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -249,8 +254,7 @@
         "primaryKey": {
           "columnNames": [
             "date",
-            "country",
-            "province"
+            "id"
           ],
           "autoGenerate": false
         },
@@ -264,13 +268,25 @@
             "createSql": "CREATE INDEX IF NOT EXISTS `index_day_total_country_statistic_date` ON `${TABLE_NAME}` (`date`)"
           }
         ],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "countries_statistic",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "date"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8a614d585daf02e28f2321769a55f127')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dd1c61ef756fbd6bc5849815d636ee2f')"
     ]
   }
 }

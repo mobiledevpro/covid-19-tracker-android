@@ -9,7 +9,7 @@ class CachedStatisticCountryWithDailyStatistic {
     var country: CachedStatisticCountry? = null
 
     @Relation(
-        parentColumn = "country",
+        parentColumn = "id",
         entityColumn = "date"
     )
 
