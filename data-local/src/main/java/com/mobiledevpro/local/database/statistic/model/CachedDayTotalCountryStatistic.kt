@@ -15,14 +15,13 @@ import androidx.room.Index
     indices = [Index("date")],
     foreignKeys = [(ForeignKey(
         entity = CachedStatisticCountry::class,
-        parentColumns = ["country", "province"],
-        childColumns = ["date"],
+        parentColumns = ["province"],
+        childColumns = ["province"],
         onDelete = ForeignKey.CASCADE
     ))],
-    primaryKeys = ["date", "id"]
+    primaryKeys = ["date", "province"]
 )
 data class CachedDayTotalCountryStatistic(
-    val country: String,
     val province: String,
     val date: String,
     val count: Long

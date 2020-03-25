@@ -12,8 +12,8 @@ import androidx.room.Index
  */
 @Entity(
     tableName = "countries_statistic",
-    primaryKeys = ["country", "province"],
-    indices = [Index(value = ["country"], unique = false)]
+    primaryKeys = ["province"],
+    indices = [Index(value = ["province"], unique = false)]
 )
 data class CachedStatisticCountry(
     val country: String,

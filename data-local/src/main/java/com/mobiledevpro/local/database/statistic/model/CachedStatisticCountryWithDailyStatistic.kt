@@ -1,18 +1,15 @@
 package com.mobiledevpro.local.database.statistic.model
 
 import androidx.room.Embedded
-import androidx.room.Relation
 
 class CachedStatisticCountryWithDailyStatistic {
 
     @Embedded
     var country: CachedStatisticCountry? = null
 
-    @Relation(
-        // TODO: can I create list of parents?
-        parentColumn = "country",
-        entityColumn = "date"
-    )
-
+//    @Relation(
+//        parentColumn = "country",
+//        entityColumn = "country"
+//    )
     var dayStatistic: List<CachedDayTotalCountryStatistic> = listOf()
 }
