@@ -2,8 +2,10 @@ package com.mobiledevpro.local.mapper
 
 import com.mobiledevpro.data.model.CountryTotalEntity
 import com.mobiledevpro.data.model.TotalEntity
-import com.mobiledevpro.local.database.model.CachedCounties
-import com.mobiledevpro.local.database.model.CachedTotal
+import com.mobiledevpro.data.model.statistic.StatisticEntity
+import com.mobiledevpro.local.database.statistic.model.CachedStatisticCountry
+import com.mobiledevpro.local.database.total.model.CachedTotal
+import com.mobiledevpro.local.database.total.model.CachedTotalCounties
 
 fun CachedTotal.toEntity() = TotalEntity(
     confirmed = confirmed,
@@ -19,7 +21,7 @@ fun TotalEntity.toCached() = CachedTotal(
     lastUpdateTime = lastUpdateTime
 )
 
-fun CachedCounties.toEntity() = CountryTotalEntity(
+fun CachedTotalCounties.toEntity() = CountryTotalEntity(
     id = id,
     country = country,
     updated = updated,
@@ -31,7 +33,7 @@ fun CachedCounties.toEntity() = CountryTotalEntity(
     active = active
 )
 
-fun CountryTotalEntity.toCached() = CachedCounties(
+fun CountryTotalEntity.toCached() = CachedTotalCounties(
     id = id,
     country = country,
     updated = updated,
@@ -41,4 +43,11 @@ fun CountryTotalEntity.toCached() = CachedCounties(
     deaths = deaths,
     recovered = recovered,
     active = active
+)
+
+fun StatisticEntity.toCache() = CachedStatisticCountry(
+    province = country.provinceName,
+    country = country.countryName,
+    latitude = coord.lat,
+    longitude = coord.long
 )

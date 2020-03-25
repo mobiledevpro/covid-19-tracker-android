@@ -82,7 +82,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun applyWindowInsets(view: View) {
-        //Use Window Insets to set top and bottom paddings to our activity
+        //Use Window Insets to set top and bottom padding's to our activity
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             v.updatePadding(
                 left = insets.systemWindowInsetLeft,

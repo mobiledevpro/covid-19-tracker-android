@@ -1,17 +1,17 @@
-package com.mobiledevpro.local.database.model
+package com.mobiledevpro.local.database.total.model
 
 import androidx.room.Entity
 import androidx.room.Index
 
 @Entity(
-    tableName = "counties",
+    tableName = "counties_total",
     indices = [
         Index(value = ["id"]),
         Index(value = ["country"])
     ],
     primaryKeys = ["id"]
 )
-data class CachedCounties(
+data class CachedTotalCounties(
 
     var id: Int = 0,
 

@@ -12,6 +12,7 @@ import com.mobiledevpro.app.utils.provider.ResourceProvider
 import com.mobiledevpro.app.utils.toDecimalFormat
 import com.mobiledevpro.domain.common.Result
 import com.mobiledevpro.domain.model.Country
+import com.mobiledevpro.domain.statistic.data.StatisticDataInteractor
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -27,8 +28,10 @@ import io.reactivex.rxkotlin.subscribeBy
  * #MobileDevPro
  */
 class TotalViewModel(
+    private val resourceProvider: ResourceProvider,
     private val totalInteractor: TotalDataInteractor,
-    private val resourceProvider: ResourceProvider
+    // TODO: delete the parameter
+    private val statisticInteractor: StatisticDataInteractor
 ) : BaseViewModel(), LifecycleObserver {
 
     private val localSubscriptions = CompositeDisposable()
@@ -70,6 +73,14 @@ class TotalViewModel(
     init {
         observeTotalValues()
         observeCountriesList()
+
+        // TODO: delete the test subscribe logic
+        statisticInteractor
+            .fetchStatisticsFromHtml()
+            .subscribeBy {
+                _eventShowError.value = Event("Fetch parsing success!")
+            }
+            .addTo(subscriptions)
     }
 
 
@@ -92,6 +103,8 @@ class TotalViewModel(
                 .subscribeBy { /* do nothing */ }
                 .addTo(subscriptions)
         }
+
+
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)

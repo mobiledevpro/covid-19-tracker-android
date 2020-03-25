@@ -16,7 +16,8 @@ import com.mobiledevpro.domain.statistic.data.StatisticDataRepository
 import com.mobiledevpro.domain.totaldata.DefaultTotalDataInteractor
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import com.mobiledevpro.domain.totaldata.TotalDataRepository
-import com.mobiledevpro.local.database.DefaultTotalCovidCache
+import com.mobiledevpro.local.database.AppDatabase
+import com.mobiledevpro.local.database.total.DefaultTotalCovidCache
 import com.mobiledevpro.local.storage.PreferencesHelper
 import com.mobiledevpro.local.storage.PreferencesHelperImpl
 import com.mobiledevpro.remote.implementation.DefaultStatisticCovidRemote
@@ -41,16 +42,18 @@ import org.koin.dsl.module
  */
 
 val uiModule = module {
-    viewModel { TotalViewModel(get(), get()) }
+
     viewModel { MainViewModel() }
 
-    single { DefaultResourceProvider(androidContext().resources) as ResourceProvider }
     viewModel {
         TotalViewModel(
+            resourceProvider = get(),
             totalInteractor = get(),
-            resourceProvider = get()
+            statisticInteractor = get()
         )
     }
+
+    single { DefaultResourceProvider(androidContext().resources) as ResourceProvider }
 }
 
 val domainModule = module {
@@ -65,23 +68,27 @@ val dataModule = module {
             totalCovidRemote = get()
         ) as TotalDataRepository
     }
-    single { DefaultStatisticDataRepository(statisticRemote = get()) as StatisticDataRepository }
+    single { DefaultStatisticDataRepository(
+        statisticsCache = get(),
+        statisticRemote = get(),
+        statisticsParserHtml = get()
+    ) as StatisticDataRepository }
 }
 
 val dataLocalModule = module {
     single { DefaultTotalCovidRemote(apiTotal = get()) as TotalCovidRemote }
-    single { DefaultTotalCovidCache(appContext = get()) as TotalCovidCache }
+    single { DefaultTotalCovidCache(database = get()) as TotalCovidCache }
 
     single { DefaultStatisticCovidRemote(apiStatistic = get()) as StatisticCovidRemote }
 
-    single { DefaultStatisticsParserHtml() as StatisticsParserHtml }
+    single { AppDatabase.getInstance(androidContext()) }
 
     single { PreferencesHelperImpl(appContext = get()) as PreferencesHelper }
 
 }
 
 val dataRemoteModule = module {
-    // retrofit instance, firebase database, etc
+    // retrofit instance, firebase database, html parser etc
     single {
         RemoteServiceFactory(
             client = get(named(TOTAL_OK_HTTP_CLIENT))
@@ -107,6 +114,8 @@ val dataRemoteModule = module {
             listOf(ApiResponseInterceptor())
         )
     }
+
+    single { DefaultStatisticsParserHtml() as StatisticsParserHtml }
 }
 
 

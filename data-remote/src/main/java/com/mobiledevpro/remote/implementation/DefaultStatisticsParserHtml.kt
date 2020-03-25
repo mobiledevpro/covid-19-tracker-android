@@ -13,13 +13,13 @@ import org.jsoup.select.Elements
 class DefaultStatisticsParserHtml : StatisticsParserHtml {
 
     override fun getConfirmedStatistics(): Single<ArrayList<StatisticEntity>> =
-        Single.just(getDataStatistic(CONFIRMED_FILE_NAME))
+        Single.fromCallable { getDataStatistic(CONFIRMED_FILE_NAME) }
 
     override fun getDeathsStatistics(): Single<ArrayList<StatisticEntity>> =
-        Single.just(getDataStatistic(DEATHS_FILE_NAME))
+        Single.fromCallable { getDataStatistic(DEATHS_FILE_NAME) }
 
     override fun getRecoveredStatistics(): Single<ArrayList<StatisticEntity>> =
-        Single.just(getDataStatistic(RECOVERED_FILE_NAME))
+        Single.fromCallable { getDataStatistic(RECOVERED_FILE_NAME) }
 
 
     private fun getDataStatistic(fileName: String): ArrayList<StatisticEntity> {
@@ -72,7 +72,7 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
             }
         } catch (e: Exception) {
             // TODO: create exception
-            throw Exception("Parser Error")
+            throw Exception("Parser Error: ${e.message}")
         }
 
         return counties
@@ -93,7 +93,7 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
     private companion object {
 
         const val BASE_URL =
-            "https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series/"
+            "https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/"
 
         const val CONFIRMED_FILE_NAME = "time_series_19-covid-Confirmed.csv"
 

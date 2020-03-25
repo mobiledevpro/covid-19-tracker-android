@@ -1,17 +1,16 @@
-package com.mobiledevpro.local.database.dao
+package com.mobiledevpro.local.database.total.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.mobiledevpro.local.database.model.CachedTotal
+import com.mobiledevpro.local.database.total.model.CachedTotal
 import io.reactivex.Observable
 
 @Dao
-internal interface TotalDataDao : BaseDao<CachedTotal> {
+interface TotalDataDao : BaseDao<CachedTotal> {
 
     @Query("SELECT * FROM total")
     fun getTotalDataObservable(): Observable<CachedTotal>
 
     @Query("DELETE FROM total")
     fun deleteAllTotalValues()
-
 }
