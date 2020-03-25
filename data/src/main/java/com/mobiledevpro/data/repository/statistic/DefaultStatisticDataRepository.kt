@@ -2,9 +2,13 @@ package com.mobiledevpro.data.repository.statistic
 
 import com.mobiledevpro.data.mapper.toDomain
 import com.mobiledevpro.data.model.statistic.CountryStatisticEntity
+import com.mobiledevpro.data.model.statistic.CountyStatisticEntity
+import com.mobiledevpro.data.model.statistic.DayStatisticEntity
 import com.mobiledevpro.data.model.statistic.StatisticEntity
 import com.mobiledevpro.data.repository.parcer.StatisticsParserHtml
+import com.mobiledevpro.domain.model.StatisticCountry
 import com.mobiledevpro.domain.statistic.data.StatisticDataRepository
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.Function3
 
@@ -30,4 +34,39 @@ class DefaultStatisticDataRepository(
         .flatMapCompletable(statisticsCache::updateConfirmedData)
     //TODO: add error implementation
 
+    override fun observeStatisticByCountyName(query: String): Observable<StatisticCountry> = statisticsCache
+        .observeConfirmedDataByCountryName(query)
+        .map { result ->
+            if (result.size <= 1) result[0]
+            else collectDataByDay(result)
+        }
+        .map(StatisticEntity::toDomain)
+
+    private fun collectDataByDay(result: List<StatisticEntity>): StatisticEntity {
+        val convertedDaysTotalEntity = ArrayList<DayStatisticEntity>()
+
+        for (i in result[0].dayStatistic.indices) {
+            var count = 0L
+
+            for (j in result.indices) count += result[j].dayStatistic[i].count
+
+            convertedDaysTotalEntity.add(
+                DayStatisticEntity(
+                    date = result[0].dayStatistic[i].date,
+                    count = count
+                )
+            )
+        }
+
+        return StatisticEntity(
+            country = CountyStatisticEntity(
+                countryName = result[0].country.countryName,
+                provinceName = result[0].country.countryName
+            ),
+            // TODO: need to think about getting coordinates for showing on Map
+            coord = result[0].coord,
+            dayStatistic = convertedDaysTotalEntity
+        )
+
+    }
 }

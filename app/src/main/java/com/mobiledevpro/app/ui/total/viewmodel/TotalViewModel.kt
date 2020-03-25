@@ -11,7 +11,7 @@ import com.mobiledevpro.app.utils.dateToSting
 import com.mobiledevpro.app.utils.provider.ResourceProvider
 import com.mobiledevpro.app.utils.toDecimalFormat
 import com.mobiledevpro.domain.common.Result
-import com.mobiledevpro.domain.model.Country
+import com.mobiledevpro.domain.model.TotalCountry
 import com.mobiledevpro.domain.statistic.data.StatisticDataInteractor
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
 import io.reactivex.disposables.CompositeDisposable
@@ -59,8 +59,8 @@ class TotalViewModel(
     private val _updateTime = MutableLiveData<String>()
     val updateTime: LiveData<String> = _updateTime
 
-    private val _countriesList = MutableLiveData<ArrayList<Country>>()
-    val countriesList: LiveData<ArrayList<Country>> = _countriesList
+    private val _countriesList = MutableLiveData<ArrayList<TotalCountry>>()
+    val countriesList: LiveData<ArrayList<TotalCountry>> = _countriesList
 
     /*  private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
       val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
@@ -75,12 +75,18 @@ class TotalViewModel(
         observeCountriesList()
 
         // TODO: delete the test subscribe logic
-        statisticInteractor
-            .fetchStatisticsFromHtml()
-            .subscribeBy {
-                _eventShowError.value = Event("Fetch parsing success!")
-            }
+        statisticInteractor.apply {
+            fetchStatisticsFromHtml()
+            .subscribeBy { /* do nothing */ }
             .addTo(subscriptions)
+
+            // TODO: remove to new viewmodel
+            observeStatisticByCountryName("China")
+                .subscribeBy {
+                    val result = it
+                }
+                .addTo(subscriptions)
+        }
     }
 
 

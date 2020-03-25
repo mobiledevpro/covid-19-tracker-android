@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.ItemCountryBinding
 import com.mobiledevpro.app.utils.diff.CountiesDiffUtil
-import com.mobiledevpro.domain.model.Country
+import com.mobiledevpro.domain.model.TotalCountry
 
 /**
  * Adapter for RecyclerView Countries list
@@ -22,7 +22,7 @@ import com.mobiledevpro.domain.model.Country
  */
 class CountriesListAdapter : RecyclerView.Adapter<CountriesListAdapter.ViewHolder>() {
 
-    private var countriesList: ArrayList<Country> = ArrayList()
+    private var countriesList: ArrayList<TotalCountry> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryItemViewHolder =
         CountryItemViewHolder(parent)
@@ -35,7 +35,7 @@ class CountriesListAdapter : RecyclerView.Adapter<CountriesListAdapter.ViewHolde
 
     override fun getItemCount() = countriesList.size
 
-    fun populateList(update: ArrayList<Country>) {
+    fun populateList(update: ArrayList<TotalCountry>) {
         val callback = CountiesDiffUtil(countriesList, update)
         val result = DiffUtil.calculateDiff(callback)
         countriesList.clear()
@@ -47,7 +47,7 @@ class CountriesListAdapter : RecyclerView.Adapter<CountriesListAdapter.ViewHolde
     companion object {
         @JvmStatic
         @BindingAdapter("items")
-        fun RecyclerView.bindItems(items: List<Country>) {
+        fun RecyclerView.bindItems(items: List<TotalCountry>) {
             val adapter = adapter as CountriesListAdapter
             adapter.populateList(ArrayList(items))
         }
@@ -66,7 +66,7 @@ class CountriesListAdapter : RecyclerView.Adapter<CountriesListAdapter.ViewHolde
 
     ) : ViewHolder(binding.root) {
 
-        fun bind(item: Country) {
+        fun bind(item: TotalCountry) {
             binding.item = item
             binding.executePendingBindings()
         }

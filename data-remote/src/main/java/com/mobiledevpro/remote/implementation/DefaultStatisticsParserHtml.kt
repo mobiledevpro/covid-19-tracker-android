@@ -2,7 +2,7 @@ package com.mobiledevpro.remote.implementation
 
 import com.mobiledevpro.data.model.statistic.CoordEntity
 import com.mobiledevpro.data.model.statistic.CountyStatisticEntity
-import com.mobiledevpro.data.model.statistic.DayTotalEntity
+import com.mobiledevpro.data.model.statistic.DayStatisticEntity
 import com.mobiledevpro.data.model.statistic.StatisticEntity
 import com.mobiledevpro.data.repository.parcer.StatisticsParserHtml
 import io.reactivex.Single
@@ -41,9 +41,20 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
                     .parent()
                     .getElementsByTag(ROW_SEPARATOR)
 
+                val countryName = countryHtml.toStringValue(2)
+
+                var provinceName = countryHtml.toStringValue(1).apply {
+                    when (this.isEmpty()) {
+                        true -> countryName
+                        else -> this
+                    }
+                }
+
+                if (provinceName.isEmpty()) provinceName = countryName
+
                 val countyStatisticEntity = CountyStatisticEntity(
-                    provinceName = countryHtml.toStringValue(1),
-                    countryName = countryHtml.toStringValue(2)
+                    provinceName = provinceName,
+                    countryName = countryName
                 )
 
                 val coordEntity = CoordEntity(
@@ -51,12 +62,12 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
                     long = countryHtml.toDoubleValue(4)
                 )
 
-                val dayCountsEntity = ArrayList<DayTotalEntity>()
+                val dayCountsEntity = ArrayList<DayStatisticEntity>()
 
                 for (j in 5 until countryHtml.size) {
                     dayCountsEntity.add(
-                        DayTotalEntity(
-                            date = titlesHtml.toStringValue(j-1),
+                        DayStatisticEntity(
+                            date = titlesHtml.toStringValue(j - 1),
                             count = countryHtml.toLongValue(j)
                         )
                     )
@@ -66,7 +77,7 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
                     StatisticEntity(
                         country = countyStatisticEntity,
                         coord = coordEntity,
-                        dayCounts = dayCountsEntity
+                        dayStatistic = dayCountsEntity
                     )
                 )
             }

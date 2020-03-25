@@ -3,8 +3,8 @@ package com.mobiledevpro.domain.totaldata
 import com.mobiledevpro.domain.common.None
 import com.mobiledevpro.domain.common.Result
 import com.mobiledevpro.domain.extension.toResult
-import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
+import com.mobiledevpro.domain.model.TotalCountry
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,7 +39,7 @@ class DefaultTotalDataInteractor(
 
     override fun observeCountriesListData(
         query: String
-    ): Observable<Result<ArrayList<Country>>> = totalDataRepository
+    ): Observable<Result<ArrayList<TotalCountry>>> = totalDataRepository
         .getLocalCountriesObservable(query)
         .map { ArrayList(it) }
         .toResult()

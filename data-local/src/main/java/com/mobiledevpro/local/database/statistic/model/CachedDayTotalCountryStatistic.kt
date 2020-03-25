@@ -6,7 +6,7 @@ import androidx.room.Index
 
 /**
  * Data class for collect day statistic by country
- * @property country is parent name of country
+ * @property province is parent name of country/province
  * @property date is a date of statistic
  * @property count is a count people of statistic
  */

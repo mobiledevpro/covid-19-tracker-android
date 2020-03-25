@@ -15,6 +15,6 @@ interface StatisticCountryDataDao : BaseDao<CachedStatisticCountry> {
     fun getCountries(): Observable<List<CachedStatisticCountry>>
 
     @Transaction
-    @Query("SELECT * FROM countries_statistic WHERE country = :country AND province = :province")
-    fun getCountryByCountryName(province: String, country: String): Observable<CachedStatisticCountryWithDailyStatistic>
+    @Query("SELECT * FROM countries_statistic WHERE country = :query")
+    fun getCountryByCountryName(query: String): Observable<List<CachedStatisticCountryWithDailyStatistic>>
 }

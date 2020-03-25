@@ -2,8 +2,13 @@ package com.mobiledevpro.local.mapper
 
 import com.mobiledevpro.data.model.CountryTotalEntity
 import com.mobiledevpro.data.model.TotalEntity
+import com.mobiledevpro.data.model.statistic.CoordEntity
+import com.mobiledevpro.data.model.statistic.CountyStatisticEntity
+import com.mobiledevpro.data.model.statistic.DayStatisticEntity
 import com.mobiledevpro.data.model.statistic.StatisticEntity
+import com.mobiledevpro.local.database.statistic.model.CachedDayTotalCountryStatistic
 import com.mobiledevpro.local.database.statistic.model.CachedStatisticCountry
+import com.mobiledevpro.local.database.statistic.model.CachedStatisticCountryWithDailyStatistic
 import com.mobiledevpro.local.database.total.model.CachedTotal
 import com.mobiledevpro.local.database.total.model.CachedTotalCounties
 
@@ -50,4 +55,21 @@ fun StatisticEntity.toCache() = CachedStatisticCountry(
     country = country.countryName,
     latitude = coord.lat,
     longitude = coord.long
+)
+
+fun CachedStatisticCountryWithDailyStatistic.toEntity() = StatisticEntity(
+    country = CountyStatisticEntity(
+        countryName = country!!.country,
+        provinceName = country!!.province
+    ),
+    coord = CoordEntity(
+        lat = country!!.latitude,
+        long = country!!.longitude
+    ),
+    dayStatistic = dayStatistics.map { it.toEntity() }
+)
+
+private fun CachedDayTotalCountryStatistic.toEntity() = DayStatisticEntity(
+    date = date,
+    count = count
 )

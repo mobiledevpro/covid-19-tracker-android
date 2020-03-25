@@ -7,8 +7,8 @@ import com.mobiledevpro.data.mapper.toEntity
 import com.mobiledevpro.data.model.CountryTotalEntity
 import com.mobiledevpro.data.model.TotalEntity
 import com.mobiledevpro.data.model.TotalValueEntity
-import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
+import com.mobiledevpro.domain.model.TotalCountry
 import com.mobiledevpro.domain.totaldata.TotalDataRepository
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -56,19 +56,19 @@ class DefaultTotalDataRepository(
         .throwableToDomain()
 
 
-    override fun getLocalCountriesObservable(query: String): Observable<List<Country>> = totalCovidCache
+    override fun getLocalCountriesObservable(query: String): Observable<List<TotalCountry>> = totalCovidCache
         .getLocalCountriesObservable(query)
         .map { it.map(CountryTotalEntity::toDomain) }
         .throwableToDomain()
 
-    override fun getCountries(): Single<List<Country>> = totalCovidRemote
+    override fun getCountries(): Single<List<TotalCountry>> = totalCovidRemote
         .getCountries()
         .map { it.map(CountryTotalEntity::toDomain) }
         .throwableToDomain()
 
-    override fun setLocalCountriesData(countries: List<Country>): Completable = Single
-        .just(countries)
-        .map { it.map(Country::toEntity) }
+    override fun setLocalCountriesData(totalCountries: List<TotalCountry>): Completable = Single
+        .just(totalCountries)
+        .map { it.map(TotalCountry::toEntity) }
         .flatMapCompletable(totalCovidCache::updateCountries)
         .throwableToDomain()
 }

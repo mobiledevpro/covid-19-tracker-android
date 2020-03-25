@@ -9,7 +9,7 @@
 
         <variable
             name="item"
-            type="com.mobiledevpro.domain.model.Country" />
+            type="com.mobiledevpro.domain.model.TotalCountry" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

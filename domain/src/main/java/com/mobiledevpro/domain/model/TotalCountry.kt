@@ -8,7 +8,7 @@ package com.mobiledevpro.domain.model
  * http://androiddev.pro
  *
  */
-data class Country(
+data class TotalCountry(
     val id: Int = 0,
     val country: String = "",
     val updated: Long = 0,
