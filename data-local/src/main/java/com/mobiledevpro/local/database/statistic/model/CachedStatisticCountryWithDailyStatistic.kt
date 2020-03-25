@@ -9,7 +9,8 @@ class CachedStatisticCountryWithDailyStatistic {
     var country: CachedStatisticCountry? = null
 
     @Relation(
-        parentColumn = "id",
+        // TODO: can I create list of parents?
+        parentColumn = "country",
         entityColumn = "date"
     )
 

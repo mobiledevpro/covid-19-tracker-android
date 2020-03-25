@@ -2,7 +2,6 @@ package com.mobiledevpro.local.database.statistic.model
 
 import androidx.room.Entity
 import androidx.room.Index
-import androidx.room.PrimaryKey
 
 /***
  * Data class for collect countries per static
@@ -13,12 +12,10 @@ import androidx.room.PrimaryKey
  */
 @Entity(
     tableName = "countries_statistic",
-//    primaryKeys = ["id"],
+    primaryKeys = ["country", "province"],
     indices = [Index(value = ["country"], unique = false)]
 )
 data class CachedStatisticCountry(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
     val country: String,
     val province: String,
     val latitude: Double,

@@ -9,7 +9,6 @@ import com.mobiledevpro.local.database.statistic.dao.StatisticCountryDataDao
 import com.mobiledevpro.local.database.statistic.dao.StatisticDayCountryDataDao
 import com.mobiledevpro.local.database.statistic.model.CachedDayTotalCountryStatistic
 import com.mobiledevpro.local.database.statistic.model.CachedStatisticCountry
-import com.mobiledevpro.local.database.statistic.model.CachedStatisticCountryWithDailyStatistic
 import com.mobiledevpro.local.database.total.dao.TotalCountryDataDao
 import com.mobiledevpro.local.database.total.dao.TotalDataDao
 import com.mobiledevpro.local.database.total.model.CachedTotal
@@ -30,7 +29,6 @@ import com.mobiledevpro.local.database.total.model.CachedTotalCounties
         CachedTotal::class,
         CachedTotalCounties::class,
         CachedStatisticCountry::class,
-        CachedStatisticCountryWithDailyStatistic::class,
         CachedDayTotalCountryStatistic::class
     ],
     version = BuildConfig.RoomDatabaseVersion,
