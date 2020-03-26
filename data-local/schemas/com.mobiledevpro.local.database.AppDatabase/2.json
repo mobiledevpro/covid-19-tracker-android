@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "850f1fd35303992ef8f8f996277c4965",
+    "identityHash": "698eccaa4552bc01a1de10cdb8c2b033",
     "entities": [
       {
         "tableName": "total",
@@ -182,7 +182,7 @@
       },
       {
         "tableName": "day_total_country_statistic",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`province` TEXT NOT NULL, `date` TEXT NOT NULL, `count` INTEGER NOT NULL, PRIMARY KEY(`date`, `province`), FOREIGN KEY(`province`) REFERENCES `countries_statistic`(`province`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`province` TEXT NOT NULL, `date` TEXT NOT NULL, `count` INTEGER NOT NULL, PRIMARY KEY(`date`, `province`))",
         "fields": [
           {
             "fieldPath": "province",
@@ -220,25 +220,13 @@
             "createSql": "CREATE INDEX IF NOT EXISTS `index_day_total_country_statistic_date` ON `${TABLE_NAME}` (`date`)"
           }
         ],
-        "foreignKeys": [
-          {
-            "table": "countries_statistic",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "province"
-            ],
-            "referencedColumns": [
-              "province"
-            ]
-          }
-        ]
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '850f1fd35303992ef8f8f996277c4965')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '698eccaa4552bc01a1de10cdb8c2b033')"
     ]
   }
 }
