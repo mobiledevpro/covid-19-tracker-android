@@ -1,5 +1,7 @@
 package com.mobiledevpro.domain.statistic.data
 
+import com.mobiledevpro.domain.common.Result
+import com.mobiledevpro.domain.extension.toResult
 import com.mobiledevpro.domain.model.StatisticCountry
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,9 +21,9 @@ class DefaultStatisticDataInteractor(
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
 
-    override fun observeStatisticByCountryName(query: String): Observable<StatisticCountry> = statisticDataRepository
+    override fun observeStatisticByCountryName(query: String): Observable<Result<StatisticCountry>> = statisticDataRepository
         .observeStatisticByCountyName(query)
-        .map<StatisticCountry> { result ->
+        .map { result ->
             for (i in result.dayStatistics.indices)
                 if (i == 0) result.dayStatistics[i].dayCount = result.dayStatistics[i].totalCount
                 else {
@@ -30,6 +32,7 @@ class DefaultStatisticDataInteractor(
                 }
             result
         }
+        .toResult()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
 }

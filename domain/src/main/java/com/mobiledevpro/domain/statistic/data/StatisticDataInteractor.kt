@@ -1,5 +1,6 @@
 package com.mobiledevpro.domain.statistic.data
 
+import com.mobiledevpro.domain.common.Result
 import com.mobiledevpro.domain.model.StatisticCountry
 import com.mobiledevpro.domain.model.TotalCountry
 import io.reactivex.Completable
@@ -12,5 +13,5 @@ interface StatisticDataInteractor {
 
     fun fetchStatisticsFromHtml(): Completable
 
-    fun observeStatisticByCountryName(query: String): Observable<StatisticCountry>
+    fun observeStatisticByCountryName(query: String): Observable<Result<StatisticCountry>>
 }

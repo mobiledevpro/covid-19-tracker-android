@@ -35,6 +35,7 @@ class DefaultStatisticDataRepository(
     //TODO: add error implementation
 
     override fun observeStatisticByCountyName(query: String): Observable<StatisticCountry> = statisticsCache
+            //TODO: add zip for collect confirmed, deaths, recovered
         .observeConfirmedDataByCountryName(query)
         .map { result ->
             if (result.size <= 1) result[0]

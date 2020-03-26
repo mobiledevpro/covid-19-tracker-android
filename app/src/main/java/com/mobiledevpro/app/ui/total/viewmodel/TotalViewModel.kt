@@ -30,7 +30,6 @@ import io.reactivex.rxkotlin.subscribeBy
 class TotalViewModel(
     private val resourceProvider: ResourceProvider,
     private val totalInteractor: TotalDataInteractor,
-    // TODO: delete the parameter
     private val statisticInteractor: StatisticDataInteractor
 ) : BaseViewModel(), LifecycleObserver {
 
@@ -62,6 +61,7 @@ class TotalViewModel(
     private val _countriesList = MutableLiveData<ArrayList<TotalCountry>>()
     val countriesList: LiveData<ArrayList<TotalCountry>> = _countriesList
 
+    //TODO: check this comment, if not need delete please
     /*  private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
       val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
 
@@ -73,20 +73,7 @@ class TotalViewModel(
     init {
         observeTotalValues()
         observeCountriesList()
-
-        // TODO: delete the test subscribe logic
-        statisticInteractor.apply {
-            fetchStatisticsFromHtml()
-            .subscribeBy { /* do nothing */ }
-            .addTo(subscriptions)
-
-            // TODO: remove to new viewmodel
-            observeStatisticByCountryName("China")
-                .subscribeBy {
-                    val result = it
-                }
-                .addTo(subscriptions)
-        }
+        fetchStatisticFromHtml()
     }
 
 
@@ -109,8 +96,6 @@ class TotalViewModel(
                 .subscribeBy { /* do nothing */ }
                 .addTo(subscriptions)
         }
-
-
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
@@ -165,6 +150,13 @@ class TotalViewModel(
                 }
             }
             .addTo(localSubscriptions)
+    }
+
+    private fun fetchStatisticFromHtml() {
+        statisticInteractor
+            .fetchStatisticsFromHtml()
+            .subscribeBy { /* do nothing */ }
+            .addTo(subscriptions)
     }
 
     override fun onCleared() {
