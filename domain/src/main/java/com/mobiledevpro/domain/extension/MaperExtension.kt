@@ -4,6 +4,7 @@ import com.mobiledevpro.domain.common.Error
 import com.mobiledevpro.domain.common.None
 import com.mobiledevpro.domain.common.Result
 import com.mobiledevpro.domain.error.AccessDeniedThrowable
+import com.mobiledevpro.domain.error.HtmlParserThrowable
 import com.mobiledevpro.domain.error.NetworkThrowable
 import com.mobiledevpro.domain.error.NotFoundThrowable
 import com.mobiledevpro.domain.error.ServiceUnavailableThrowable
@@ -46,6 +47,7 @@ private fun Throwable.toView() = when (this) {
     is NotFoundThrowable -> Error.NOT_FOUND_ERROR
     is AccessDeniedThrowable -> Error.ACCESS_DENIED_ERROR
     is ServiceUnavailableThrowable -> Error.SERVICE_UNAVAILABLE_ERROR
+    is HtmlParserThrowable -> Error.HTML_PARSER_ERROR
     is UnknownThrowable -> Error.UNKNOWN_ERROR
     else -> Error.UNKNOWN_ERROR
 

@@ -1,4 +1,4 @@
-package com.mobiledevpro.app.ui.countries.adapter
+package com.mobiledevpro.app.ui.statistic.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mobiledevpro.app.R
-import com.mobiledevpro.app.databinding.ItemStatisticBinding
+import com.mobiledevpro.app.databinding.ItemStatisticCountryBinding
 import com.mobiledevpro.app.utils.diff.StatisticCountryDiffUtil
 import com.mobiledevpro.domain.model.DayStatistic
 
@@ -49,7 +49,7 @@ class StatisticCountryListAdapter : RecyclerView.Adapter<StatisticCountryListAda
 
     inner class StatisticItemViewHolder(
         private val parent: ViewGroup,
-        private val binding: ItemStatisticBinding = DataBindingUtil.inflate(
+        private val binding: ItemStatisticCountryBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.item_statistic_country,
             parent,

@@ -1,5 +1,6 @@
 package com.mobiledevpro.remote.implementation
 
+import com.mobiledevpro.data.model.HtmlParserThrowableEntity
 import com.mobiledevpro.data.model.statistic.CoordEntity
 import com.mobiledevpro.data.model.statistic.CountyStatisticEntity
 import com.mobiledevpro.data.model.statistic.DayStatisticEntity
@@ -82,8 +83,9 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
                 )
             }
         } catch (e: Exception) {
-            // TODO: create exception
-            throw Exception("Parser Error: ${e.message}")
+            throw HtmlParserThrowableEntity(
+                "Parser Error: ${e.message}"
+            )
         }
 
         return counties

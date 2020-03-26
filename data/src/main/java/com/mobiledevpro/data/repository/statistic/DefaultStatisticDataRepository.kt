@@ -1,5 +1,6 @@
 package com.mobiledevpro.data.repository.statistic
 
+import com.mobiledevpro.data.mapper.throwableToDomain
 import com.mobiledevpro.data.mapper.toDomain
 import com.mobiledevpro.data.model.statistic.CountryStatisticEntity
 import com.mobiledevpro.data.model.statistic.CountyStatisticEntity
@@ -32,7 +33,7 @@ class DefaultStatisticDataRepository(
             }
         )
         .flatMapCompletable(statisticsCache::updateConfirmedData)
-    //TODO: add error implementation
+        .throwableToDomain()
 
     override fun observeStatisticByCountyName(query: String): Observable<StatisticCountry> = statisticsCache
             //TODO: add zip for collect confirmed, deaths, recovered
@@ -42,6 +43,7 @@ class DefaultStatisticDataRepository(
             else collectDataByDay(result)
         }
         .map(StatisticEntity::toDomain)
+        .throwableToDomain()
 
     private fun collectDataByDay(result: List<StatisticEntity>): StatisticEntity {
         val convertedDaysTotalEntity = ArrayList<DayStatisticEntity>()

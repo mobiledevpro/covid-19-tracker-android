@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentStatisticCountryBinding
-import com.mobiledevpro.app.ui.countries.adapter.StatisticCountryListAdapter
+import com.mobiledevpro.app.ui.statistic.adapter.StatisticCountryListAdapter
 import com.mobiledevpro.app.ui.statistic.viewmodel.StatisticCountryViewModel
 import com.mobiledevpro.commons.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_statistic_country.*
@@ -23,6 +23,8 @@ class StatisticCountryFragment : BaseFragment() {
 
     //TODO: add country name to Toolbar
 //    override fun getAppBarTitle() = query
+
+    override fun getHomeAsUpIndicatorIcon(): Int = R.drawable.ic_arrow_back_white_24dp
 
     override fun initPresenters() {
         lifecycle.addObserver(statisticViewModel)

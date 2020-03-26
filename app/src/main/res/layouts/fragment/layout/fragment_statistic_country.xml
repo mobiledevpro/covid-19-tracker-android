@@ -20,7 +20,7 @@
             android:id="@+id/rvStatistic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:items="@{viewModel.statisticCountry.dayStatistics}" />
+            app:items="@{viewModel.statisticCountry}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

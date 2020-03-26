@@ -2,6 +2,7 @@ package com.mobiledevpro.data.mapper
 
 import com.mobiledevpro.data.model.AccessDeniedThrowableEntity
 import com.mobiledevpro.data.model.CountryTotalEntity
+import com.mobiledevpro.data.model.HtmlParserThrowableEntity
 import com.mobiledevpro.data.model.NetworkThrowableEntity
 import com.mobiledevpro.data.model.NotFoundThrowableEntity
 import com.mobiledevpro.data.model.ServiceUnavailableThrowableEntity
@@ -11,6 +12,7 @@ import com.mobiledevpro.data.model.statistic.CountryStatisticEntity
 import com.mobiledevpro.data.model.statistic.DayStatisticEntity
 import com.mobiledevpro.data.model.statistic.StatisticEntity
 import com.mobiledevpro.domain.error.AccessDeniedThrowable
+import com.mobiledevpro.domain.error.HtmlParserThrowable
 import com.mobiledevpro.domain.error.NetworkThrowable
 import com.mobiledevpro.domain.error.NotFoundThrowable
 import com.mobiledevpro.domain.error.ServiceUnavailableThrowable
@@ -94,6 +96,7 @@ fun Throwable.throwableToDomain() = when (this) {
     is NotFoundThrowableEntity -> NotFoundThrowable()
     is AccessDeniedThrowableEntity -> AccessDeniedThrowable()
     is ServiceUnavailableThrowableEntity -> ServiceUnavailableThrowable()
+    is HtmlParserThrowableEntity -> HtmlParserThrowable(message = message)
     is UnknownThrowableEntity -> UnknownThrowable()
     else -> UnknownThrowable()
 }

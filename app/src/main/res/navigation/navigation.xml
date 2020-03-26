@@ -23,10 +23,11 @@
         android:label="fragment_countries" >
         <action
             android:id="@+id/action_countriesListFragment_to_statisticFragment"
-            app:destination="@id/statisticFragment" />
+            app:destination="@id/statisticCountryFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/statisticFragment"
+        android:id="@+id/statisticCountryFragment"
         android:name="com.mobiledevpro.app.ui.statistic.StatisticCountryFragment"
         android:label="StatisticFragment" />
 

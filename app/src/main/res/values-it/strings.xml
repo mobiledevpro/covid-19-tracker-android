@@ -25,4 +25,5 @@
     <string name="access_denied_error">Access Denied</string>
     <string name="service_unavailable_error">Service Unavailable</string>
     <string name="unknown_error">Unknown Error</string>
+    <string name="parsing_error">Error getting data for statistic</string>
 </resources>

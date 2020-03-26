@@ -2,7 +2,11 @@ package com.mobiledevpro.app.common
 
 import android.app.Application
 import com.mobiledevpro.app.BuildConfig
-import com.mobiledevpro.app.di.*
+import com.mobiledevpro.app.di.dataLocalModule
+import com.mobiledevpro.app.di.dataModule
+import com.mobiledevpro.app.di.dataRemoteModule
+import com.mobiledevpro.app.di.domainModule
+import com.mobiledevpro.app.di.uiModule
 import com.testfairy.TestFairy
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -27,14 +31,6 @@ class App : Application() {
         initKoin()
         initTimber()
 
-        /*
-        if (BuildConfig.DEBUG) {
-            initStetho()
-            initFlipper()
-        }
-
-         */
-
         //Beta testing (where release is published)
         TestFairy.begin(this, "6f9121c053a0dabdfa96dbb31c5c128860c119b3");
     }
@@ -54,24 +50,6 @@ class App : Application() {
         dataRemoteModule
     )
 
-    /*
-    private fun initStetho() {
-        Stetho.initializeWithDefaults(this)
-    }
-
-
-     */
-    /*
-    private fun initFlipper() {
-        SoLoader.init(this, false)
-        val client = AndroidFlipperClient.getInstance(this)
-        client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))
-        client.addPlugin(flipperNetworkPlugin)
-        client.start()
-    }
-
-     */
-
     private fun initTimber() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
@@ -79,11 +57,4 @@ class App : Application() {
 //            Timber.plant(CrashlyticsTree())
         }
     }
-
-    /*
-    companion object {
-        val flipperNetworkPlugin = if (BuildConfig.DEBUG) Т() else null
-    }
-
-     */
 }

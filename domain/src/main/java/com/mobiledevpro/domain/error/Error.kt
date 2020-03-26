@@ -8,4 +8,6 @@ class AccessDeniedThrowable : Throwable()
 
 class ServiceUnavailableThrowable : Throwable()
 
+class HtmlParserThrowable(override val message: String?) : Throwable()
+
 class UnknownThrowable : Throwable()

@@ -9,7 +9,7 @@ import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.provider.ResourceProvider
 import com.mobiledevpro.domain.common.Result
-import com.mobiledevpro.domain.model.StatisticCountry
+import com.mobiledevpro.domain.model.DayStatistic
 import com.mobiledevpro.domain.statistic.data.StatisticDataInteractor
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
@@ -29,8 +29,8 @@ class StatisticCountryViewModel(
     private val _isShowProgressStatistic = MutableLiveData<Boolean>()
     val isShowProgressStatistic: LiveData<Boolean> = _isShowProgressStatistic
 
-    private val _statisticCountry = MutableLiveData<StatisticCountry>()
-    val statisticCountry: LiveData<StatisticCountry> = _statisticCountry
+    private val _statisticCountry = MutableLiveData<List<DayStatistic>>()
+    val statisticCountry: LiveData<List<DayStatistic>> = _statisticCountry
 
     init {
         statisticInteractor
@@ -44,7 +44,7 @@ class StatisticCountryViewModel(
             .subscribeBy {
                 when (it) {
                     is Result.Success -> {
-                        _statisticCountry.value = it.data
+                        _statisticCountry.value = it.data.dayStatistics
                     }
                     is Result.Failure -> {
                         val errorMessage = resourceProvider.getErrorMessage(it.error)
