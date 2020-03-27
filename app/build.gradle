@@ -108,7 +108,7 @@ android {
         }
     }
 
-    dataBinding.enabled = true
+    android.dataBinding.enabled = true
 
     kapt.correctErrorTypes = true
 }

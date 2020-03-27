@@ -25,7 +25,7 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
 
     private fun getDataStatistic(fileName: String): ArrayList<StatisticEntity> {
 
-        val counties = ArrayList<StatisticEntity>(COUNT_COUNTRIES)
+        val counties = ArrayList<StatisticEntity>()
 
         try {
             val docHtml: Document = Jsoup.connect("$BASE_URL$fileName").get()
@@ -35,7 +35,11 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
                 .parent()
                 .getElementsByTag(LINE_SEPARATOR)
 
-            for (i in 2..COUNT_COUNTRIES) {
+            val countCountries = docHtml
+                .getElementsByTag(ROW_IDENTIFICATION)
+                .size
+
+            for (i in 2 until countCountries) {
 
                 val countryHtml = docHtml
                     .getElementById("$LINE_IDENTIFICATION${i}")
@@ -106,20 +110,20 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
     private companion object {
 
         const val BASE_URL =
-            "https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/"
+            "https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series/"
 
-        const val CONFIRMED_FILE_NAME = "time_series_19-covid-Confirmed.csv"
+        const val CONFIRMED_FILE_NAME = "time_series_covid19_confirmed_global.csv"
 
-        const val DEATHS_FILE_NAME = "time_series_19-covid-Deaths.csv"
+        const val DEATHS_FILE_NAME = "time_series_covid19_deaths_global.csv"
 
-        const val RECOVERED_FILE_NAME = "time_series_19-covid-Recovered.csv"
+        const val RECOVERED_FILE_NAME = "time_series_covid19_recovered_global.csv"
 
         const val LINE_IDENTIFICATION = "L"
+
+        const val ROW_IDENTIFICATION = "tr"
 
         const val LINE_SEPARATOR = "th"
 
         const val ROW_SEPARATOR = "td"
-
-        const val COUNT_COUNTRIES = 488
     }
 }

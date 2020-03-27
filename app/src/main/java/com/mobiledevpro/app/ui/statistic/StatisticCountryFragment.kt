@@ -30,8 +30,8 @@ class StatisticCountryFragment : BaseFragment() {
         lifecycle.addObserver(statisticViewModel)
     }
 
-    override fun populateView(layoutView: View?, savedInstanceState: Bundle?): View {
-        val binding = FragmentStatisticCountryBinding.bind(view)
+    override fun populateView(layoutView: View, savedInstanceState: Bundle?): View {
+        val binding = FragmentStatisticCountryBinding.bind(layoutView)
             .apply {
                 viewModel = statisticViewModel
             }

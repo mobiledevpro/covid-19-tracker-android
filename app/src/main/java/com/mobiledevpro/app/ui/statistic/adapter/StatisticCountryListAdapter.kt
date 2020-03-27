@@ -16,16 +16,16 @@ class StatisticCountryListAdapter : RecyclerView.Adapter<StatisticCountryListAda
 
     private val data: ArrayList<DayStatistic> = ArrayList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatisticItemViewHolder =
-        StatisticItemViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatisticCountryItemViewHolder =
+        StatisticCountryItemViewHolder(parent)
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        when (holder) {
-            is StatisticItemViewHolder -> holder.bind(data[holder.adapterPosition])
-        }
+        if (holder is StatisticCountryItemViewHolder)
+            holder.bind(data[holder.adapterPosition])
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount() = data.size
 
     fun populateList(update: ArrayList<DayStatistic>) {
         val callback = StatisticCountryDiffUtil(data, update)
@@ -47,7 +47,7 @@ class StatisticCountryListAdapter : RecyclerView.Adapter<StatisticCountryListAda
 
     abstract inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    inner class StatisticItemViewHolder(
+    inner class StatisticCountryItemViewHolder(
         private val parent: ViewGroup,
         private val binding: ItemStatisticCountryBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -55,6 +55,7 @@ class StatisticCountryListAdapter : RecyclerView.Adapter<StatisticCountryListAda
             parent,
             false
         )
+
     ) : ViewHolder(binding.root) {
 
         fun bind(item: DayStatistic) {
