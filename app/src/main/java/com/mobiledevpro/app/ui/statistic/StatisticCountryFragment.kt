@@ -2,6 +2,7 @@ package com.mobiledevpro.app.ui.statistic
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobiledevpro.app.R
@@ -16,6 +17,8 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
  * Fragment for showing statistic by country
  */
 class StatisticCountryFragment : BaseFragment() {
+
+    private val args: StatisticCountryFragmentArgs  by navArgs()
 
     private val statisticViewModel: StatisticCountryViewModel by sharedViewModel()
 
@@ -42,6 +45,9 @@ class StatisticCountryFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val query = args.countryName
+        statisticViewModel.observeConfirmedList(query)
         initRecyclerView()
     }
 

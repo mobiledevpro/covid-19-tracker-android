@@ -2,10 +2,11 @@
 
 buildscript {
 
-    ext.kotlinVersion = '1.3.70'
+    ext.kotlinVersion = '1.3.71'
     ext.gradleVersion = '4.0.0-beta03'
     ext.playServicesVersion = '4.3.3'
     ext.crashlyticsPluginVersion = '2.0.0-beta02'
+    ext.navVersion = "2.3.0-alpha04"
 
     repositories {
         google()
@@ -17,6 +18,8 @@ buildscript {
 
         classpath "com.google.gms:google-services:$playServicesVersion"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlyticsPluginVersion"
+
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion"
     }
 }
 

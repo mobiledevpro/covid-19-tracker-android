@@ -18,9 +18,8 @@ import io.reactivex.rxkotlin.subscribeBy
  * ViewModel for statistic fragment
  */
 class StatisticCountryViewModel(
-    resourceProvider: ResourceProvider,
-    statisticInteractor: StatisticDataInteractor,
-    query: String
+    private val resourceProvider: ResourceProvider,
+    private val statisticInteractor: StatisticDataInteractor
 ) : BaseViewModel(), LifecycleObserver {
 
     private val _eventShowError = MutableLiveData<Event<String>>()
@@ -33,6 +32,11 @@ class StatisticCountryViewModel(
     val statisticCountry: LiveData<List<DayStatistic>> = _statisticCountry
 
     init {
+        //TODO: check why null error without empty list
+        _statisticCountry.value = listOf()
+    }
+
+    fun observeConfirmedList(query: String) {
         statisticInteractor
             .observeStatisticByCountryName(query = query)
             .doOnSubscribe {

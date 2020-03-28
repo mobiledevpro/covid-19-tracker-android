@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/totalValuesFragment">
 
     <fragment
         android:id="@+id/totalValuesFragment"
         android:name="com.mobiledevpro.app.ui.total.TotalFragment"
-        android:label="fragment_total_values">
+        android:label="fragment_total_values"
+        tools:layout="@layout/fragment_total">
         <action
             android:id="@+id/actionShowCountriesList"
             app:destination="@id/countriesListFragment"
@@ -20,7 +22,8 @@
     <fragment
         android:id="@+id/countriesListFragment"
         android:name="com.mobiledevpro.app.ui.countries.CountriesListFragment"
-        android:label="fragment_countries" >
+        android:label="fragment_countries"
+        tools:layout="@layout/fragment_countries_list">
         <action
             android:id="@+id/action_countriesListFragment_to_statisticFragment"
             app:destination="@id/statisticCountryFragment" />
@@ -29,6 +32,11 @@
     <fragment
         android:id="@+id/statisticCountryFragment"
         android:name="com.mobiledevpro.app.ui.statistic.StatisticCountryFragment"
-        android:label="StatisticFragment" />
+        android:label="StatisticFragment"
+        tools:layout="@layout/fragment_statistic_country">
+        <argument
+            android:name="countryName"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

@@ -1,6 +1,7 @@
 package com.mobiledevpro.app.di
 
 import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
+import com.mobiledevpro.app.ui.statistic.viewmodel.StatisticCountryViewModel
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
 import com.mobiledevpro.app.utils.provider.DefaultResourceProvider
 import com.mobiledevpro.app.utils.provider.ResourceProvider
@@ -51,6 +52,13 @@ val uiModule = module {
         TotalViewModel(
             resourceProvider = get(),
             totalInteractor = get(),
+            statisticInteractor = get()
+        )
+    }
+
+    viewModel {
+        StatisticCountryViewModel(
+            resourceProvider = get(),
             statisticInteractor = get()
         )
     }

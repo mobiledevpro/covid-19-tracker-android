@@ -20,7 +20,9 @@ import com.mobiledevpro.domain.model.TotalCountry
  * http://androiddev.pro
  *
  */
-class CountriesListAdapter : RecyclerView.Adapter<CountriesListAdapter.ViewHolder>() {
+class CountriesListAdapter(
+    private val onClick: (countryName: String) -> Unit
+) : RecyclerView.Adapter<CountriesListAdapter.ViewHolder>() {
 
     private var countriesList: ArrayList<TotalCountry> = ArrayList()
 
@@ -30,7 +32,7 @@ class CountriesListAdapter : RecyclerView.Adapter<CountriesListAdapter.ViewHolde
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (holder is CountryItemViewHolder)
-            holder.bind(countriesList[holder.adapterPosition])
+            holder.bind(countriesList[holder.adapterPosition], onClick)
     }
 
     override fun getItemCount() = countriesList.size
@@ -66,9 +68,14 @@ class CountriesListAdapter : RecyclerView.Adapter<CountriesListAdapter.ViewHolde
 
     ) : ViewHolder(binding.root) {
 
-        fun bind(item: TotalCountry) {
+        fun bind(
+            item: TotalCountry,
+            onClick: (countryName: String) -> Unit
+        ) {
             binding.item = item
             binding.executePendingBindings()
+
+            itemView.setOnClickListener { onClick(item.country) }
         }
     }
 }

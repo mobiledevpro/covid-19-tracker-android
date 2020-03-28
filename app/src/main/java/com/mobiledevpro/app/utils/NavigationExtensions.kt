@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.mobiledevpro.app.R
+import com.mobiledevpro.app.ui.countries.CountriesListFragmentDirections
 
 /**
  * Navigation Helper
@@ -28,6 +29,10 @@ enum class FabActionNavigation {
 
 fun Fragment.showCountiesList() =
     this.findNavController().navigate(R.id.actionShowCountriesList)
+
+fun Fragment.showStatisticCountry(query: String) {
+    val action = CountriesListFragmentDirections.actionCountriesListFragmentToStatisticFragment(query)
+    this.findNavController().navigate(action)}
 
 fun Activity.showCountiesList(fragmentContainerId: Int) =
     this.findNavController(fragmentContainerId).navigate(R.id.actionShowCountriesList)

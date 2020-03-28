@@ -110,6 +110,10 @@ class TotalViewModel(
         observeCountriesList()
     }
 
+    fun showStatisticCountryScreen(query: String) {
+        // TODO: add route logic
+    }
+
     private fun observeTotalValues() {
         totalInteractor.observeTotalData()
             .doOnSubscribe {
