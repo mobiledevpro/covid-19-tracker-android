@@ -2,9 +2,11 @@ package com.mobiledevpro.app.ui.statistic
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentStatisticCountryBinding
 import com.mobiledevpro.app.ui.statistic.adapter.StatisticCountryListAdapter
@@ -18,9 +20,11 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
  */
 class StatisticCountryFragment : BaseFragment() {
 
-    private val args: StatisticCountryFragmentArgs  by navArgs()
+    private val args: StatisticCountryFragmentArgs by navArgs()
 
     private val statisticViewModel: StatisticCountryViewModel by sharedViewModel()
+
+    private lateinit var bottomSheetBehaviour: BottomSheetBehavior<ViewGroup>
 
     override fun getLayoutResId() = R.layout.fragment_statistic_country
 
@@ -48,6 +52,7 @@ class StatisticCountryFragment : BaseFragment() {
 
         val query = args.countryName
         statisticViewModel.observeConfirmedList(query)
+        initBottomSheetView()
         initRecyclerView()
     }
 
@@ -62,5 +67,9 @@ class StatisticCountryFragment : BaseFragment() {
         rvStatistic?.setHasFixedSize(true)
         rvStatistic?.adapter = StatisticCountryListAdapter()
         rvStatistic.addItemDecoration(divider)
+    }
+
+    private fun initBottomSheetView() {
+        bottomSheetBehaviour = BottomSheetBehavior.from(layout_bottom_sheet)
     }
 }
