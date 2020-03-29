@@ -71,5 +71,7 @@ fun CachedStatisticCountryWithDailyStatistic.toEntity() = StatisticEntity(
 
 private fun CachedDayTotalCountryStatistic.toEntity() = DayStatisticEntity(
     date = date,
-    count = count
+    confirmed = confirmed,
+    deaths = deaths,
+    recovered = recovered
 )

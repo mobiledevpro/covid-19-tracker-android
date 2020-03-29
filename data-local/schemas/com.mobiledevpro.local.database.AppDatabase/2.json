@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "698eccaa4552bc01a1de10cdb8c2b033",
+    "identityHash": "2774a336a6f5cd0da0460ad2313fcf97",
     "entities": [
       {
         "tableName": "total",
@@ -182,7 +182,7 @@
       },
       {
         "tableName": "day_total_country_statistic",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`province` TEXT NOT NULL, `date` TEXT NOT NULL, `count` INTEGER NOT NULL, PRIMARY KEY(`date`, `province`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`province` TEXT NOT NULL, `date` TEXT NOT NULL, `confirmed` INTEGER NOT NULL, `deaths` INTEGER NOT NULL, `recovered` INTEGER NOT NULL, PRIMARY KEY(`date`, `province`))",
         "fields": [
           {
             "fieldPath": "province",
@@ -197,8 +197,20 @@
             "notNull": true
           },
           {
-            "fieldPath": "count",
-            "columnName": "count",
+            "fieldPath": "confirmed",
+            "columnName": "confirmed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deaths",
+            "columnName": "deaths",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recovered",
+            "columnName": "recovered",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -226,7 +238,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '698eccaa4552bc01a1de10cdb8c2b033')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2774a336a6f5cd0da0460ad2313fcf97')"
     ]
   }
 }

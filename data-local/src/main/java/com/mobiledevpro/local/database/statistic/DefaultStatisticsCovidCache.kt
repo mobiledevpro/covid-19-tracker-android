@@ -24,7 +24,9 @@ class DefaultStatisticsCovidCache(
                     CachedDayTotalCountryStatistic(
                         province = statisticEntity.country.provinceName,
                         date = dayTotalEntity.date,
-                        count = dayTotalEntity.count
+                        confirmed = dayTotalEntity.confirmed,
+                        deaths = dayTotalEntity.deaths,
+                        recovered = dayTotalEntity.recovered
                     )
                 }
             }

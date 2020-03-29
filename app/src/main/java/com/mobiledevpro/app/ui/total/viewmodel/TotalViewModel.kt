@@ -98,20 +98,11 @@ class TotalViewModel(
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onStopView() {
-        //do something if needed
-    }
-
     fun getQuery() = query
 
     fun getCountiesByQuery(query: String) {
         this.query = query
         observeCountriesList()
-    }
-
-    fun showStatisticCountryScreen(query: String) {
-        // TODO: add route logic
     }
 
     private fun observeTotalValues() {

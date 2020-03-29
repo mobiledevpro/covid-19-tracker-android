@@ -88,7 +88,9 @@ fun StatisticEntity.toDomain() = StatisticCountry(
 
 fun DayStatisticEntity.toDomain() = DayStatistic(
     date = date,
-    totalCount = count
+    totalConfirmed = confirmed,
+    totalRecovered = recovered,
+    totalDeaths = deaths
 )
 
 fun Throwable.throwableToDomain() = when (this) {

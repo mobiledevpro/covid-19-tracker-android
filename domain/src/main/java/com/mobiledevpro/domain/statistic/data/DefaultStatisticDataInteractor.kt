@@ -25,10 +25,18 @@ class DefaultStatisticDataInteractor(
         .observeStatisticByCountyName(query)
         .map { result ->
             for (i in result.dayStatistics.indices)
-                if (i == 0) result.dayStatistics[i].dayCount = result.dayStatistics[i].totalCount
+                if (i == 0) {
+                    result.dayStatistics[i].recovered = result.dayStatistics[i].totalRecovered
+                    result.dayStatistics[i].deaths = result.dayStatistics[i].totalDeaths
+                    result.dayStatistics[i].confirmed = result.dayStatistics[i].totalConfirmed
+                }
                 else {
-                    result.dayStatistics[i].dayCount =
-                        result.dayStatistics[i].totalCount - result.dayStatistics[i - 1].totalCount
+                    result.dayStatistics[i].confirmed =
+                        result.dayStatistics[i].totalConfirmed - result.dayStatistics[i - 1].confirmed
+                    result.dayStatistics[i].deaths =
+                        result.dayStatistics[i].totalDeaths - result.dayStatistics[i - 1].deaths
+                    result.dayStatistics[i].confirmed =
+                        result.dayStatistics[i].totalRecovered - result.dayStatistics[i - 1].recovered
                 }
             result
         }

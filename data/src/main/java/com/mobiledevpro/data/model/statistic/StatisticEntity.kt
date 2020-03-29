@@ -35,9 +35,13 @@ data class CoordEntity(
 /**
  * Data class for day people total count by date
  * @property date is a date in format like 22/03/20
- * @property count is a count people
+ * @property confirmed is a confirmed count people
+ * @property deaths is a deaths of count people
+ * @property recovered is a recovered count people
  */
 data class DayStatisticEntity(
     val date: String,
-    val count: Long
+    val confirmed: Long = 0L,
+    val deaths: Long = 0L,
+    val recovered: Long = 0
 )

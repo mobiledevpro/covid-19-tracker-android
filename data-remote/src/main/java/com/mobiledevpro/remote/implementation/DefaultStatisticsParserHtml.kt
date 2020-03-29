@@ -73,7 +73,9 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
                     dayCountsEntity.add(
                         DayStatisticEntity(
                             date = titlesHtml.toStringValue(j - 1),
-                            count = countryHtml.toLongValue(j)
+                            confirmed = if (fileName == CONFIRMED_FILE_NAME) countryHtml.toLongValue(j) else 0L,
+                            deaths = if (fileName == DEATHS_FILE_NAME) countryHtml.toLongValue(j) else 0L,
+                            recovered = if (fileName == RECOVERED_FILE_NAME) countryHtml.toLongValue(j) else 0L
                         )
                     )
                 }

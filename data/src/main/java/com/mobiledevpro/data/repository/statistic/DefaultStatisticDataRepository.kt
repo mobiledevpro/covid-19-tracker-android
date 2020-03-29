@@ -2,6 +2,7 @@ package com.mobiledevpro.data.repository.statistic
 
 import com.mobiledevpro.data.mapper.throwableToDomain
 import com.mobiledevpro.data.mapper.toDomain
+import com.mobiledevpro.data.model.statistic.CoordEntity
 import com.mobiledevpro.data.model.statistic.CountryStatisticEntity
 import com.mobiledevpro.data.model.statistic.CountyStatisticEntity
 import com.mobiledevpro.data.model.statistic.DayStatisticEntity
@@ -29,34 +30,73 @@ class DefaultStatisticDataRepository(
             statisticsParserHtml.getDeathsStatistics(),
             statisticsParserHtml.getRecoveredStatistics(),
             Function3 { confirmed, deaths, recovered ->
-                confirmed
+                val convertedStatisticCountry = ArrayList<StatisticEntity>()
+
+                for (i in 0 until confirmed.size) {
+                    val dayStatisticsEntity = ArrayList<DayStatisticEntity>()
+
+                    for (j in confirmed[i].dayStatistic.indices) {
+                        dayStatisticsEntity.add(
+                            DayStatisticEntity(
+                                date = confirmed[i].dayStatistic[j].date,
+                                confirmed = confirmed[i].dayStatistic[j].confirmed,
+                                deaths = deaths[i].dayStatistic[j].deaths,
+                                recovered = recovered[i].dayStatistic[j].recovered
+                            )
+                        )
+                    }
+
+                    convertedStatisticCountry.add(
+                        StatisticEntity(
+                            CountyStatisticEntity(
+                                provinceName = confirmed[i].country.provinceName,
+                                countryName = confirmed[i].country.countryName
+                            ),
+                            CoordEntity(
+                                lat = confirmed[i].coord.lat,
+                                long = confirmed[i].coord.long
+                            ),
+                            dayStatistic = dayStatisticsEntity
+                        )
+                    )
+                }
+
+                convertedStatisticCountry
             }
         )
         .flatMapCompletable(statisticsCache::updateConfirmedData)
         .throwableToDomain()
 
-    override fun observeStatisticByCountyName(query: String): Observable<StatisticCountry> = statisticsCache
-            //TODO: add zip for collect confirmed, deaths, recovered
-        .observeConfirmedDataByCountryName(query)
-        .map { result ->
-            if (result.size <= 1) result[0]
-            else collectDataByDay(result)
-        }
-        .map(StatisticEntity::toDomain)
-        .throwableToDomain()
+    override fun observeStatisticByCountyName(query: String): Observable<StatisticCountry> =
+        statisticsCache
+            .observeConfirmedDataByCountryName(query)
+            .map { result ->
+                if (result.size <= 1) result[0]
+                else collectDataByDay(result)
+            }
+            .map(StatisticEntity::toDomain)
+            .throwableToDomain()
 
     private fun collectDataByDay(result: List<StatisticEntity>): StatisticEntity {
         val convertedDaysTotalEntity = ArrayList<DayStatisticEntity>()
 
         for (i in result[0].dayStatistic.indices) {
-            var count = 0L
+            var confirmed = 0L
+            var deaths = 0L
+            var recovered = 0L
 
-            for (j in result.indices) count += result[j].dayStatistic[i].count
+            for (j in result.indices) {
+                confirmed += result[j].dayStatistic[i].confirmed
+                deaths += result[j].dayStatistic[i].deaths
+                recovered += result[j].dayStatistic[i].recovered
+            }
 
             convertedDaysTotalEntity.add(
                 DayStatisticEntity(
                     date = result[0].dayStatistic[i].date,
-                    count = count
+                    confirmed = confirmed,
+                    deaths = deaths,
+                    recovered = recovered
                 )
             )
         }
@@ -66,7 +106,6 @@ class DefaultStatisticDataRepository(
                 countryName = result[0].country.countryName,
                 provinceName = result[0].country.countryName
             ),
-            // TODO: need to think about getting coordinates for showing on Map
             coord = result[0].coord,
             dayStatistic = convertedDaysTotalEntity
         )
