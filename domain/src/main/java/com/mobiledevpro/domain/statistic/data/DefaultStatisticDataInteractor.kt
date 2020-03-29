@@ -21,26 +21,28 @@ class DefaultStatisticDataInteractor(
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
 
-    override fun observeStatisticByCountryName(query: String): Observable<Result<StatisticCountry>> = statisticDataRepository
-        .observeStatisticByCountyName(query)
-        .map { result ->
-            for (i in result.dayStatistics.indices)
-                if (i == 0) {
-                    result.dayStatistics[i].recovered = result.dayStatistics[i].totalRecovered
-                    result.dayStatistics[i].deaths = result.dayStatistics[i].totalDeaths
-                    result.dayStatistics[i].confirmed = result.dayStatistics[i].totalConfirmed
+    override fun observeStatisticByCountryName(query: String): Observable<Result<StatisticCountry>> =
+        statisticDataRepository
+            .observeStatisticByCountyName(query)
+            .map { result ->
+                result.dayStatistics.mapIndexed { index, dayStatistic ->
+                    if (index == 0) {
+                        dayStatistic.confirmed = result.dayStatistics[index].totalConfirmed
+                        dayStatistic.deaths = result.dayStatistics[index].totalDeaths
+                        dayStatistic.recovered = result.dayStatistics[index].totalRecovered
+                    } else {
+                        dayStatistic.confirmed =
+                            dayStatistic.totalConfirmed - result.dayStatistics[index - 1].totalConfirmed
+                        dayStatistic.deaths =
+                            dayStatistic.totalDeaths - result.dayStatistics[index - 1].totalDeaths
+                        dayStatistic.recovered =
+                            dayStatistic.totalRecovered - result.dayStatistics[index - 1].totalRecovered
+                    }
                 }
-                else {
-                    result.dayStatistics[i].confirmed =
-                        result.dayStatistics[i].totalConfirmed - result.dayStatistics[i - 1].confirmed
-                    result.dayStatistics[i].deaths =
-                        result.dayStatistics[i].totalDeaths - result.dayStatistics[i - 1].deaths
-                    result.dayStatistics[i].confirmed =
-                        result.dayStatistics[i].totalRecovered - result.dayStatistics[i - 1].recovered
-                }
-            result
-        }
-        .toResult()
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeOn(Schedulers.io())
+
+                result
+            }
+            .toResult()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
 }

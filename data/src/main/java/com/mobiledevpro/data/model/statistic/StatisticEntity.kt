@@ -41,7 +41,7 @@ data class CoordEntity(
  */
 data class DayStatisticEntity(
     val date: String,
-    val confirmed: Long = 0L,
-    val deaths: Long = 0L,
-    val recovered: Long = 0
+    var confirmed: Long = 0L,
+    var deaths: Long = 0L,
+    var recovered: Long = 0
 )

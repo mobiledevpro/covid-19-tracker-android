@@ -32,16 +32,14 @@ class DefaultStatisticDataRepository(
             Function3 { confirmed, deaths, recovered ->
                 val convertedStatisticCountry = ArrayList<StatisticEntity>()
 
-                for (i in 0 until confirmed.size) {
+                for (i in confirmed.indices) {
                     val dayStatisticsEntity = ArrayList<DayStatisticEntity>()
 
                     for (j in confirmed[i].dayStatistic.indices) {
                         dayStatisticsEntity.add(
                             DayStatisticEntity(
                                 date = confirmed[i].dayStatistic[j].date,
-                                confirmed = confirmed[i].dayStatistic[j].confirmed,
-                                deaths = deaths[i].dayStatistic[j].deaths,
-                                recovered = recovered[i].dayStatistic[j].recovered
+                                confirmed = confirmed[i].dayStatistic[j].confirmed
                             )
                         )
                     }
@@ -60,6 +58,24 @@ class DefaultStatisticDataRepository(
                         )
                     )
                 }
+
+                for (i in deaths.indices)
+                    convertedStatisticCountry.filter { it.country.provinceName == deaths[i].country.provinceName }
+                        .map { country ->
+                            for (j in deaths[i].dayStatistic.indices)
+                                country.dayStatistic
+                                    .filter { it.date == deaths[i].dayStatistic[j].date }
+                                    .map { it.deaths = deaths[i].dayStatistic[j].deaths }
+                        }
+
+                for (i in recovered.indices)
+                    convertedStatisticCountry.filter { it.country.provinceName == recovered[i].country.provinceName }
+                        .map { country ->
+                            for (j in recovered[i].dayStatistic.indices)
+                                country.dayStatistic
+                                    .filter { it.date == recovered[i].dayStatistic[j].date }
+                                    .map { it.recovered = recovered[i].dayStatistic[j].recovered }
+                        }
 
                 convertedStatisticCountry
             }

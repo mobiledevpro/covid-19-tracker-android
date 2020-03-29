@@ -48,7 +48,7 @@ class StatisticCountryViewModel(
             .subscribeBy {
                 when (it) {
                     is Result.Success -> {
-                        _statisticCountry.value = it.data.dayStatistics
+                        _statisticCountry.value = it.data.dayStatistics.reversed()
                     }
                     is Result.Failure -> {
                         val errorMessage = resourceProvider.getErrorMessage(it.error)
