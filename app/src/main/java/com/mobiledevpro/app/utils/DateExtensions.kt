@@ -7,3 +7,9 @@ fun Long.dateToSting(): String {
     val dateFormat = SimpleDateFormat(" E, dd MMM yyyy hh:mm a", Locale.getDefault())
     return dateFormat.format(this)
 }
+
+fun String.toFloatDate(): Float {
+    val dateFormat = SimpleDateFormat("MM/dd/yy", Locale.getDefault())
+    val date = dateFormat.parse(this)
+    return date.time.toFloat()
+}

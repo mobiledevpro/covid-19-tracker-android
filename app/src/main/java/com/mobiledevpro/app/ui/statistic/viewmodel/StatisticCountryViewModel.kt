@@ -5,9 +5,12 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
+import com.github.mikephil.charting.data.Entry
+import com.jakewharton.rxrelay2.BehaviorRelay
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.provider.ResourceProvider
+import com.mobiledevpro.app.utils.toFloatDate
 import com.mobiledevpro.domain.common.Result
 import com.mobiledevpro.domain.model.DayStatistic
 import com.mobiledevpro.domain.statistic.data.StatisticDataInteractor
@@ -31,6 +34,8 @@ class StatisticCountryViewModel(
     private val _statisticCountry = MutableLiveData<List<DayStatistic>>()
     val statisticCountry: LiveData<List<DayStatistic>> = _statisticCountry
 
+    private val chartData = BehaviorRelay.create<ArrayList<Entry>>()
+
     init {
         //TODO: check why null error without empty list
         _statisticCountry.value = listOf()
@@ -49,6 +54,8 @@ class StatisticCountryViewModel(
                 when (it) {
                     is Result.Success -> {
                         _statisticCountry.value = it.data.dayStatistics.reversed()
+                        mapConfirmedStatisticToChartView(it.data.dayStatistics)
+
                     }
                     is Result.Failure -> {
                         val errorMessage = resourceProvider.getErrorMessage(it.error)
@@ -58,6 +65,24 @@ class StatisticCountryViewModel(
 
             }
             .addTo(subscriptions)
+    }
+
+    fun observeChartData() = chartData
+
+    private fun mapConfirmedStatisticToChartView(dayStatistics: List<DayStatistic>) {
+        val entries = ArrayList<Entry>()
+
+        dayStatistics.forEach {
+            if (it.totalConfirmed != 0L)
+                entries.add(
+                    Entry(
+                        it.date.toFloatDate(),
+                        it.totalConfirmed.toFloat()
+                    )
+                )
+
+            chartData.accept(entries)
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)

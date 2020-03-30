@@ -73,6 +73,8 @@ ext {
     soloaderVersion = "0.8.2"
     testfairyVersion = '1.+@aar'
     jsoupVersion = "1.13.1"
+    mpaChartVersion = "v3.1.0-alpha"
+    rxRelayVersion = "2.1.1"
 
     deps = [
             "multidex"                : "androidx.multidex:multidex:$multidexVersion",
@@ -90,6 +92,8 @@ ext {
             "firebaseAnalytics"       : "com.google.firebase:firebase-analytics:$analyticsVersion",
             "coreKtx"                 : "androidx.core:core-ktx:$coreKtxVersion",
             "kotlin"                  : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
+            "rxRelay"                 : "com.jakewharton.rxrelay2:rxrelay:$rxRelayVersion",
+
 
             // ViewModel and LiveData
             "lifecycle"               : "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion",
@@ -132,6 +136,9 @@ ext {
             "jsoup"                   : "org.jsoup:jsoup:$jsoupVersion",
 
             //Beta testing
-            "testfairy"               : "testfairy:testfairy-android-sdk:$testfairyVersion"
+            "testfairy"               : "testfairy:testfairy-android-sdk:$testfairyVersion",
+
+            //MPAAndroidChart
+            "mpaChart"                : "com.github.PhilJay:MPAndroidChart:$mpaChartVersion"
     ]
 }

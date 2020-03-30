@@ -152,6 +152,7 @@ dependencies {
     //Rx
     implementation deps.rxAndroid
     implementation deps.rxKotlin
+    implementation(deps.rxRelay)
 
     //Glide
     implementation deps.glide
@@ -159,13 +160,9 @@ dependencies {
 
     //Logs
     implementation deps.timber
-   // debugImplementation deps.stetho
-  //  debugImplementation deps.flipper
- //   debugImplementation deps.stethoNetworkHelper
-   // debugImplementation deps.soloader
 
-   // releaseImplementation deps.flipperNoop
-    //
+    //Chart
+    implementation(deps.mpaChart)
 
     //Beta testing
     implementation deps.testfairy
