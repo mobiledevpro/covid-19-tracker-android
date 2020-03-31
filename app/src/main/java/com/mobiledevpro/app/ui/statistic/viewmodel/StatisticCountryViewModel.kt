@@ -34,7 +34,7 @@ class StatisticCountryViewModel(
     private val _statisticCountry = MutableLiveData<List<DayStatistic>>()
     val statisticCountry: LiveData<List<DayStatistic>> = _statisticCountry
 
-    private val chartData = BehaviorRelay.create<ArrayList<Entry>>()
+    private val chartData = BehaviorRelay.create<ChartLines>()
 
     init {
         //TODO: check why null error without empty list
@@ -70,16 +70,30 @@ class StatisticCountryViewModel(
     fun observeChartData() = chartData
 
     private fun mapConfirmedStatisticToChartView(dayStatistics: List<DayStatistic>) {
-        val entries = ArrayList<Entry>()
+        val entries = ChartLines()
 
         dayStatistics.forEach {
             if (it.totalConfirmed != 0L)
-                entries.add(
-                    Entry(
-                        it.date.toFloatDate(),
-                        it.totalConfirmed.toFloat()
+                entries.apply {
+                    confirmed.add(
+                        Entry(
+                            it.date.toFloatDate(),
+                            it.totalConfirmed.toFloat()
+                        )
                     )
-                )
+                    death.add(
+                        Entry(
+                            it.date.toFloatDate(),
+                            it.totalDeaths.toFloat()
+                        )
+                    )
+                    recovered.add(
+                        Entry(
+                            it.date.toFloatDate(),
+                            it.totalRecovered.toFloat()
+                        )
+                    )
+                }
 
             chartData.accept(entries)
         }
@@ -95,4 +109,9 @@ class StatisticCountryViewModel(
         // do something if needed
     }
 
+    data class ChartLines(
+        val confirmed: ArrayList<Entry> = arrayListOf(),
+        val death: ArrayList<Entry> = arrayListOf(),
+        val recovered: ArrayList<Entry> = arrayListOf()
+    )
 }
