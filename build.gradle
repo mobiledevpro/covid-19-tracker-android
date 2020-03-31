@@ -65,6 +65,7 @@ ext {
     flipperVersion = '0.33.1'
     soloaderVersion = "0.8.2"
     testfairyVersion = '1.+@aar'
+    firebaseMessagingVersion = "20.1.4"
 
     deps = [
             "multidex"                : "androidx.multidex:multidex:$multidexVersion",
@@ -80,6 +81,7 @@ ext {
             "firebasePerformance"     : "com.google.firebase:firebase-perf:$firebasePerfVersion",
             "crashlytics"             : "com.google.firebase:firebase-crashlytics:$crashlyticsVersion",
             "firebaseAnalytics"       : "com.google.firebase:firebase-analytics:$analyticsVersion",
+            "fcm"                     : "com.google.firebase:firebase-messaging:$firebaseMessagingVersion",
             "coreKtx"                 : "androidx.core:core-ktx:$coreKtxVersion",
             "kotlin"                  : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
 
