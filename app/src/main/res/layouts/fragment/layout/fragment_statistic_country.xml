@@ -24,7 +24,7 @@
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="350dp">
 
-            <com.github.mikephil.charting.charts.LineChart
+            <com.mobiledevpro.app.ui.widget.StatisticLineChart
                 android:id="@+id/chartByDays"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

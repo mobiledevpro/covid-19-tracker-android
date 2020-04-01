@@ -13,3 +13,11 @@ fun Long.toDecimalFormat(): String {
     val formatter = DecimalFormat("#,###,###")
     return formatter.format(this)
 }
+
+fun Float.toNumberWithAbbreviation(): String =
+    when {
+        this > 999 -> "${this.toInt() / 1000}K"
+        this > 999999 -> "${this.toInt() / 1000000}M"
+        this > 999999999 -> "${this.toInt() / 1000000000}B"
+        else -> "${this.toInt()}"
+    }
