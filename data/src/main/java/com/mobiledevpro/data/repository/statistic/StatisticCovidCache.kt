@@ -8,9 +8,5 @@ interface StatisticCovidCache {
 
     fun updateConfirmedData(statistics: ArrayList<StatisticEntity>): Completable
 
-    fun updateDeathsData(statistics: ArrayList<StatisticEntity>): Completable
-
-    fun updateRecoveredData(statistics: ArrayList<StatisticEntity>): Completable
-
     fun observeConfirmedDataByCountryName(query: String): Observable<List<StatisticEntity>>
 }

@@ -6,6 +6,7 @@ import com.mobiledevpro.data.model.statistic.CountyStatisticEntity
 import com.mobiledevpro.data.model.statistic.DayStatisticEntity
 import com.mobiledevpro.data.model.statistic.StatisticEntity
 import com.mobiledevpro.data.repository.parcer.StatisticsParserHtml
+import com.mobiledevpro.remote.mapper.toDateLong
 import io.reactivex.Single
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -72,7 +73,7 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
                 for (j in 5 until countryHtml.size) {
                     dayCountsEntity.add(
                         DayStatisticEntity(
-                            date = titlesHtml.toStringValue(j - 1),
+                            date = titlesHtml.toStringValue(j - 1).toDateLong(),
                             confirmed = if (fileName == CONFIRMED_FILE_NAME) countryHtml.toLongValue(j) else 0L,
                             deaths = if (fileName == DEATHS_FILE_NAME) countryHtml.toLongValue(j) else 0L,
                             recovered = if (fileName == RECOVERED_FILE_NAME) countryHtml.toLongValue(j) else 0L

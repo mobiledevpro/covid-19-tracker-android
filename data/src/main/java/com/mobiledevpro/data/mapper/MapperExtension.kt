@@ -21,6 +21,7 @@ import com.mobiledevpro.domain.model.DayStatistic
 import com.mobiledevpro.domain.model.StatisticCountry
 import com.mobiledevpro.domain.model.Total
 import com.mobiledevpro.domain.model.TotalCountry
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -87,7 +88,7 @@ fun StatisticEntity.toDomain() = StatisticCountry(
 )
 
 fun DayStatisticEntity.toDomain() = DayStatistic(
-    date = date,
+    date = date.toDateSting(),
     totalConfirmed = confirmed,
     totalRecovered = recovered,
     totalDeaths = deaths
@@ -101,4 +102,9 @@ fun Throwable.throwableToDomain() = when (this) {
     is HtmlParserThrowableEntity -> HtmlParserThrowable(message = message)
     is UnknownThrowableEntity -> UnknownThrowable()
     else -> UnknownThrowable()
+}
+
+fun Long.toDateSting(): String {
+    val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+    return dateFormat.format(this)
 }

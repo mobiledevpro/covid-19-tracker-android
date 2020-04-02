@@ -1,14 +1,15 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="com.mobiledevpro.app.utils.FormatExtensionsKt" />
+        <import type="com.mobiledevpro.app.utils.FormatExtensionsKt"/>
 
         <variable
             name="item"
-            type="com.mobiledevpro.domain.model.DayStatistic" />
+            type="com.mobiledevpro.app.ui.statistic.viewmodel.StatisticCountryViewModel.StatisticView.TotalStatisticView" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +24,7 @@
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.date}"
+            android:text="@{item.country}"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +35,7 @@
             android:id="@+id/tv_confirmed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{FormatExtensionsKt.toDecimalFormat(item.confirmed)}"
+            android:text="@{FormatExtensionsKt.toDecimalFormat(item.totalConfirmed)}"
             android:textColor="@color/colorTextPrimaryRed"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +46,7 @@
             android:id="@+id/tv_recovered"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.format(@string/label_recovered, FormatExtensionsKt.toDecimalFormat(item.recovered))}"
+            android:text="@{String.format(@string/label_recovered, FormatExtensionsKt.toDecimalFormat(item.totalRecovered))}"
             android:textColor="@color/colorTextPrimaryGreen"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,12 +57,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="@{String.format(@string/label_deaths, FormatExtensionsKt.toDecimalFormat(item.deaths))}"
+            android:text="@{String.format(@string/label_deaths, FormatExtensionsKt.toDecimalFormat(item.totalDeaths))}"
             android:textColor="@color/colorTextSecondary"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/tv_recovered"
             app:layout_constraintTop_toBottomOf="@id/tv_confirmed"
             tools:text="Deaths 1,000" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

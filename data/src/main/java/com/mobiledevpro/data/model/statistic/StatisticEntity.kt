@@ -40,7 +40,7 @@ data class CoordEntity(
  * @property recovered is a recovered count people
  */
 data class DayStatisticEntity(
-    val date: String,
+    val date: Long,
     var confirmed: Long = 0L,
     var deaths: Long = 0L,
     var recovered: Long = 0

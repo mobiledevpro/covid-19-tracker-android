@@ -38,16 +38,6 @@ class DefaultStatisticsCovidCache(
             Completable.complete()
         }
 
-    override fun updateDeathsData(statistics: ArrayList<StatisticEntity>) = Completable
-        .defer {
-            Completable.complete()
-        }
-
-    override fun updateRecoveredData(statistics: ArrayList<StatisticEntity>) = Completable
-        .defer {
-            Completable.complete()
-        }
-
     override fun observeConfirmedDataByCountryName(query: String): Observable<List<StatisticEntity>> = database
         .statisticCountryData.getCountryByCountryName(query)
         .map { it.map(CachedStatisticCountryWithDailyStatistic::toEntity) }

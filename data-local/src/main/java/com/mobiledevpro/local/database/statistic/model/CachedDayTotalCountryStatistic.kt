@@ -18,7 +18,7 @@ import androidx.room.Index
 )
 data class CachedDayTotalCountryStatistic(
     val province: String,
-    val date: String,
+    val date: Long,
     val confirmed: Long,
     val deaths: Long,
     val recovered: Long

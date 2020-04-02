@@ -6,6 +6,8 @@ import com.mobiledevpro.data.model.statistic.CountryStatisticEntity
 import com.mobiledevpro.remote.model.response.CountryStatisticResponse
 import com.mobiledevpro.remote.model.response.CountryTotalResponse
 import com.mobiledevpro.remote.model.response.TotalResponse
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun TotalResponse.toEntity() = TotalValueEntity(
     count = feature.first().attribute.value
@@ -23,12 +25,17 @@ fun CountryTotalResponse.toEntity() = CountryTotalEntity(
     active = active
 )
 
-fun CountryStatisticResponse.toEntity() =
-    CountryStatisticEntity(
-        id = id,
-        country = country,
-        updated = updated,
-        confirmed = confirmed,
-        deaths = deaths,
-        deltaConfirmed = deltaConfirmed
-    )
+fun CountryStatisticResponse.toEntity() = CountryStatisticEntity(
+    id = id,
+    country = country,
+    updated = updated,
+    confirmed = confirmed,
+    deaths = deaths,
+    deltaConfirmed = deltaConfirmed
+)
+
+fun String.toDateLong(): Long {
+    val dateFormat = SimpleDateFormat("MM/dd/yy", Locale.getDefault())
+    val date = dateFormat.parse(this)
+    return date.time
+}
