@@ -12,8 +12,6 @@ import com.mobiledevpro.app.databinding.FragmentStatisticCountryBinding
 import com.mobiledevpro.app.ui.statistic.adapter.StatisticCountryListAdapter
 import com.mobiledevpro.app.ui.statistic.viewmodel.StatisticCountryViewModel
 import com.mobiledevpro.commons.fragment.BaseFragment
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_statistic_country.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -28,8 +26,6 @@ class StatisticCountryFragment : BaseFragment() {
 
     private lateinit var bottomSheetBehaviour: BottomSheetBehavior<ViewGroup>
 
-    private val subscriptions = CompositeDisposable()
-
     override fun getLayoutResId() = R.layout.fragment_statistic_country
 
     override fun getAppBarTitleString() = args.countryName
@@ -38,6 +34,7 @@ class StatisticCountryFragment : BaseFragment() {
 
     override fun initPresenters() {
         lifecycle.addObserver(statisticViewModel)
+        statisticViewModel.setCountryName(args.countryName)
     }
 
     override fun populateView(layoutView: View, savedInstanceState: Bundle?): View {
@@ -47,29 +44,14 @@ class StatisticCountryFragment : BaseFragment() {
             }
         binding.lifecycleOwner = viewLifecycleOwner
 
+        observeEvents()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val query = args.countryName
-        statisticViewModel.observeConfirmedList(query)
         initBottomSheetView()
         initRecyclerView()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        statisticViewModel.observeChartData()
-            .subscribe { chartByDays.setDada(it) }
-            .addTo(subscriptions)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        subscriptions.clear()
     }
 
     private fun initRecyclerView() {
@@ -83,6 +65,13 @@ class StatisticCountryFragment : BaseFragment() {
         rvStatistic?.setHasFixedSize(true)
         rvStatistic?.adapter = StatisticCountryListAdapter()
         rvStatistic.addItemDecoration(divider)
+    }
+
+    private fun observeEvents() {
+        statisticViewModel.chartEntries.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            chartByDays.setDada(it)
+        })
+
     }
 
     private fun initBottomSheetView() {

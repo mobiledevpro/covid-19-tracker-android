@@ -49,9 +49,9 @@ class CountriesListAdapter(
     companion object {
         @JvmStatic
         @BindingAdapter("items")
-        fun RecyclerView.bindItems(items: List<TotalCountry>) {
+        fun RecyclerView.bindItems(items: List<TotalCountry>?) {
             val adapter = adapter as CountriesListAdapter
-            adapter.populateList(ArrayList(items))
+            adapter.populateList(if (items == null) ArrayList() else ArrayList(items))
         }
     }
 

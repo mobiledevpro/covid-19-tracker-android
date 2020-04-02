@@ -5,11 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.ItemStatisticCountryBinding
-import com.mobiledevpro.app.utils.diff.StatisticCountryDiffUtil
 import com.mobiledevpro.domain.model.DayStatistic
 
 class StatisticCountryListAdapter : RecyclerView.Adapter<StatisticCountryListAdapter.ViewHolder>() {
@@ -28,20 +26,19 @@ class StatisticCountryListAdapter : RecyclerView.Adapter<StatisticCountryListAda
     override fun getItemCount() = data.size
 
     fun populateList(update: ArrayList<DayStatistic>) {
-        val callback = StatisticCountryDiffUtil(data, update)
-        val result = DiffUtil.calculateDiff(callback)
         data.clear()
         data.addAll(update)
-        result.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
     //it uses to bind items via xml layout (see attribute app:items in <RecyclerView/>)
     companion object {
         @JvmStatic
         @BindingAdapter("items")
-        fun RecyclerView.bindItems(items: List<DayStatistic>) {
+        fun RecyclerView.bindItems(items: List<DayStatistic>?) {
             val adapter = adapter as StatisticCountryListAdapter
-            adapter.populateList(ArrayList(items))
+
+            adapter.populateList((if (items != null) ArrayList(items) else ArrayList()))
         }
     }
 

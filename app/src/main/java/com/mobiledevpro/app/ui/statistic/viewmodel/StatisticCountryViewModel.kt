@@ -1,12 +1,7 @@
 package com.mobiledevpro.app.ui.statistic.viewmodel
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.github.mikephil.charting.data.Entry
-import com.jakewharton.rxrelay2.BehaviorRelay
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.provider.ResourceProvider
@@ -34,14 +29,17 @@ class StatisticCountryViewModel(
     private val _statisticCountry = MutableLiveData<List<DayStatistic>>()
     val statisticCountry: LiveData<List<DayStatistic>> = _statisticCountry
 
-    private val chartData = BehaviorRelay.create<ChartLines>()
+    private val _chartEntries = MutableLiveData<ChartLines>()
+    val chartEntries: LiveData<ChartLines> = _chartEntries
 
-    init {
-        //TODO: check why null error without empty list
-        _statisticCountry.value = listOf()
+    /**
+     * It should to be called in Fragment onCreate() or onCreateView()
+     */
+    fun setCountryName(name: String) {
+        observeConfirmedList(name)
     }
 
-    fun observeConfirmedList(query: String) {
+    private fun observeConfirmedList(query: String) {
         statisticInteractor
             .observeStatisticByCountryName(query = query)
             .doOnSubscribe {
@@ -66,8 +64,6 @@ class StatisticCountryViewModel(
             }
             .addTo(subscriptions)
     }
-
-    fun observeChartData() = chartData
 
     private fun mapConfirmedStatisticToChartView(dayStatistics: List<DayStatistic>) {
         val entries = ChartLines()
@@ -95,7 +91,7 @@ class StatisticCountryViewModel(
                     )
                 }
 
-            chartData.accept(entries)
+            _chartEntries.value = entries
         }
     }
 

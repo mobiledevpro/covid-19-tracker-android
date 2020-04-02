@@ -1,10 +1,6 @@
 package com.mobiledevpro.app.ui.total.viewmodel
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
@@ -14,7 +10,6 @@ import com.mobiledevpro.domain.common.Result
 import com.mobiledevpro.domain.model.TotalCountry
 import com.mobiledevpro.domain.statistic.data.StatisticDataInteractor
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -32,8 +27,6 @@ class TotalViewModel(
     private val totalInteractor: TotalDataInteractor,
     private val statisticInteractor: StatisticDataInteractor
 ) : BaseViewModel(), LifecycleObserver {
-
-    private val localSubscriptions = CompositeDisposable()
 
     private var query: String = ""
 
@@ -61,12 +54,6 @@ class TotalViewModel(
     private val _countriesList = MutableLiveData<ArrayList<TotalCountry>>()
     val countriesList: LiveData<ArrayList<TotalCountry>> = _countriesList
 
-    //TODO: check this comment, if not need delete please
-    /*  private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
-      val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
-
-
-     */
     private val _eventShowError = MutableLiveData<Event<String>>()
     val eventShowError: LiveData<Event<String>> = _eventShowError
 
@@ -133,7 +120,6 @@ class TotalViewModel(
     }
 
     private fun observeCountriesList() {
-        localSubscriptions.clear()
 
         totalInteractor.observeCountriesListData(query)
             .subscribeBy { result ->
@@ -144,7 +130,7 @@ class TotalViewModel(
                     }
                 }
             }
-            .addTo(localSubscriptions)
+            .addTo(subscriptions)
     }
 
     private fun fetchStatisticFromHtml() {
@@ -152,10 +138,5 @@ class TotalViewModel(
             .fetchStatisticsFromHtml()
             .subscribeBy { /* do nothing */ }
             .addTo(subscriptions)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        localSubscriptions.clear()
     }
 }

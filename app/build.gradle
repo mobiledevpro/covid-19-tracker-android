@@ -152,7 +152,7 @@ dependencies {
     //Rx
     implementation deps.rxAndroid
     implementation deps.rxKotlin
-    implementation(deps.rxRelay)
+    implementation deps.rxRelay
 
     //Glide
     implementation deps.glide
@@ -162,7 +162,7 @@ dependencies {
     implementation deps.timber
 
     //Chart
-    implementation(deps.mpaChart)
+    implementation deps.mpaChart
 
     //Beta testing
     implementation deps.testfairy
