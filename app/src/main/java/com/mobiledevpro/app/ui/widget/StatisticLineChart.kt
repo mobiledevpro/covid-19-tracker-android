@@ -77,13 +77,13 @@ class StatisticLineChart @JvmOverloads constructor(
         lineChart.invalidate()
     }
 
-    fun setDada(chartLines: StatisticCountryViewModel.ChartLines) {
+    fun setDada(chartLinesView: StatisticCountryViewModel.ChartLinesView) {
         lineChart.highlightValue(null)
         lineChart.clear()
 
-        val confirmedLine: ILineDataSet = createConfirmedChartLine(chartLines.confirmed)
-        val deathsLine: ILineDataSet = createDeathsChartLine(chartLines.death)
-        val recoveredLine: ILineDataSet = createRecoveredChartLine(chartLines.recovered)
+        val confirmedLine: ILineDataSet = createConfirmedChartLine(chartLinesView.confirmed)
+        val deathsLine: ILineDataSet = createDeathsChartLine(chartLinesView.death)
+        val recoveredLine: ILineDataSet = createRecoveredChartLine(chartLinesView.recovered)
 
         val sets = arrayListOf(
             confirmedLine,

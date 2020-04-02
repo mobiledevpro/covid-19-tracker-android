@@ -113,7 +113,9 @@ class DefaultStatisticsParserHtml : StatisticsParserHtml {
     private companion object {
 
         const val BASE_URL =
-            "https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series/"
+//            "https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series/"
+
+        "https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/"
 
         const val CONFIRMED_FILE_NAME = "time_series_covid19_confirmed_global.csv"
 

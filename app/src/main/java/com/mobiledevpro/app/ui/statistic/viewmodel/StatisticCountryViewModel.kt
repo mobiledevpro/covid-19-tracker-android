@@ -1,6 +1,10 @@
 package com.mobiledevpro.app.ui.statistic.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
 import com.github.mikephil.charting.data.Entry
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
@@ -29,8 +33,12 @@ class StatisticCountryViewModel(
     private val _statisticCountry = MutableLiveData<List<DayStatistic>>()
     val statisticCountry: LiveData<List<DayStatistic>> = _statisticCountry
 
-    private val _chartEntries = MutableLiveData<ChartLines>()
-    val chartEntries: LiveData<ChartLines> = _chartEntries
+    private val _chartEntries = MutableLiveData<ChartLinesView>()
+    val chartEntriesView: LiveData<ChartLinesView> = _chartEntries
+
+    private val _totalData = MutableLiveData<TotalStatisticView>()
+    val totalData: LiveData<TotalStatisticView> = _totalData
+
 
     /**
      * It should to be called in Fragment onCreate() or onCreateView()
@@ -52,8 +60,8 @@ class StatisticCountryViewModel(
                 when (it) {
                     is Result.Success -> {
                         _statisticCountry.value = it.data.dayStatistics.reversed()
-                        mapConfirmedStatisticToChartView(it.data.dayStatistics)
-
+                        _totalData.value = mapDayStatisticToTotal(it.data.dayStatistics.last())
+                        mapDaysStatisticToChartView(it.data.dayStatistics)
                     }
                     is Result.Failure -> {
                         val errorMessage = resourceProvider.getErrorMessage(it.error)
@@ -65,8 +73,8 @@ class StatisticCountryViewModel(
             .addTo(subscriptions)
     }
 
-    private fun mapConfirmedStatisticToChartView(dayStatistics: List<DayStatistic>) {
-        val entries = ChartLines()
+    private fun mapDaysStatisticToChartView(dayStatistics: List<DayStatistic>) {
+        val entries = ChartLinesView()
 
         dayStatistics.forEach {
             if (it.totalConfirmed != 0L)
@@ -95,6 +103,12 @@ class StatisticCountryViewModel(
         }
     }
 
+    private fun mapDayStatisticToTotal(dayStatistic: DayStatistic) = TotalStatisticView(
+        totalConfirmed = dayStatistic.totalConfirmed,
+        totalRecovered = dayStatistic.totalRecovered,
+        totalDeaths = dayStatistic.totalDeaths
+    )
+
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStartView() {
         // do something if needed
@@ -105,9 +119,15 @@ class StatisticCountryViewModel(
         // do something if needed
     }
 
-    data class ChartLines(
+    data class ChartLinesView(
         val confirmed: ArrayList<Entry> = arrayListOf(),
         val death: ArrayList<Entry> = arrayListOf(),
         val recovered: ArrayList<Entry> = arrayListOf()
+    )
+
+    data class TotalStatisticView(
+        val totalConfirmed: Long,
+        val totalDeaths: Long,
+        val totalRecovered: Long
     )
 }

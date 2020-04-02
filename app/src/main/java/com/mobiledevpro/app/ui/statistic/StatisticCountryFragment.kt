@@ -68,7 +68,7 @@ class StatisticCountryFragment : BaseFragment() {
     }
 
     private fun observeEvents() {
-        statisticViewModel.chartEntries.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        statisticViewModel.chartEntriesView.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             chartByDays.setDada(it)
         })
 

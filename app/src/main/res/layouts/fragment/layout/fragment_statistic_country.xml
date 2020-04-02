@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.mobiledevpro.app.utils.FormatExtensionsKt" />
+
         <variable
             name="viewModel"
             type="com.mobiledevpro.app.ui.statistic.viewmodel.StatisticCountryViewModel" />
@@ -22,13 +24,69 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
-            android:layout_marginBottom="350dp">
+            android:layout_marginBottom="300dp">
 
             <com.mobiledevpro.app.ui.widget.StatisticLineChart
                 android:id="@+id/chartByDays"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@id/layout_total_info"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_total_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_total_description"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Mar 22, 2020" />
+
+
+                <TextView
+                    android:id="@+id/tv_confirmed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalConfirmed)}"
+                    android:textColor="@color/colorTextPrimaryRed"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="80,000" />
+
+                <TextView
+                    android:id="@+id/tv_recovered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.format(@string/label_total_recovered, FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalRecovered))}"
+                    android:textColor="@color/colorTextPrimaryGreen"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_confirmed"
+                    tools:text="Recovered 40,000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:text="@{String.format(@string/label_total_deaths, FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalDeaths))}"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_recovered"
+                    app:layout_constraintTop_toBottomOf="@id/tv_confirmed"
+                    tools:text="Deaths 1,000" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -36,19 +94,18 @@
             android:id="@+id/layout_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorPrimaryLight"
-            android:minHeight="340dp"
+            android:minHeight="290dp"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="340dp"
+            app:behavior_peekHeight="290dp"
+            app:cardBackgroundColor="@color/colorPrimaryLight"
+            app:cardCornerRadius="8dp"
             app:layout_behavior="@string/bottom_sheet_behavior"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:cardCornerRadius="8dp">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/img_drag"
