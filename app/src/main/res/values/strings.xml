@@ -9,7 +9,7 @@
     <string name="message_dont_panic">Stay at home! And be healthy.</string>
     <string name="message_main">This tracker displays the near real-time status of Corova Virus outbreak based on the Johns Hopkins University(JHU) datasource.</string>
 
-    <string name="label_total_description">Total</string>
+    <string name="label_total_description">Total on %s</string>
     <string name="label_total_confirmed">Total Confirmed</string>
     <string name="label_total_deaths">Total Deaths</string>
     <string name="label_total_recovered">Total Recovered</string>

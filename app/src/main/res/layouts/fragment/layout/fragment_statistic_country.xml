@@ -6,6 +6,7 @@
     <data>
 
         <import type="com.mobiledevpro.app.utils.FormatExtensionsKt" />
+        <import type="com.mobiledevpro.app.utils.DateExtensionsKt" />
 
         <variable
             name="viewModel"
@@ -44,7 +45,7 @@
                     android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_total_description"
+                    android:text="@{String.format(@string/label_total_description, DateExtensionsKt.toDayMonth(viewModel.lastStatisticDate))}"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

@@ -34,6 +34,9 @@ class StatisticCountryViewModel(
     private val _totalData = MutableLiveData<TotalStatisticView>()
     val totalData: LiveData<TotalStatisticView> = _totalData
 
+    private val _lastStatisticDate = MutableLiveData<Long>()
+    val lastStatisticDate: LiveData<Long> = _lastStatisticDate
+
 
     /**
      * It should to be called in Fragment onCreate() or onCreateView()
@@ -70,6 +73,8 @@ class StatisticCountryViewModel(
 
     private fun mapDaysStatisticToChartView(dayStatistics: List<DayStatistic>) {
         val entries = ChartLinesView()
+
+        _lastStatisticDate.value = dayStatistics.last().date
 
         dayStatistics.forEach {
             if (it.totalConfirmed != 0L)

@@ -9,7 +9,7 @@
     <string name="message_dont_panic">Залишайтесь у дома! Та не хворійте.</string>
     <string name="message_main">Цей трекер відображає статус поширення вірусу COVID-19 майже в реальному часі, з джерел Університету Джона Хопкінса (JNU).</string>
 
-    <string name="label_total_description">Усього</string>
+    <string name="label_total_description">Усього на %s</string>
     <string name="label_total_confirmed">Усього Заражених</string>
     <string name="label_total_deaths">Усього Смертей</string>
     <string name="label_total_recovered">Усього Вилікувано</string>
