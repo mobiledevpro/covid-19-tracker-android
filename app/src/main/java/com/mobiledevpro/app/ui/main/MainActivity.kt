@@ -71,12 +71,20 @@ class MainActivity : BaseActivity() {
 
                     FabActionNavigation.ACTION_SHOW_COUNTRY_SEARCH_BAR ->
                         fab_main_action?.apply {
-                            // this.hide() - it does not work properly
                             this.setOnClickListener { mainViewModel.showSearchCountryBar() }
                             this.setImageDrawable(
                                 BaseResourcesHelper.getDrawableCompatible(this@MainActivity, R.drawable.ic_search_24))
                             this.show(true)
                         }
+
+                    FabActionNavigation.ACTION_CLOSE_COUNTRY_SEARCH_BAR ->
+                        fab_main_action?.apply {
+                            this.setOnClickListener { mainViewModel.closeSearchCountryBar() }
+                            this.setImageDrawable(
+                                BaseResourcesHelper.getDrawableCompatible(this@MainActivity, R.drawable.ic_close_24dp))
+                            this.show(true)
+                        }
+
 
                     FabActionNavigation.ACTION_HIDE ->
                         fab_main_action?.apply {

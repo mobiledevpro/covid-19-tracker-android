@@ -21,13 +21,15 @@ import com.mobiledevpro.app.ui.countries.CountriesListFragmentDirections
 
 enum class Navigation {
     NAVIGATE_TO_COUNTRIES_LIST,
-    NAVIGATE_TO_SEARCH_COUNTRY
+    NAVIGATE_TO_SEARCH_COUNTRY,
+    NAVIGATE_CLOSE_SEARCH_COUNTRY
 }
 
 enum class FabActionNavigation {
     ACTION_HIDE,
     ACTION_SHOW_COUNTRIES,
-    ACTION_SHOW_COUNTRY_SEARCH_BAR
+    ACTION_SHOW_COUNTRY_SEARCH_BAR,
+    ACTION_CLOSE_COUNTRY_SEARCH_BAR,
 }
 
 fun Fragment.showCountiesList() =
