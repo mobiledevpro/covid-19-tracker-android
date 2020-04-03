@@ -63,8 +63,8 @@ android {
         production {
             dimension "default"
             applicationId defaultConfig.applicationId
-            versionCode 2
-            versionName "1.0.0"
+            versionCode 3
+            versionName "1.1.0"
 
             //it's for using the same flavors in modules/libraries
             matchingFallbacks = ["production"]
