@@ -1,15 +1,10 @@
 package com.mobiledevpro.app.ui.statistic.viewmodel
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.github.mikephil.charting.data.Entry
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.provider.ResourceProvider
-import com.mobiledevpro.app.utils.toFloatDate
 import com.mobiledevpro.domain.common.Result
 import com.mobiledevpro.domain.model.DayStatistic
 import com.mobiledevpro.domain.statistic.data.StatisticDataInteractor
@@ -81,19 +76,19 @@ class StatisticCountryViewModel(
                 entries.apply {
                     confirmed.add(
                         Entry(
-                            it.date.toFloatDate(),
+                            it.date.toFloat(),
                             it.totalConfirmed.toFloat()
                         )
                     )
                     death.add(
                         Entry(
-                            it.date.toFloatDate(),
+                            it.date.toFloat(),
                             it.totalDeaths.toFloat()
                         )
                     )
                     recovered.add(
                         Entry(
-                            it.date.toFloatDate(),
+                            it.date.toFloat(),
                             it.totalRecovered.toFloat()
                         )
                     )

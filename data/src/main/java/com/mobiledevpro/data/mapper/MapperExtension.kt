@@ -1,27 +1,14 @@
 package com.mobiledevpro.data.mapper
 
-import com.mobiledevpro.data.model.AccessDeniedThrowableEntity
-import com.mobiledevpro.data.model.CountryTotalEntity
-import com.mobiledevpro.data.model.HtmlParserThrowableEntity
-import com.mobiledevpro.data.model.NetworkThrowableEntity
-import com.mobiledevpro.data.model.NotFoundThrowableEntity
-import com.mobiledevpro.data.model.ServiceUnavailableThrowableEntity
-import com.mobiledevpro.data.model.TotalEntity
-import com.mobiledevpro.data.model.UnknownThrowableEntity
+import com.mobiledevpro.data.model.*
 import com.mobiledevpro.data.model.statistic.CountryStatisticEntity
 import com.mobiledevpro.data.model.statistic.DayStatisticEntity
 import com.mobiledevpro.data.model.statistic.StatisticEntity
-import com.mobiledevpro.domain.error.AccessDeniedThrowable
-import com.mobiledevpro.domain.error.HtmlParserThrowable
-import com.mobiledevpro.domain.error.NetworkThrowable
-import com.mobiledevpro.domain.error.NotFoundThrowable
-import com.mobiledevpro.domain.error.ServiceUnavailableThrowable
-import com.mobiledevpro.domain.error.UnknownThrowable
+import com.mobiledevpro.domain.error.*
 import com.mobiledevpro.domain.model.DayStatistic
 import com.mobiledevpro.domain.model.StatisticCountry
 import com.mobiledevpro.domain.model.Total
 import com.mobiledevpro.domain.model.TotalCountry
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -88,7 +75,7 @@ fun StatisticEntity.toDomain() = StatisticCountry(
 )
 
 fun DayStatisticEntity.toDomain() = DayStatistic(
-    date = date.toDateSting(),
+    date = date,
     totalConfirmed = confirmed,
     totalRecovered = recovered,
     totalDeaths = deaths
@@ -102,9 +89,4 @@ fun Throwable.throwableToDomain() = when (this) {
     is HtmlParserThrowableEntity -> HtmlParserThrowable(message = message)
     is UnknownThrowableEntity -> UnknownThrowable()
     else -> UnknownThrowable()
-}
-
-fun Long.toDateSting(): String {
-    val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-    return dateFormat.format(this)
 }

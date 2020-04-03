@@ -21,16 +21,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="300dp">
 
             <com.mobiledevpro.app.ui.widget.StatisticLineChart
                 android:id="@+id/chartByDays"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@id/layout_total_info"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,9 +38,6 @@
                 android:id="@+id/layout_total_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <TextView
@@ -51,7 +48,7 @@
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Mar 22, 2020" />
+                    tools:text="Total" />
 
 
                 <TextView
@@ -69,7 +66,7 @@
                     android:id="@+id/tv_recovered"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.format(@string/label_total_recovered, FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalRecovered))}"
+                    android:text="@{String.format(@string/label_recovered, FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalRecovered))}"
                     android:textColor="@color/colorTextPrimaryGreen"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:text="@{String.format(@string/label_total_deaths, FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalDeaths))}"
+                    android:text="@{String.format(@string/label_deaths, FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalDeaths))}"
                     android:textColor="@color/colorTextSecondary"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@+id/tv_recovered"

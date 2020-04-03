@@ -8,6 +8,7 @@ import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentTotalBinding
 import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
+import com.mobiledevpro.commons.activity.IBaseActivity
 import com.mobiledevpro.commons.fragment.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -32,7 +33,7 @@ class TotalFragment : BaseFragment() {
 
     override fun getAppBarTitle() = R.string.app_name_main
 
-    override fun getHomeAsUpIndicatorIcon() = R.drawable.ic_close_24dp
+    override fun getHomeAsUpIndicatorIcon() = 0
 
     override fun populateView(view: View, savedInstanceState: Bundle?): View {
         //databinding
@@ -49,6 +50,12 @@ class TotalFragment : BaseFragment() {
     override fun initPresenters() {
         //add lifecycle observer to viewmodel
         lifecycle.addObserver(totalViewModel)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (activity as IBaseActivity).setHomeAsUpIndicatorIcon(homeAsUpIndicatorIcon)
     }
 
     override fun onStart() {

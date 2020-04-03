@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:visibility="gone"
+        android:scaleX="0"
+        android:scaleY="0"
         app:srcCompat="@drawable/ic_world_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

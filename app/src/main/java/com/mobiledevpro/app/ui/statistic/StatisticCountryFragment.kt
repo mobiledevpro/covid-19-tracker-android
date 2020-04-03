@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.databinding.FragmentStatisticCountryBinding
+import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
 import com.mobiledevpro.app.ui.statistic.adapter.StatisticCountryListAdapter
 import com.mobiledevpro.app.ui.statistic.viewmodel.StatisticCountryViewModel
 import com.mobiledevpro.commons.fragment.BaseFragment
@@ -23,6 +24,7 @@ class StatisticCountryFragment : BaseFragment() {
     private val args: StatisticCountryFragmentArgs by navArgs()
 
     private val statisticViewModel: StatisticCountryViewModel by sharedViewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     private lateinit var bottomSheetBehaviour: BottomSheetBehavior<ViewGroup>
 
@@ -52,6 +54,11 @@ class StatisticCountryFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         initBottomSheetView()
         initRecyclerView()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.setFabHide()
     }
 
     private fun initRecyclerView() {

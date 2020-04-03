@@ -11,6 +11,7 @@ import com.mobiledevpro.app.R
 import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
 import com.mobiledevpro.app.utils.FabActionNavigation
 import com.mobiledevpro.app.utils.Navigation
+import com.mobiledevpro.app.utils.show
 import com.mobiledevpro.app.utils.showCountiesList
 import com.mobiledevpro.commons.activity.BaseActivity
 import com.mobiledevpro.commons.helpers.BaseResourcesHelper
@@ -65,16 +66,23 @@ class MainActivity : BaseActivity() {
                             this.setOnClickListener { mainViewModel.showCountriesList() }
                             this.setImageDrawable(
                                 BaseResourcesHelper.getDrawableCompatible(this@MainActivity, R.drawable.ic_world_24dp))
-                            this.show()
+                            this.show(true)
                         }
 
                     FabActionNavigation.ACTION_SHOW_COUNTRY_SEARCH_BAR ->
                         fab_main_action?.apply {
+                            // this.hide() - it does not work properly
                             this.setOnClickListener { mainViewModel.showSearchCountryBar() }
                             this.setImageDrawable(
                                 BaseResourcesHelper.getDrawableCompatible(this@MainActivity, R.drawable.ic_search_24))
-                            this.show()
+                            this.show(true)
                         }
+
+                    FabActionNavigation.ACTION_HIDE ->
+                        fab_main_action?.apply {
+                            this.show(false)
+                        }
+
                 }
             }
         })

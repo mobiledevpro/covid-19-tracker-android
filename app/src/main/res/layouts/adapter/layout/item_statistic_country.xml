@@ -5,6 +5,7 @@
     <data>
 
         <import type="com.mobiledevpro.app.utils.FormatExtensionsKt" />
+        <import type="com.mobiledevpro.app.utils.DateExtensionsKt" />
 
         <variable
             name="item"
@@ -23,11 +24,11 @@
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.date}"
+            android:text="@{DateExtensionsKt.toDayMonth(item.date)}"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Mar 22, 2020" />
+            tools:text="Mar 22" />
 
 
         <TextView

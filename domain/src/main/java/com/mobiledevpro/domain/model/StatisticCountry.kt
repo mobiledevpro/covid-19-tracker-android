@@ -26,7 +26,7 @@ data class StatisticCountry(
  * @property deaths is a deaths of count people by day
  * @property recovered is a recovered count people by day*/
 data class DayStatistic(
-    val date: String,
+    val date: Long,
     val totalConfirmed: Long,
     var confirmed: Long = 0L,
     val totalDeaths: Long,

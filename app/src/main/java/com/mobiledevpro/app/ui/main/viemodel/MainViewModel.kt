@@ -44,4 +44,8 @@ class MainViewModel : BaseViewModel() {
             Event(FabActionNavigation.ACTION_SHOW_COUNTRY_SEARCH_BAR)
     }
 
+    fun setFabHide() {
+        _eventFabAction.value =
+            Event(FabActionNavigation.ACTION_HIDE)
+    }
 }
