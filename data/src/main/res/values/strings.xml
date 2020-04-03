@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">data</string>
+
+    <string name="label_channel_notification"></string>
 </resources>

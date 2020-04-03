@@ -1,12 +1,16 @@
 package com.mobiledevpro.app.common
 
 import android.app.Application
+import android.util.Log
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import com.mobiledevpro.app.BuildConfig
 import com.mobiledevpro.app.di.dataLocalModule
 import com.mobiledevpro.app.di.dataModule
 import com.mobiledevpro.app.di.dataRemoteModule
 import com.mobiledevpro.app.di.domainModule
 import com.mobiledevpro.app.di.uiModule
+import com.mobiledevpro.data.LOG_TAG_DEBUG
 import com.testfairy.TestFairy
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -31,6 +35,14 @@ class App : Application() {
         initKoin()
         initTimber()
 
+        if (BuildConfig.DEBUG) {
+            // initStetho()
+            //  initFlipper()
+
+            //its only for debug
+            retrieveFirebaseToken()
+        }
+
         //Beta testing (where release is published)
         TestFairy.begin(this, "6f9121c053a0dabdfa96dbb31c5c128860c119b3");
     }
@@ -49,6 +61,39 @@ class App : Application() {
         dataLocalModule,
         dataRemoteModule
     )
+
+    private fun retrieveFirebaseToken() {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.d(LOG_TAG_DEBUG, "retrieveFirebaseToken failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+
+                Log.d(LOG_TAG_DEBUG, "Firebase token: $token")
+            })
+    }
+
+    /*
+    private fun initStetho() {
+        Stetho.initializeWithDefaults(this)
+    }
+
+
+     */
+    /*
+    private fun initFlipper() {
+        SoLoader.init(this, false)
+        val client = AndroidFlipperClient.getInstance(this)
+        client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))
+        client.addPlugin(flipperNetworkPlugin)
+        client.start()
+    }
+
+     */
 
     private fun initTimber() {
         if (BuildConfig.DEBUG) {
