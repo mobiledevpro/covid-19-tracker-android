@@ -11,7 +11,7 @@ android.defaultConfig.javaCompileOptions {
 
 android.productFlavors {
     production {
-        buildConfigField "int", "RoomDatabaseVersion", "2"
+        buildConfigField "int", "RoomDatabaseVersion", "3"
     }
 }
 

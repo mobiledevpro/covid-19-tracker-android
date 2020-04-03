@@ -11,6 +11,7 @@ import com.mobiledevpro.app.R
 import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
 import com.mobiledevpro.app.utils.FabActionNavigation
 import com.mobiledevpro.app.utils.Navigation
+import com.mobiledevpro.app.utils.show
 import com.mobiledevpro.app.utils.showCountiesList
 import com.mobiledevpro.commons.activity.BaseActivity
 import com.mobiledevpro.commons.helpers.BaseResourcesHelper
@@ -65,7 +66,7 @@ class MainActivity : BaseActivity() {
                             this.setOnClickListener { mainViewModel.showCountriesList() }
                             this.setImageDrawable(
                                 BaseResourcesHelper.getDrawableCompatible(this@MainActivity, R.drawable.ic_world_24dp))
-                            this.show()
+                            this.show(true)
                         }
 
                     FabActionNavigation.ACTION_SHOW_COUNTRY_SEARCH_BAR ->
@@ -73,8 +74,23 @@ class MainActivity : BaseActivity() {
                             this.setOnClickListener { mainViewModel.showSearchCountryBar() }
                             this.setImageDrawable(
                                 BaseResourcesHelper.getDrawableCompatible(this@MainActivity, R.drawable.ic_search_24))
-                            this.show()
+                            this.show(true)
                         }
+
+                    FabActionNavigation.ACTION_CLOSE_COUNTRY_SEARCH_BAR ->
+                        fab_main_action?.apply {
+                            this.setOnClickListener { mainViewModel.closeSearchCountryBar() }
+                            this.setImageDrawable(
+                                BaseResourcesHelper.getDrawableCompatible(this@MainActivity, R.drawable.ic_close_24dp))
+                            this.show(true)
+                        }
+
+
+                    FabActionNavigation.ACTION_HIDE ->
+                        fab_main_action?.apply {
+                            this.show(false)
+                        }
+
                 }
             }
         })
@@ -82,7 +98,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun applyWindowInsets(view: View) {
-        //Use Window Insets to set top and bottom paddings to our activity
+        //Use Window Insets to set top and bottom padding's to our activity
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             v.updatePadding(
                 left = insets.systemWindowInsetLeft,

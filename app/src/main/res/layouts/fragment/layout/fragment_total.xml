@@ -16,14 +16,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.mobiledevpro.app.ui.common.SplashActivity"
-        tools:showIn="@layout/activity_splash">
+        tools:showIn="@layout/activity_main"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
 
         <TextView
             android:id="@+id/tv_main_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"
-            android:gravity="center"
+            android:gravity="start"
             android:text="@string/message_main"
             android:textColor="@color/colorTextPrimary"
             android:textSize="14sp"
@@ -143,7 +146,6 @@
             android:id="@+id/tv_update_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
             android:gravity="center"
             android:text="@{String.format(@string/label_last_update_date, viewModel.updateTime)}"
             android:textColor="@color/colorTextSecondary"

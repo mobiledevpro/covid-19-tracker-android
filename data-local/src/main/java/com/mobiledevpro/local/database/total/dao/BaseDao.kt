@@ -1,4 +1,4 @@
-package com.mobiledevpro.local.database.dao
+package com.mobiledevpro.local.database.total.dao
 
 import androidx.room.Delete
 import androidx.room.Insert
@@ -14,7 +14,7 @@ import androidx.room.Update
  *
  * http://androiddev.pro
  */
-internal interface BaseDao<T> {
+interface BaseDao<T> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(obj: T)

@@ -4,6 +4,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun Long.dateToSting(): String {
-    val dateFormat = SimpleDateFormat(" E, dd MMM yyyy hh:mm a", Locale.getDefault())
+    val dateFormat = SimpleDateFormat("MMM dd, yyyy | hh:mm", Locale.getDefault())
+    return dateFormat.format(this)
+}
+
+fun Long.toDayMonth(): String {
+    if (this <= 0) return ""
+    val dateFormat = SimpleDateFormat("MMM dd", Locale.getDefault())
     return dateFormat.format(this)
 }

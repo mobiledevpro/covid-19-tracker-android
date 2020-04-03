@@ -2,8 +2,8 @@ package com.mobiledevpro.domain.totaldata
 
 import com.mobiledevpro.domain.common.None
 import com.mobiledevpro.domain.common.Result
-import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
+import com.mobiledevpro.domain.model.TotalCountry
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -22,7 +22,7 @@ interface TotalDataInteractor {
 
     fun refreshTotalData(): Single<Result<None>>
 
-    fun observeCountriesListData(query: String): Observable<Result<ArrayList<Country>>>
+    fun observeCountriesListData(query: String): Observable<Result<ArrayList<TotalCountry>>>
 
     fun refreshCountriesData(): Single<Result<None>>
 }

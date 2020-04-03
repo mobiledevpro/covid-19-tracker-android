@@ -7,9 +7,9 @@ import com.mobiledevpro.app.utils.dateToSting
 import com.mobiledevpro.app.utils.provider.ResourceProvider
 import com.mobiledevpro.app.utils.toDecimalFormat
 import com.mobiledevpro.domain.common.Result
-import com.mobiledevpro.domain.model.Country
+import com.mobiledevpro.domain.model.TotalCountry
+import com.mobiledevpro.domain.statistic.data.StatisticDataInteractor
 import com.mobiledevpro.domain.totaldata.TotalDataInteractor
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -23,11 +23,10 @@ import io.reactivex.rxkotlin.subscribeBy
  * #MobileDevPro
  */
 class TotalViewModel(
-    private val interactor: TotalDataInteractor,
-    private val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider,
+    private val totalInteractor: TotalDataInteractor,
+    private val statisticInteractor: StatisticDataInteractor
 ) : BaseViewModel(), LifecycleObserver {
-
-    private val localSubscriptions = CompositeDisposable()
 
     private var query: String = ""
 
@@ -52,26 +51,22 @@ class TotalViewModel(
     private val _updateTime = MutableLiveData<String>()
     val updateTime: LiveData<String> = _updateTime
 
-    private val _countriesList = MutableLiveData<ArrayList<Country>>()
-    val countriesList: LiveData<ArrayList<Country>> = _countriesList
+    private val _countriesList = MutableLiveData<ArrayList<TotalCountry>>()
+    val countriesList: LiveData<ArrayList<TotalCountry>> = _countriesList
 
-    /*  private val _eventNavigateTo = MutableLiveData<Event<Navigation>>()
-      val eventNavigateTo: LiveData<Event<Navigation>> = _eventNavigateTo
-
-
-     */
     private val _eventShowError = MutableLiveData<Event<String>>()
     val eventShowError: LiveData<Event<String>> = _eventShowError
 
     init {
         observeTotalValues()
         observeCountriesList()
+        fetchStatisticFromHtml()
     }
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStartView() {
-        interactor.apply {
+        totalInteractor.apply {
             refreshTotalData()
                 .subscribeBy { result ->
                     when (result) {
@@ -90,11 +85,6 @@ class TotalViewModel(
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onStopView() {
-        //do something if needed
-    }
-
     fun getQuery() = query
 
     fun getCountiesByQuery(query: String) {
@@ -103,7 +93,7 @@ class TotalViewModel(
     }
 
     private fun observeTotalValues() {
-        interactor.observeTotalData()
+        totalInteractor.observeTotalData()
             .doOnSubscribe {
                 _isShowProgressTotalConfirmed.value = true
                 _isShowProgressTotalDeaths.value = true
@@ -130,9 +120,8 @@ class TotalViewModel(
     }
 
     private fun observeCountriesList() {
-        localSubscriptions.clear()
 
-        interactor.observeCountriesListData(query)
+        totalInteractor.observeCountriesListData(query)
             .subscribeBy { result ->
                 when (result) {
                     is Result.Success -> _countriesList.value = result.data
@@ -141,11 +130,13 @@ class TotalViewModel(
                     }
                 }
             }
-            .addTo(localSubscriptions)
+            .addTo(subscriptions)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        localSubscriptions.clear()
+    private fun fetchStatisticFromHtml() {
+        statisticInteractor
+            .fetchStatisticsFromHtml()
+            .subscribeBy { /* do nothing */ }
+            .addTo(subscriptions)
     }
 }

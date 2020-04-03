@@ -6,9 +6,10 @@
     <string name="app_version">v%s</string>
 
     <string name="message_splash">Глобальні дані \nпо поширенню COVID-19 (Corona Virus)</string>
-    <string name="message_dont_panic">Будь ласка, не панікуйте. Усе буде добре.</string>
-    <string name="message_main">Цей трекер відображає статус поширення Корона Вірус майже в реальному часі, з джерел Університету Джона Хопкінса (JNU).</string>
+    <string name="message_dont_panic">Залишайтесь у дома! Та не хворійте.</string>
+    <string name="message_main">Цей трекер відображає статус поширення вірусу COVID-19 майже в реальному часі, з джерел Університету Джона Хопкінса (JNU).</string>
 
+    <string name="label_total_description">Усього на %s</string>
     <string name="label_total_confirmed">Усього Заражених</string>
     <string name="label_total_deaths">Усього Смертей</string>
     <string name="label_total_recovered">Усього Вилікувано</string>
@@ -25,4 +26,5 @@
     <string name="access_denied_error">Доступ заборонено</string>
     <string name="service_unavailable_error">Сервіс недоступний</string>
     <string name="unknown_error">Невідома помилка</string>
+    <string name="parsing_error">Помилка при завантаженні данних для статистики</string>
 </resources>

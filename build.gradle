@@ -2,10 +2,11 @@
 
 buildscript {
 
-    ext.kotlinVersion = '1.3.70'
+    ext.kotlinVersion = '1.3.71'
     ext.gradleVersion = '4.0.0-beta03'
     ext.playServicesVersion = '4.3.3'
     ext.crashlyticsPluginVersion = '2.0.0-beta02'
+    ext.navVersion = "2.3.0-alpha04"
 
     repositories {
         google()
@@ -17,6 +18,8 @@ buildscript {
 
         classpath "com.google.gms:google-services:$playServicesVersion"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlyticsPluginVersion"
+
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion"
     }
 }
 
@@ -26,6 +29,10 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
         mavenCentral()
+        maven {
+            url 'http://www.idescout.com/maven/repo/'
+            name 'IDEScout, Inc.'
+        }
     }
 }
 
@@ -65,6 +72,9 @@ ext {
     flipperVersion = '0.33.1'
     soloaderVersion = "0.8.2"
     testfairyVersion = '1.+@aar'
+    jsoupVersion = "1.13.1"
+    mpaChartVersion = "v3.1.0"
+    rxRelayVersion = "2.1.1"
     firebaseMessagingVersion = "20.1.4"
 
     deps = [
@@ -84,6 +94,8 @@ ext {
             "fcm"                     : "com.google.firebase:firebase-messaging:$firebaseMessagingVersion",
             "coreKtx"                 : "androidx.core:core-ktx:$coreKtxVersion",
             "kotlin"                  : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
+            "rxRelay"                 : "com.jakewharton.rxrelay2:rxrelay:$rxRelayVersion",
+
 
             // ViewModel and LiveData
             "lifecycle"               : "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion",
@@ -122,7 +134,13 @@ ext {
             "stethoNetworkHelper"     : "com.facebook.stetho:stetho-okhttp3:$stethoVersion",
             "soloader"                : "com.facebook.soloader:soloader:$soloaderVersion",
 
+            //HTML parser
+            "jsoup"                   : "org.jsoup:jsoup:$jsoupVersion",
+
             //Beta testing
-            "testfairy"               : "testfairy:testfairy-android-sdk:$testfairyVersion"
+            "testfairy"               : "testfairy:testfairy-android-sdk:$testfairyVersion",
+
+            //MPAAndroidChart
+            "mpaChart"                : "com.github.PhilJay:MPAndroidChart:$mpaChartVersion"
     ]
 }

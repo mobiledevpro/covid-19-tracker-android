@@ -1,7 +1,8 @@
 package com.mobiledevpro.remote.service
 
 import com.google.gson.GsonBuilder
-import com.mobiledevpro.remote.service.api.RestApiClient
+import com.mobiledevpro.remote.service.api.FullStatisticRestApiClient
+import com.mobiledevpro.remote.service.api.TotalRestApiClient
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -11,10 +12,15 @@ class RemoteServiceFactory(
     client: OkHttpClient
 ) {
 
-    fun buildStackOverFlowApi(): RestApiClient = builder
-        .baseUrl(BASE_URL)
+    fun buildCovidTotalApi(): TotalRestApiClient = builder
+        .baseUrl(BASE_DAILY_URL)
         .build()
-        .create(RestApiClient::class.java)
+        .create(TotalRestApiClient::class.java)
+
+    fun buildCovidFullStatisticsApi(): FullStatisticRestApiClient = builder
+        .baseUrl(BASE_FULL_STATISTICS_URL)
+        .build()
+        .create(FullStatisticRestApiClient::class.java)
 
     private val gson = GsonBuilder()
         .setLenient()
@@ -26,7 +32,11 @@ class RemoteServiceFactory(
         .addConverterFactory(GsonConverterFactory.create(gson))
 
     companion object {
-        private const val BASE_URL =
+
+        private const val BASE_DAILY_URL =
             "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query/"
+
+        private const val BASE_FULL_STATISTICS_URL =
+            "https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/services/Nc2JKvYFoAEOFCG5JSI6/FeatureServer/4/query/"
     }
 }

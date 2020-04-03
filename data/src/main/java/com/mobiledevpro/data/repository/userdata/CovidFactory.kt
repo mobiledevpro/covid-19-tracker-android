@@ -1,11 +1,11 @@
 package com.mobiledevpro.data.repository.userdata
 
 class CovidFactory(
-    private val covidCache: CovidCache,
-    private val covidRemote: CovidRemote
+    private val totalCovidCache: TotalCovidCache,
+    private val totalCovidRemote: TotalCovidRemote
 ) {
 
-    fun remote() = covidRemote
+    fun remote() = totalCovidRemote
 
-    fun cache() = covidCache
+    fun cache() = totalCovidCache
 }

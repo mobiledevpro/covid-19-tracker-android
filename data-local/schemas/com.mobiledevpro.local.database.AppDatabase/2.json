@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "a4e968e459a698eaaaa43c073e1d9702",
+    "identityHash": "3e9d516bddbbd8324dcf4986fa5cd036",
     "entities": [
       {
         "tableName": "total",
@@ -49,7 +49,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "counties",
+        "tableName": "counties_total",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `country` TEXT NOT NULL, `updated` INTEGER NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `confirmed` INTEGER NOT NULL, `deaths` INTEGER NOT NULL, `recovered` INTEGER NOT NULL, `active` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -115,20 +115,121 @@
         },
         "indices": [
           {
-            "name": "index_counties_id",
+            "name": "index_counties_total_id",
             "unique": false,
             "columnNames": [
               "id"
             ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_counties_id` ON `${TABLE_NAME}` (`id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_counties_total_id` ON `${TABLE_NAME}` (`id`)"
           },
           {
-            "name": "index_counties_country",
+            "name": "index_counties_total_country",
             "unique": false,
             "columnNames": [
               "country"
             ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_counties_country` ON `${TABLE_NAME}` (`country`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_counties_total_country` ON `${TABLE_NAME}` (`country`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "countries_statistic",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`country` TEXT NOT NULL, `province` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, PRIMARY KEY(`province`))",
+        "fields": [
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "province",
+            "columnName": "province",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "latitude",
+            "columnName": "latitude",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "longitude",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "province"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_countries_statistic_province",
+            "unique": false,
+            "columnNames": [
+              "province"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_countries_statistic_province` ON `${TABLE_NAME}` (`province`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "day_total_country_statistic",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`province` TEXT NOT NULL, `date` INTEGER NOT NULL, `confirmed` INTEGER NOT NULL, `deaths` INTEGER NOT NULL, `recovered` INTEGER NOT NULL, PRIMARY KEY(`date`, `province`))",
+        "fields": [
+          {
+            "fieldPath": "province",
+            "columnName": "province",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "confirmed",
+            "columnName": "confirmed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deaths",
+            "columnName": "deaths",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recovered",
+            "columnName": "recovered",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "date",
+            "province"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_day_total_country_statistic_date",
+            "unique": false,
+            "columnNames": [
+              "date"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_day_total_country_statistic_date` ON `${TABLE_NAME}` (`date`)"
           }
         ],
         "foreignKeys": []
@@ -137,7 +238,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a4e968e459a698eaaaa43c073e1d9702')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3e9d516bddbbd8324dcf4986fa5cd036')"
     ]
   }
 }

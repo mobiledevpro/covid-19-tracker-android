@@ -5,10 +5,11 @@
     <string name="app_name_countries_list">Confirmed per Country</string>
     <string name="app_version">v%s</string>
 
-    <string name="message_splash">Global Data \non the COVID-19 (Corona Virus) outbreak</string>
-    <string name="message_dont_panic">Please, don\'t panic. Everything will be fine.</string>
-    <string name="message_main">This tracker displays the near real-time status based on the Johns Hopkins University(JHU) datasource.</string>
+    <string name="message_splash">Global Data on the COVID-19 (Corona Virus) outbreak</string>
+    <string name="message_dont_panic">Stay at home! And be healthy.</string>
+    <string name="message_main">This tracker displays the near real-time status of Corova Virus outbreak based on the Johns Hopkins University(JHU) datasource.</string>
 
+    <string name="label_total_description">Total on %s</string>
     <string name="label_total_confirmed">Total Confirmed</string>
     <string name="label_total_deaths">Total Deaths</string>
     <string name="label_total_recovered">Total Recovered</string>
@@ -25,4 +26,5 @@
     <string name="access_denied_error">Access Denied</string>
     <string name="service_unavailable_error">Service Unavailable</string>
     <string name="unknown_error">Unknown Error</string>
+    <string name="parsing_error">Error getting data for statistic</string>
 </resources>

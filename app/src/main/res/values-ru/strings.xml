@@ -5,10 +5,11 @@
     <string name="app_name_countries_list">Заражения по странам</string>
     <string name="app_version">v%s</string>
 
-    <string name="message_splash">Глобальные данные \nпо распространению COVID-19 (Corona Virus)</string>
-    <string name="message_dont_panic">Пожалуйста, не паникуйте. Все будет хорошо.</string>
-    <string name="message_main">Этот трекер отображает статистику распростарнения Корона Вирус почти в реальном времени, из источников Университета Джона Хопкинса (JNU).</string>
+    <string name="message_splash">Глобальные данные по распространению COVID-19 (Corona Virus)</string>
+    <string name="message_dont_panic">Оставайтесь дома! И не болейте.</string>
+    <string name="message_main">Этот трекер отображает статистику распростарнения вируса COVID-19 почти в реальном времени, из источников Университета Джона Хопкинса (JNU).</string>
 
+    <string name="label_total_description">Всего на %s</string>
     <string name="label_total_confirmed">Всего Зараженных</string>
     <string name="label_total_deaths">Всего Смертей</string>
     <string name="label_total_recovered">Всего Вылечено</string>
@@ -25,4 +26,5 @@
     <string name="access_denied_error">Доступ запрещен</string>
     <string name="service_unavailable_error">Сервис недоступен</string>
     <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="parsing_error">Ошибка при загрузке данных для статистики</string>
 </resources>

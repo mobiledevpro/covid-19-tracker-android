@@ -1,10 +1,10 @@
 package com.mobiledevpro.data.repository.userdata
 
-import com.mobiledevpro.data.model.CountryEntity
+import com.mobiledevpro.data.model.CountryTotalEntity
 import com.mobiledevpro.data.model.TotalValueEntity
 import io.reactivex.Single
 
-interface CovidRemote {
+interface TotalCovidRemote {
 
     fun getTotalConfirmed(): Single<TotalValueEntity>
 
@@ -12,5 +12,5 @@ interface CovidRemote {
 
     fun getTotalRecovered(): Single<TotalValueEntity>
 
-    fun getCountries(): Single<List<CountryEntity>>
+    fun getCountries(): Single<List<CountryTotalEntity>>
 }

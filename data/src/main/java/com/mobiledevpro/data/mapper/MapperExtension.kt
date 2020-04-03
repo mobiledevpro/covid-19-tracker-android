@@ -1,19 +1,14 @@
 package com.mobiledevpro.data.mapper
 
-import com.mobiledevpro.data.model.AccessDeniedThrowableEntity
-import com.mobiledevpro.data.model.CountryEntity
-import com.mobiledevpro.data.model.NetworkThrowableEntity
-import com.mobiledevpro.data.model.NotFoundThrowableEntity
-import com.mobiledevpro.data.model.ServiceUnavailableThrowableEntity
-import com.mobiledevpro.data.model.TotalEntity
-import com.mobiledevpro.data.model.UnknownThrowableEntity
-import com.mobiledevpro.domain.error.AccessDeniedThrowable
-import com.mobiledevpro.domain.error.NetworkThrowable
-import com.mobiledevpro.domain.error.NotFoundThrowable
-import com.mobiledevpro.domain.error.ServiceUnavailableThrowable
-import com.mobiledevpro.domain.error.UnknownThrowable
-import com.mobiledevpro.domain.model.Country
+import com.mobiledevpro.data.model.*
+import com.mobiledevpro.data.model.statistic.CountryStatisticEntity
+import com.mobiledevpro.data.model.statistic.DayStatisticEntity
+import com.mobiledevpro.data.model.statistic.StatisticEntity
+import com.mobiledevpro.domain.error.*
+import com.mobiledevpro.domain.model.DayStatistic
+import com.mobiledevpro.domain.model.StatisticCountry
 import com.mobiledevpro.domain.model.Total
+import com.mobiledevpro.domain.model.TotalCountry
 import java.util.*
 
 /**
@@ -39,7 +34,7 @@ fun TotalEntity.toDomain() = Total(
     updateTime = lastUpdateTime
 )
 
-fun CountryEntity.toDomain() = Country(
+fun CountryTotalEntity.toDomain() = TotalCountry(
     id = id,
     country = country,
     updated = updated,
@@ -51,7 +46,7 @@ fun CountryEntity.toDomain() = Country(
     active = active
 )
 
-fun Country.toEntity() = CountryEntity(
+fun TotalCountry.toEntity() = CountryTotalEntity(
     id = id,
     country = country,
     updated = updated,
@@ -61,6 +56,29 @@ fun Country.toEntity() = CountryEntity(
     deaths = deaths,
     recovered = recovered,
     active = active
+)
+
+fun CountryStatisticEntity.toDomain() = TotalCountry(
+    id = id,
+    country = country,
+    updated = updated,
+    confirmed = confirmed.toInt(),
+    deaths = deaths.toInt()
+)
+
+fun StatisticEntity.toDomain() = StatisticCountry(
+    country = country.countryName,
+    province = country.provinceName,
+    latitude = coord.lat,
+    longitude = coord.long,
+    dayStatistics = dayStatistic.map { it.toDomain() }
+)
+
+fun DayStatisticEntity.toDomain() = DayStatistic(
+    date = date,
+    totalConfirmed = confirmed,
+    totalRecovered = recovered,
+    totalDeaths = deaths
 )
 
 fun Throwable.throwableToDomain() = when (this) {
@@ -68,6 +86,7 @@ fun Throwable.throwableToDomain() = when (this) {
     is NotFoundThrowableEntity -> NotFoundThrowable()
     is AccessDeniedThrowableEntity -> AccessDeniedThrowable()
     is ServiceUnavailableThrowableEntity -> ServiceUnavailableThrowable()
+    is HtmlParserThrowableEntity -> HtmlParserThrowable(message = message)
     is UnknownThrowableEntity -> UnknownThrowable()
     else -> UnknownThrowable()
 }

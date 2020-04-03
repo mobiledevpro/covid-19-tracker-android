@@ -10,6 +10,9 @@ dependencies {
     implementation deps.retrofitRx
     implementation deps.okhttpLoggingInterceptor
 
+    //Parsing HTML
+    implementation(deps.jsoup)
+
     //Firebase messaging
     implementation deps.fcm
 }

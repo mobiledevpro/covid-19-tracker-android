@@ -13,6 +13,7 @@ import com.mobiledevpro.app.ui.countries.adapter.CountriesListAdapter
 import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
 import com.mobiledevpro.app.utils.Navigation
+import com.mobiledevpro.app.utils.showStatisticCountry
 import com.mobiledevpro.commons.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_countries_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -79,7 +80,7 @@ class CountriesListFragment : BaseFragment() {
 
         rv_countries_list?.layoutManager = layoutManager
         rv_countries_list?.setHasFixedSize(true)
-        rv_countries_list?.adapter = CountriesListAdapter()
+        rv_countries_list?.adapter = CountriesListAdapter(this::showStatisticCountry)
         rv_countries_list.addItemDecoration(divider)
     }
 
@@ -92,6 +93,7 @@ class CountriesListFragment : BaseFragment() {
                 if (this.isNotEmpty()) {
                     onActionViewExpanded()
                     setQuery(this, true)
+                    mainViewModel.setFabActionCloseCountrySearch()
                 }
             }
 
@@ -103,19 +105,42 @@ class CountriesListFragment : BaseFragment() {
                     return true
                 }
             })
+
+            setOnSearchClickListener {
+                mainViewModel.setFabActionCloseCountrySearch()
+            }
         }
     }
 
     private fun observeEvents() {
         mainViewModel.eventNavigateTo.observe(viewLifecycleOwner, Observer {
             it.peekContent().let { navigateTo ->
-                if (navigateTo == Navigation.NAVIGATE_TO_SEARCH_COUNTRY) {
-                    searchView.apply {
-                        onActionViewExpanded()
-                        totalViewModel.getQuery().apply {
-                            setQuery(this, true)
+                when (navigateTo) {
+                    Navigation.NAVIGATE_TO_SEARCH_COUNTRY -> {
+                        searchView.apply {
+                            onActionViewExpanded()
+                            totalViewModel.getQuery().apply {
+                                setQuery(this, true)
+                            }
                         }
+
+                        mainViewModel.setFabActionCloseCountrySearch()
                     }
+
+                    Navigation.NAVIGATE_CLOSE_SEARCH_COUNTRY -> {
+                        searchView.apply {
+                            onActionViewCollapsed()
+                            totalViewModel.getQuery().apply {
+                                setQuery(this, true)
+                            }
+                        }
+
+                        mainViewModel.setFabActionShowCountrySearch()
+                    }
+
+                    else -> {
+                    }
+
                 }
             }
         })

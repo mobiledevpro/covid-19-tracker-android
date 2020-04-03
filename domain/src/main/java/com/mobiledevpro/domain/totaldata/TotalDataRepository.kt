@@ -1,7 +1,7 @@
 package com.mobiledevpro.domain.totaldata
 
-import com.mobiledevpro.domain.model.Country
 import com.mobiledevpro.domain.model.Total
+import com.mobiledevpro.domain.model.TotalCountry
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -27,9 +27,9 @@ interface TotalDataRepository {
 
     fun getTotalData(): Single<Total>
 
-    fun getLocalCountriesObservable(query: String): Observable<List<Country>>
+    fun getLocalCountriesObservable(query: String): Observable<List<TotalCountry>>
 
-    fun getCountries(): Single<List<Country>>
+    fun getCountries(): Single<List<TotalCountry>>
 
-    fun setLocalCountriesData(countries: List<Country>): Completable
+    fun setLocalCountriesData(totalCountries: List<TotalCountry>): Completable
 }

@@ -1,18 +1,17 @@
 package com.mobiledevpro.data.repository.userdata
 
-import com.mobiledevpro.data.model.CountryEntity
+import com.mobiledevpro.data.model.CountryTotalEntity
 import com.mobiledevpro.data.model.TotalEntity
-import com.mobiledevpro.domain.model.Country
 import io.reactivex.Completable
 import io.reactivex.Observable
 
-interface CovidCache {
+interface TotalCovidCache {
 
     fun getTotalDataObservable(): Observable<TotalEntity>
 
     fun updateTotalData(totalEntity: TotalEntity): Completable
 
-    fun getLocalCountriesObservable(query: String): Observable<List<CountryEntity>>
+    fun getLocalCountriesObservable(query: String): Observable<List<CountryTotalEntity>>
 
-    fun updateCountries(countriesEntity: List<CountryEntity>): Completable
+    fun updateCountries(countriesTotalEntity: List<CountryTotalEntity>): Completable
 }

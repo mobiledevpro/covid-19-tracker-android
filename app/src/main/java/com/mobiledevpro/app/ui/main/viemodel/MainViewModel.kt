@@ -34,6 +34,11 @@ class MainViewModel : BaseViewModel() {
             Event(Navigation.NAVIGATE_TO_SEARCH_COUNTRY)
     }
 
+    fun closeSearchCountryBar() {
+        _eventNavigateTo.value =
+            Event(Navigation.NAVIGATE_CLOSE_SEARCH_COUNTRY)
+    }
+
     fun setFabActionShowCountries() {
         _eventFabAction.value =
             Event(FabActionNavigation.ACTION_SHOW_COUNTRIES)
@@ -44,4 +49,13 @@ class MainViewModel : BaseViewModel() {
             Event(FabActionNavigation.ACTION_SHOW_COUNTRY_SEARCH_BAR)
     }
 
+    fun setFabActionCloseCountrySearch() {
+        _eventFabAction.value =
+            Event(FabActionNavigation.ACTION_CLOSE_COUNTRY_SEARCH_BAR)
+    }
+
+    fun setFabHide() {
+        _eventFabAction.value =
+            Event(FabActionNavigation.ACTION_HIDE)
+    }
 }

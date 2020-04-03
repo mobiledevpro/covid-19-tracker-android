@@ -5,10 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mobiledevpro.local.BuildConfig
-import com.mobiledevpro.local.database.dao.CountryDataDao
-import com.mobiledevpro.local.database.dao.TotalDataDao
-import com.mobiledevpro.local.database.model.CachedCounties
-import com.mobiledevpro.local.database.model.CachedTotal
+import com.mobiledevpro.local.database.statistic.dao.StatisticCountryDataDao
+import com.mobiledevpro.local.database.statistic.dao.StatisticDayCountryDataDao
+import com.mobiledevpro.local.database.statistic.model.CachedDayTotalCountryStatistic
+import com.mobiledevpro.local.database.statistic.model.CachedStatisticCountry
+import com.mobiledevpro.local.database.total.dao.TotalCountryDataDao
+import com.mobiledevpro.local.database.total.dao.TotalDataDao
+import com.mobiledevpro.local.database.total.model.CachedTotal
+import com.mobiledevpro.local.database.total.model.CachedTotalCounties
 
 /**
  * Room Database
@@ -23,15 +27,20 @@ import com.mobiledevpro.local.database.model.CachedTotal
 @Database(
     entities = [
         CachedTotal::class,
-        CachedCounties::class
+        CachedTotalCounties::class,
+        CachedStatisticCountry::class,
+        CachedDayTotalCountryStatistic::class
     ],
     version = BuildConfig.RoomDatabaseVersion,
     exportSchema = true
 )
 
-internal abstract class AppDatabase : RoomDatabase() {
-    internal abstract val totalDataDao: TotalDataDao
-    internal abstract val countiesDataDao: CountryDataDao
+abstract class AppDatabase : RoomDatabase() {
+    abstract val totalDataDao: TotalDataDao
+    abstract val totalCountryDataDao: TotalCountryDataDao
+    abstract val statisticCountryData: StatisticCountryDataDao
+    abstract val statisticDayCountryData: StatisticDayCountryDataDao
+
 
     companion object {
         @Volatile
@@ -43,10 +52,10 @@ internal abstract class AppDatabase : RoomDatabase() {
 
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                            context.applicationContext,
-                            AppDatabase::class.java,
-                            "app_database"
-                        )
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        "app_database"
+                    )
                         .fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance
