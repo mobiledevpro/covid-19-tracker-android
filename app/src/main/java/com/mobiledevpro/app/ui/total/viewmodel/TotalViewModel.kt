@@ -1,6 +1,10 @@
 package com.mobiledevpro.app.ui.total.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
@@ -70,7 +74,8 @@ class TotalViewModel(
             refreshTotalData()
                 .subscribeBy { result ->
                     when (result) {
-                        is Result.Success -> { /*do nothing*/ }
+                        is Result.Success -> { /*do nothing*/
+                        }
                         is Result.Failure -> {
                             val errMsg = resourceProvider.getErrorMessage(result.error)
                             _eventShowError.value = Event(errMsg)
@@ -136,7 +141,14 @@ class TotalViewModel(
     private fun fetchStatisticFromHtml() {
         statisticInteractor
             .fetchStatisticsFromHtml()
-            .subscribeBy { /* do nothing */ }
+            .subscribeBy { result ->
+                when (result) {
+                    is Result.Failure -> {
+                        val errMsg = resourceProvider.getErrorMessage(result.error)
+                        _eventShowError.value = Event(errMsg)
+                    }
+                }
+            }
             .addTo(subscriptions)
     }
 }
