@@ -18,6 +18,7 @@ class DefaultStatisticDataInteractor(
 
     override fun fetchStatisticsFromHtml() = statisticDataRepository
         .fetchStatisticsFromHtml()
+        .toResult()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(Schedulers.io())
 
