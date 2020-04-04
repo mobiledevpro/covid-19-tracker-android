@@ -1,5 +1,6 @@
 package com.mobiledevpro.app.di
 
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
 import com.mobiledevpro.app.ui.statistic.viewmodel.StatisticCountryViewModel
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
@@ -46,7 +47,7 @@ import org.koin.dsl.module
 
 val uiModule = module {
 
-    viewModel { MainViewModel() }
+    viewModel { MainViewModel(analytics = get()) }
 
     viewModel {
         TotalViewModel(
@@ -64,6 +65,7 @@ val uiModule = module {
     }
 
     single { DefaultResourceProvider(androidContext().resources) as ResourceProvider }
+    single { FirebaseAnalytics.getInstance(get()) }
 }
 
 val domainModule = module {

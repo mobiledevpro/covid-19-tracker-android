@@ -22,9 +22,13 @@
     <string name="search_country_hint">Введіть країну (EN)</string>
 
     <string name="network_error">Помилка мережі</string>
+    <string name="menu_share_app_link">Відправити посилання на додаток</string>
     <string name="not_found_error">Сервер не знайдено</string>
     <string name="access_denied_error">Доступ заборонено</string>
     <string name="service_unavailable_error">Сервіс недоступний</string>
     <string name="unknown_error">Невідома помилка</string>
     <string name="parsing_error">Помилка при завантаженні данних для статистики</string>
+
+    <string name="message_share_the_app">COVID-19 статистика розповсюдження у реальному часі. Завантажити додаток https://tsfr.io/covid19</string>
+
 </resources>

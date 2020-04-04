@@ -1,6 +1,7 @@
 package com.mobiledevpro.app.ui.total
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -33,6 +34,8 @@ class TotalFragment : BaseFragment() {
 
     override fun getAppBarTitle() = R.string.app_name_main
 
+    override fun getOptionsMenuResId() = R.menu.menu_total
+
     override fun getHomeAsUpIndicatorIcon() = 0
 
     override fun populateView(view: View, savedInstanceState: Bundle?): View {
@@ -61,6 +64,13 @@ class TotalFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         mainViewModel.setFabActionShowCountries()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_share_app -> mainViewModel.shareTheAppLink()
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun observeEvents() {

@@ -1,5 +1,6 @@
 package com.mobiledevpro.app.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -9,10 +10,7 @@ import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import com.mobiledevpro.app.R
 import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
-import com.mobiledevpro.app.utils.FabActionNavigation
-import com.mobiledevpro.app.utils.Navigation
-import com.mobiledevpro.app.utils.show
-import com.mobiledevpro.app.utils.showCountiesList
+import com.mobiledevpro.app.utils.*
 import com.mobiledevpro.commons.activity.BaseActivity
 import com.mobiledevpro.commons.helpers.BaseResourcesHelper
 import kotlinx.android.synthetic.main.activity_main.*
@@ -54,7 +52,26 @@ class MainActivity : BaseActivity() {
             it.getContentIfNotHandled()?.let { navigateTo ->
                 when (navigateTo) {
                     Navigation.NAVIGATE_TO_COUNTRIES_LIST -> showCountiesList(R.id.fragment_nav_host)
+                    Navigation.NAVIGATE_TO_SHARE_THE_APP -> {
+                        val shareMessage: String = this@MainActivity.resources.getString(R.string.message_share_the_app)
+                        val intent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, shareMessage)
+                            type = "text/plain"
+                            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        }
+                        val shareIntent = Intent.createChooser(intent, this@MainActivity.resources.getString(R.string.menu_share_app_link))
+                        this@MainActivity.startActivity(shareIntent)
+                    }
+                    else -> {
+                    }
                 }
+            }
+        })
+
+        mainViewModel.eventNavigateToCountryDetails.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { countryName ->
+                showStatisticCountry(R.id.fragment_nav_host, countryName)
             }
         })
 

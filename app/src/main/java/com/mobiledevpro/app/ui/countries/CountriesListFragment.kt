@@ -13,7 +13,6 @@ import com.mobiledevpro.app.ui.countries.adapter.CountriesListAdapter
 import com.mobiledevpro.app.ui.main.viemodel.MainViewModel
 import com.mobiledevpro.app.ui.total.viewmodel.TotalViewModel
 import com.mobiledevpro.app.utils.Navigation
-import com.mobiledevpro.app.utils.showStatisticCountry
 import com.mobiledevpro.commons.fragment.BaseFragment
 import kotlinx.android.synthetic.main.fragment_countries_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -80,7 +79,7 @@ class CountriesListFragment : BaseFragment() {
 
         rv_countries_list?.layoutManager = layoutManager
         rv_countries_list?.setHasFixedSize(true)
-        rv_countries_list?.adapter = CountriesListAdapter(this::showStatisticCountry)
+        rv_countries_list?.adapter = CountriesListAdapter(mainViewModel::showCountryDetails)
         rv_countries_list.addItemDecoration(divider)
     }
 
