@@ -29,5 +29,5 @@
     <string name="unknown_error">Unknown Error</string>
     <string name="parsing_error">Error getting data for statistic</string>
 
-    <string name="message_share_the_app">COVID-19 outbreak statistic in realtime. Download the app https://tsfr.io/covid19</string>
+    <string name="message_share_the_app">Realtime statistic of COVID-19 outbreak in your phone. Download the app https://tsfr.io/covid19</string>
 </resources>

@@ -29,6 +29,6 @@
     <string name="unknown_error">Невідома помилка</string>
     <string name="parsing_error">Помилка при завантаженні данних для статистики</string>
 
-    <string name="message_share_the_app">COVID-19 статистика розповсюдження у реальному часі. Завантажити додаток https://tsfr.io/covid19</string>
+    <string name="message_share_the_app">Реальна статистика розповсюдження COVID-19 у твоему смартфоні. Завантаж додаток https://tsfr.io/covid19</string>
 
 </resources>

@@ -29,5 +29,5 @@
     <string name="unknown_error">Неизвестная ошибка</string>
     <string name="parsing_error">Ошибка при загрузке данных для статистики</string>
 
-    <string name="message_share_the_app">COVID-19 статистика распространения в реальном времени. Скачать приложение https://tsfr.io/covid19</string>
+    <string name="message_share_the_app">Реальная статистика распространения COVID-19 в твоем смартфоне. Загрузи приложение https://tsfr.io/covid19</string>
 </resources>
