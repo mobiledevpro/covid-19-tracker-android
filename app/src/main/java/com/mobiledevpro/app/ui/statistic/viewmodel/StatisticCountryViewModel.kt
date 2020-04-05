@@ -1,6 +1,10 @@
 package com.mobiledevpro.app.ui.statistic.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
 import com.github.mikephil.charting.data.Entry
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
@@ -22,7 +26,7 @@ class StatisticCountryViewModel(
     private val _eventShowError = MutableLiveData<Event<String>>()
     val eventShowError: LiveData<Event<String>> = _eventShowError
 
-    private val _isShowProgressStatistic = MutableLiveData<Boolean>()
+    private val _isShowProgressStatistic = MutableLiveData<Boolean>(true)
     val isShowProgressStatistic: LiveData<Boolean> = _isShowProgressStatistic
 
     private val _statisticCountry = MutableLiveData<List<DayStatistic>>()
@@ -48,12 +52,7 @@ class StatisticCountryViewModel(
     private fun observeConfirmedList(query: String) {
         statisticInteractor
             .observeStatisticByCountryName(query = query)
-            .doOnSubscribe {
-                _isShowProgressStatistic.value = true
-            }
-            .doOnNext {
-                _isShowProgressStatistic.value = false
-            }
+            .doOnNext { _isShowProgressStatistic.value = false }
             .subscribeBy {
                 when (it) {
                     is Result.Success -> {
