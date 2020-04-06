@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.mobiledevpro.app.common.BaseViewModel
 import com.mobiledevpro.app.common.Event
 import com.mobiledevpro.app.utils.dateToSting
@@ -120,7 +120,7 @@ class TotalViewModel(
 
                     is Result.Failure -> {
                         val errMsg = resourceProvider.getErrorMessage(result.error)
-                        Crashlytics.logException(Throwable(errMsg))
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(errMsg))
                     }
                 }
             }
@@ -134,7 +134,7 @@ class TotalViewModel(
                     is Result.Success -> _countriesList.value = result.data
                     is Result.Failure -> {
                         val errMsg = resourceProvider.getErrorMessage(result.error)
-                        Crashlytics.logException(Throwable(errMsg))
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(errMsg))
                     }
                 }
             }
@@ -149,7 +149,7 @@ class TotalViewModel(
                     is Result.Failure -> {
                         val errMsg = resourceProvider.getErrorMessage(result.error)
                         _eventShowError.value = Event(errMsg)
-                        Crashlytics.logException(Throwable(errMsg))
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(errMsg))
                     }
                 }
             }
