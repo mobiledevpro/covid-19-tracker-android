@@ -2,6 +2,7 @@ package com.mobiledevpro.app.common
 
 import android.app.Application
 import android.util.Log
+import com.crashlytics.android.Crashlytics
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.mobiledevpro.app.BuildConfig
@@ -12,6 +13,7 @@ import com.mobiledevpro.app.di.domainModule
 import com.mobiledevpro.app.di.uiModule
 import com.mobiledevpro.data.LOG_TAG_DEBUG
 import com.testfairy.TestFairy
+import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -41,6 +43,7 @@ class App : Application() {
 
             //its only for debug
             retrieveFirebaseToken()
+            initCrashlytics()
         }
 
         //Beta testing (where release is published)
@@ -77,23 +80,10 @@ class App : Application() {
             })
     }
 
-    /*
-    private fun initStetho() {
-        Stetho.initializeWithDefaults(this)
-    }
+   private fun initCrashlytics() {
+       Fabric.with(applicationContext, Crashlytics())
 
-
-     */
-    /*
-    private fun initFlipper() {
-        SoLoader.init(this, false)
-        val client = AndroidFlipperClient.getInstance(this)
-        client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))
-        client.addPlugin(flipperNetworkPlugin)
-        client.start()
-    }
-
-     */
+   }
 
     private fun initTimber() {
         if (BuildConfig.DEBUG) {

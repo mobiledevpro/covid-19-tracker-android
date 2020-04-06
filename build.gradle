@@ -55,8 +55,6 @@ ext {
     leakcanaryVersion = '2.2'
     firebaseCoreVersion = '17.2.2'
     firebasePerfVersion = '19.0.5'
-    crashlyticsVersion = '17.0.0-beta01'
-    analyticsVersion = '17.2.2'
     lifecycleVersion = '2.2.0'
     rxJavaVersion = '2.2.9'
     rxAndroidVersion = '2.1.1'
@@ -76,6 +74,8 @@ ext {
     mpaChartVersion = "v3.1.0"
     rxRelayVersion = "2.1.1"
     firebaseMessagingVersion = "20.1.4"
+    crashlyticsVersion = "2.10.1"
+    analyticsVersion = '17.2.2'
 
     deps = [
             "multidex"                : "androidx.multidex:multidex:$multidexVersion",
@@ -89,7 +89,7 @@ ext {
             "leakcanaryDebug"         : "com.squareup.leakcanary:leakcanary-android:$leakcanaryVersion",
             "firebaseCore"            : "com.google.firebase:firebase-core:$firebaseCoreVersion",
             "firebasePerformance"     : "com.google.firebase:firebase-perf:$firebasePerfVersion",
-            "crashlytics"             : "com.google.firebase:firebase-crashlytics:$crashlyticsVersion",
+            "crashlytics"             : "com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion",
             "firebaseAnalytics"       : "com.google.firebase:firebase-analytics:$analyticsVersion",
             "fcm"                     : "com.google.firebase:firebase-messaging:$firebaseMessagingVersion",
             "coreKtx"                 : "androidx.core:core-ktx:$coreKtxVersion",
