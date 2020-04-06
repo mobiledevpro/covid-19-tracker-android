@@ -77,24 +77,6 @@ class App : Application() {
             })
     }
 
-    /*
-    private fun initStetho() {
-        Stetho.initializeWithDefaults(this)
-    }
-
-
-     */
-    /*
-    private fun initFlipper() {
-        SoLoader.init(this, false)
-        val client = AndroidFlipperClient.getInstance(this)
-        client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))
-        client.addPlugin(flipperNetworkPlugin)
-        client.start()
-    }
-
-     */
-
     private fun initTimber() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

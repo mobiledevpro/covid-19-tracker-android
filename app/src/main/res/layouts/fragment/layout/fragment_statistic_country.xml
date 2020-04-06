@@ -5,7 +5,10 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="com.mobiledevpro.app.utils.FormatExtensionsKt" />
+
         <import type="com.mobiledevpro.app.utils.DateExtensionsKt" />
 
         <variable
@@ -19,7 +22,7 @@
         tools:context="com.mobiledevpro.app.ui.main.MainActivity"
         tools:showIn="@layout/activity_main">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -27,66 +30,83 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="300dp">
 
-            <com.mobiledevpro.app.ui.widget.StatisticLineChart
-                android:id="@+id/chartByDays"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toTopOf="@id/layout_total_info"
-                app:layout_constraintTop_toTopOf="parent" />
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/progress_bar_circular_grey_small"
+                android:visibility="@{viewModel.isShowProgressStatistic ? View.VISIBLE : View.INVISIBLE}" />
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_total_info"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent">
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.isShowProgressStatistic ? View.INVISIBLE : View.VISIBLE}" >
 
-                <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="wrap_content"
+
+                <com.mobiledevpro.app.ui.widget.StatisticLineChart
+                    android:id="@+id/chartByDays"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toTopOf="@id/layout_total_info"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_total_info"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{String.format(@string/label_total_description, DateExtensionsKt.toDayMonth(viewModel.lastStatisticDate))}"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Total" />
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.format(@string/label_total_description, DateExtensionsKt.toDayMonth(viewModel.lastStatisticDate))}"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Total" />
 
 
-                <TextView
-                    android:id="@+id/tv_confirmed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalConfirmed)}"
-                    android:textColor="@color/colorTextPrimaryRed"
-                    android:textSize="20sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="80,000" />
+                    <TextView
+                        android:id="@+id/tv_confirmed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalConfirmed)}"
+                        android:textColor="@color/colorTextPrimaryRed"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="80,000" />
 
-                <TextView
-                    android:id="@+id/tv_recovered"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{String.format(@string/label_recovered, FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalRecovered))}"
-                    android:textColor="@color/colorTextPrimaryGreen"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_confirmed"
-                    tools:text="Recovered 40,000" />
+                    <TextView
+                        android:id="@+id/tv_recovered"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.format(@string/label_recovered, FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalRecovered))}"
+                        android:textColor="@color/colorTextPrimaryGreen"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_confirmed"
+                        tools:text="Recovered 40,000" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:text="@{String.format(@string/label_deaths, FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalDeaths))}"
-                    android:textColor="@color/colorTextSecondary"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_recovered"
-                    app:layout_constraintTop_toBottomOf="@id/tv_confirmed"
-                    tools:text="Deaths 1,000" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        android:text="@{String.format(@string/label_deaths, FormatExtensionsKt.toDecimalFormat(viewModel.totalData.totalDeaths))}"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_recovered"
+                        app:layout_constraintTop_toBottomOf="@id/tv_confirmed"
+                        tools:text="Deaths 1,000" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/layout_bottom_sheet"
@@ -114,13 +134,28 @@
                     android:paddingTop="8dp"
                     app:srcCompat="@drawable/ic_drag_handle" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvStatistic"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:items="@{viewModel.statisticCountry}"
-                    tools:listitem="@layout/item_statistic_country" />
+                    android:layout_height="wrap_content">
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvStatistic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="@{viewModel.isShowProgressStatistic() ? View.INVISIBLE : View.VISIBLE}"
+                        app:items="@{viewModel.statisticCountry}"
+                        tools:listitem="@layout/item_statistic_country" />
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|center_horizontal"
+                        android:layout_marginTop="32dp"
+                        android:indeterminate="true"
+                        android:indeterminateDrawable="@drawable/progress_bar_circular_grey_small"
+                        android:visibility="@{viewModel.isShowProgressStatistic ? View.VISIBLE : View.INVISIBLE}" />
+
+                </FrameLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

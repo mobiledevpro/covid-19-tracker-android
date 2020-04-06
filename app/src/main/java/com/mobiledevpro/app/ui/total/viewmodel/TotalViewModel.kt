@@ -117,9 +117,10 @@ class TotalViewModel(
                         _isShowProgressTotalDeaths.value = confirmed < 0
                         _isShowProgressTotalRecovered.value = confirmed < 0
                     }
+
                     is Result.Failure -> {
                         val errMsg = resourceProvider.getErrorMessage(result.error)
-                        FirebaseCrashlytics.getInstance().log(errMsg)
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(errMsg))
                     }
                 }
             }
@@ -127,14 +128,13 @@ class TotalViewModel(
     }
 
     private fun observeCountriesList() {
-
         totalInteractor.observeCountriesListData(query)
             .subscribeBy { result ->
                 when (result) {
                     is Result.Success -> _countriesList.value = result.data
                     is Result.Failure -> {
                         val errMsg = resourceProvider.getErrorMessage(result.error)
-                        FirebaseCrashlytics.getInstance().log(errMsg)
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(errMsg))
                     }
                 }
             }
@@ -149,7 +149,7 @@ class TotalViewModel(
                     is Result.Failure -> {
                         val errMsg = resourceProvider.getErrorMessage(result.error)
                         _eventShowError.value = Event(errMsg)
-                        FirebaseCrashlytics.getInstance().log(errMsg)
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(errMsg))
                     }
                 }
             }

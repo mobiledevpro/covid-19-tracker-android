@@ -86,6 +86,7 @@ class DefaultStatisticDataRepository(
     override fun observeStatisticByCountyName(query: String): Observable<StatisticCountry> =
         statisticsCache
             .observeConfirmedDataByCountryName(query)
+            .skipWhile { it.isEmpty() || it.first().dayStatistic.isEmpty() }
             .map { result ->
                 if (result.size <= 1) result[0]
                 else collectDataByDay(result)
