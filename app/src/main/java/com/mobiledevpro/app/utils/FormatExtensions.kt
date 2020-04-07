@@ -16,8 +16,8 @@ fun Long.toDecimalFormat(): String {
 
 fun Float.toNumberWithAbbreviation(): String =
     when {
-        this > 999 -> "${this.toInt() / 1000}K"
-        this > 999999 -> "${this.toInt() / 1000000}M"
-        this > 999999999 -> "${this.toInt() / 1000000000}B"
+        this > 999 -> "${DecimalFormat("#.#").format(this / 1000)}K"
+        this > 999999 -> "${DecimalFormat("#.#").format(this / 1000000)}M"
+        this > 999999999 -> "${DecimalFormat("#.#").format(this / 1000000000)}B"
         else -> "${this.toInt()}"
     }
