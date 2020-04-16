@@ -3,7 +3,7 @@
 buildscript {
 
     ext.kotlinVersion = '1.3.71'
-    ext.gradleVersion = '4.0.0-beta03'
+    ext.gradleVersion = '4.1.0-alpha05'
     ext.playServicesVersion = '4.3.3'
     ext.crashlyticsPluginVersion = '2.0.0-beta03'
     ext.navVersion = "2.3.0-alpha04"
