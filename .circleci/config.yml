@@ -8,7 +8,8 @@ jobs:
       JVM_OPTS: -Xmx4G
     branches:
       only:
-        - /v[0-9]+(\.[0-9]+)*/
+        #- /v[0-9]+(\.[0-9]+)*/
+        - config-ci
     steps:
       - checkout
       - restore_cache:
