@@ -5,6 +5,7 @@ import com.mobiledevpro.data.mapper.toCacheEntity
 import com.mobiledevpro.data.mapper.toDomain
 import com.mobiledevpro.data.mapper.toEntity
 import com.mobiledevpro.data.model.CountryTotalEntity
+import com.mobiledevpro.data.model.TotalEntity
 import com.mobiledevpro.data.model.TotalValueEntity
 import com.mobiledevpro.domain.model.Total
 import com.mobiledevpro.domain.model.TotalCountry
@@ -31,6 +32,7 @@ class DefaultTotalDataRepository(
 
     override fun getLocalTotalDataObservable(): Observable<Total> = totalCovidCache
         .getTotalDataObservable()
+        .map(TotalEntity::toDomain)
         .throwableToDomain()
 
     override fun setLocalTotalData(total: Total): Completable = Single

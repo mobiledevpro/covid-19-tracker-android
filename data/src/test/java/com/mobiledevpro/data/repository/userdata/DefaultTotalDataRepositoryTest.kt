@@ -48,7 +48,7 @@ class DefaultTotalDataRepositoryTest {
 
         repository.getLocalTotalDataObservable().test().apply {
             assertComplete()
-            assertNoErrors()
+            assertError(Throwable("dfs"))
         }
 
         verify(totalCovidCache).getTotalDataObservable()
