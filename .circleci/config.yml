@@ -1,22 +1,31 @@
-version: 2.1
+version: 2.0
+
 jobs:
   build:
     working_directory: ~/code
     docker:
       - image: circleci/android:api-29
     environment:
-      JVM_OPTS: -Xmx4G
+      # JVM_OPTS: -Xmx4G
+      JAVA_TOOL_OPTIONS: "-Xmx2048m"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dkotlin.incremental=false -Dkotlin.compiler.execution.strategy=in-process"
+      TERM: dumb
     branches:
       only:
         #- /v[0-9]+(\.[0-9]+)*/
         - config-ci
     steps:
+      - run:
+          name: Update SDK
+          command: |
+            yes | sdkmanager --licenses || true
+            sdkmanager "platform-tools" "platforms;android-29"
       - checkout
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
-         command: sudo chmod +x ./gradlew
+          name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
+          command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
           command: ./gradlew dependencies
