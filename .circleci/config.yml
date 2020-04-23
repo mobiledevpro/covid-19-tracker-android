@@ -6,7 +6,7 @@ jobs:
     docker:
       - image: circleci/android:api-29
     environment:
-      JAVA_TOOL_OPTIONS: "-Xmx2048m"
+      JAVA_TOOL_OPTIONS: "-Xmx4096m"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dkotlin.incremental=false -Dkotlin.compiler.execution.strategy=in-process"
       TERM: dumb
     branches:
@@ -40,7 +40,7 @@ jobs:
           name: Save test results
           command: |
             mkdir -p ~/junit/
-            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+            find . -type f -regex data/build/test-results/.*xml" -exec cp {} ~/junit/ \;
             when: always
       - store_test_results:
           path: ~/junit
