@@ -1,7 +1,7 @@
 package com.mobiledevpro.data.repository.userdata
 
-import com.mobiledevpro.data.DataFactory
-import com.mobiledevpro.data.model.CountryTotalEntity
+import com.mobiledevpro.data.factory.DataFactory
+import com.mobiledevpro.data.factory.TotalFactory
 import com.mobiledevpro.domain.totaldata.TotalDataRepository
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.verify
@@ -39,21 +39,27 @@ class DefaultTotalDataRepositoryTest {
     }
 
     @Test
+    fun `call local total data and return success`() {
+        val totalEntity = TotalFactory.randomTotalEntity()
+
+        val result = Observable.just(totalEntity)
+
+        whenever(totalCovidCache.getTotalDataObservable()).thenReturn(result)
+
+        repository.getLocalTotalDataObservable().test().apply {
+            assertComplete()
+            assertNoErrors()
+        }
+
+        verify(totalCovidCache).getTotalDataObservable()
+    }
+
+    @Test
     fun `get local countries and return success result`() {
 
         val query = DataFactory.randomString()
 
-        val countryTotalEntity = CountryTotalEntity(
-            id = DataFactory.randomInt(),
-            recovered = DataFactory.randomInt(),
-            deaths = DataFactory.randomInt(),
-            confirmed = DataFactory.randomInt(),
-            active = DataFactory.randomInt(),
-            country = DataFactory.randomString(),
-            latitude = DataFactory.randomDouble(),
-            longitude = DataFactory.randomDouble(),
-            updated = DataFactory.randomLong()
-        )
+        val countryTotalEntity = TotalFactory.randomCountryTotalEntity()
 
         val result = Observable.just(listOf(countryTotalEntity))
 
