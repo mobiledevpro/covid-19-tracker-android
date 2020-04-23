@@ -77,6 +77,9 @@ ext {
     crashlyticsVersion = "2.10.1"
     analyticsVersion = '17.0.0-beta03'
 
+    jUnitVersion = "4.13"
+    mockitoKotlinVersion = '2.0.0-RC1'
+
     deps = [
             "multidex"                : "androidx.multidex:multidex:$multidexVersion",
             "appcompat"               : "androidx.appcompat:appcompat:$appCompatVersion",
@@ -141,6 +144,12 @@ ext {
             "testfairy"               : "testfairy:testfairy-android-sdk:$testfairyVersion",
 
             //MPAAndroidChart
-            "mpaChart"                : "com.github.PhilJay:MPAndroidChart:$mpaChartVersion"
+            "mpaChart"                : "com.github.PhilJay:MPAndroidChart:$mpaChartVersion",
+
+            //Test
+            "junit"                   : "junit:junit:${jUnitVersion}",
+            "kotlinJUnit"             : "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion",
+            "mockito"                 : "com.nhaarman.mockitokotlin2:mockito-kotlin:${mockitoKotlinVersion}"
+
     ]
 }
