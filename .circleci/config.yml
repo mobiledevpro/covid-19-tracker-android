@@ -1,9 +1,9 @@
-version: 2
+version: 2.1
 jobs:
   build:
     working_directory: ~/code
     docker:
-      - image: circleci/android:api-27-alpha
+      - image: circleci/android:api-29
     environment:
       JVM_OPTS: -Xmx4G
     branches:
@@ -18,7 +18,7 @@ jobs:
          command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
-          command: ./gradlew androidDependencies
+          command: ./gradlew dependencies
       - save_cache:
           paths:
             - ~/.gradle
