@@ -40,6 +40,10 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     buildTypes {
         debug {
             debuggable true
