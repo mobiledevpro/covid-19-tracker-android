@@ -1,4 +1,4 @@
-package com.mobiledevpro.data
+package com.mobiledevpro.data.factory
 
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
