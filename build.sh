@@ -12,4 +12,4 @@ git submodule update
 ./gradlew dependencies
 
 #build debug and release apk
-./gradlew assemble
+./gradlew assembleRelease

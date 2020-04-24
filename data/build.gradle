@@ -4,5 +4,9 @@ dependencies {
     implementation deps.rxAndroid
     implementation deps.rxKotlin
 
+    testImplementation deps.junit
+    testImplementation deps.kotlinJUnit
+    testImplementation deps.mockito
+    
     implementation project(':domain')
 }
