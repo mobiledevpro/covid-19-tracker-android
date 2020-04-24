@@ -1,7 +1,6 @@
 # Live Tracker COVID-19. Android App
 
-[![CircleCI](https://circleci.com/gh/dmitriy-chernysh/covid-19-tracker-android.svg?style=svg)](https://app.circleci.com/pipelines/github/dmitriy-chernysh/covid-19-tracker-android)
-
+[![CircleCI](https://circleci.com/gh/dmitriy-chernysh/covid-19-tracker-android.svg?style=svg)](https://circleci.com/gh/dmitriy-chernysh/covid-19-tracker-android)
 
 Tracker based on the Johns Hopkins University(JHU) datasource https://systems.jhu.edu/research/public-health/ncov/
 
