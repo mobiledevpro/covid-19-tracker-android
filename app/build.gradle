@@ -116,6 +116,15 @@ android {
     android.dataBinding.enabled = true
 
     kapt.correctErrorTypes = true
+
+ /*   tasks.withType(Test) {
+        testLogging {
+            exceptionFormat "full"
+            events "started", "skipped", "passed", "failed"
+            showStandardStreams true
+        }
+    }
+    */
 }
 
 dependencies {
