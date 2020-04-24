@@ -37,10 +37,16 @@ jobs:
           name: Run Tests
           command: ./gradlew testProductionRelease
       - run:
-          name: Save test results
+          name: Save test results (html page, see Artifacts)
           command: |
-            mkdir -p test-results/
-            find . -type d -regex ".*/*reports/tests/testProductionReleaseUnitTest" -exec cp -avr {} test-results/ \;
+            mkdir -p test-results/html/
+            find . -type d -regex ".*/*reports/tests" -exec cp -avr {} test-results/html/ \;
+          when: always
+      - run:
+          name: Save test results (xml results, see Tests)
+          command: |
+            mkdir -p test-results/html/
+            find . -type f -regex ".*/*test-results/.*xml" -exec cp {} test-results/xml/ \;
           when: always
       - store_test_results:
           path: test-results
