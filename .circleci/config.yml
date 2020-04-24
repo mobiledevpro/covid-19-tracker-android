@@ -9,10 +9,11 @@ jobs:
       JAVA_TOOL_OPTIONS: "-Xmx4096m"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dkotlin.incremental=false -Dkotlin.compiler.execution.strategy=in-process"
       TERM: dumb
-    branches:
-      only:
-        #- /v[0-9]+(\.[0-9]+)*/
-        - config-ci
+    # branches:
+    #   only:
+    #      - /v[0-9]+(\.[0-9]+)*/ #build for tags
+    #      - config-ci
+    #      - master
     steps:
       - run:
           name: Update SDK
@@ -45,7 +46,7 @@ jobs:
       - run:
           name: Save test results (xml results, see Tests)
           command: |
-            mkdir -p test-results/html/
+            mkdir -p test-results/xml/
             find . -type f -regex ".*/*test-results/.*xml" -exec cp {} test-results/xml/ \;
           when: always
       - store_test_results:
