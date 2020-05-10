@@ -2,7 +2,7 @@
 
 #put release apk to dropbox
 APK_FILES=./app/build/outputs/apk/*/*/*-release.apk
-DROPBOX_TOKEN="MS43qTgT_TAAAAAAAAAFkS6Ostvx69pBOjdn32WyXOLVb-wMeQ8x4HDetk4hW5Fa"
+#DROPBOX_TOKEN="see ENV"
 
 for FILE in $APK_FILES
 do
