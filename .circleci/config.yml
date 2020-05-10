@@ -9,9 +9,9 @@ jobs:
       JAVA_TOOL_OPTIONS: "-Xmx4096m"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dkotlin.incremental=false -Dkotlin.compiler.execution.strategy=in-process"
       TERM: dumb
-    branches:
-      only:
-        - /v[0-9]+(\.[0-9]+)*/ #build for tags
+    # branches:
+    #   only:
+    #      - /v[0-9]+(\.[0-9]+)*/ #build for tags
     #      - config-ci
     #      - master
     steps:

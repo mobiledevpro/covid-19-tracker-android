@@ -1,5 +1,7 @@
 # Live Tracker COVID-19. Android App
 
+[![CircleCI](https://circleci.com/gh/dmitriy-chernysh/covid-19-tracker-android.svg?style=svg)](https://circleci.com/gh/dmitriy-chernysh/covid-19-tracker-android)
+
 Tracker based on the Johns Hopkins University(JHU) datasource https://systems.jhu.edu/research/public-health/ncov/
 
 Since Google restricts an app distribution about covid-19 on Google Play Store, we will upload the latest app version [here](https://tsfr.io/covid19) 
@@ -27,6 +29,7 @@ MVVM + [Clean Architecture](https://user-images.githubusercontent.com/5750211/78
 * [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics)
 * [Leak Canary](https://square.github.io/leakcanary/)
 * [Test Fairy](https://www.testfairy.com/)
+* [Circle CI](https://circleci.com/) 
 
 ## License:
 
