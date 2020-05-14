@@ -89,22 +89,22 @@ workflows:
     jobs:
       - run_tests
 
-      - build_release:
-          requires:
-            - run_tests
-          filters:
-            branches:
-              only:
-                #- master
-                - config-ci-again
+  #      - build_release:
+  #          requires:
+  #            - run_tests
+  #          filters:
+  #            branches:
+  #              only:
+  #                #- master
+  #                - config-ci-again
 
-      - deploy_release:
-          requires:
-            - build_release
-          filters:
-            tags:
-              only:
-                - /^v.*/
+  #      - deploy_release:
+  #          requires:
+  #            - build_release
+  #          filters:
+  #            tags:
+  #              only:
+  #                - /^v.*/
 
 
 
