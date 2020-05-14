@@ -16,21 +16,26 @@ update_sdk: &update_sdk
       yes | sdkmanager --licenses || true
       sdkmanager "platform-tools" "platforms;android-29"
 
-update_dependencies: &update_dependencies
+restore_cache: &restore_cache
   restore_cache:
-    - key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-    - run:
-        name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
-        command: sudo chmod +x ./gradlew
-    - run:
-        name: Download Dependencies
-        command: ./gradlew dependencies
-    - save_cache:
-        paths:
-          - ~/.gradle/caches
-          - ~/.gradle/wrapper
-        key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+    key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
 
+fix_permissions: &fix_permissions
+  run:
+    name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
+    command: sudo chmod +x ./gradlew
+
+update_dependencies: &update_dependencies
+  run:
+    name: Download Dependencies
+    command: ./gradlew dependencies
+
+update_cache: &update_cache
+  save_cache:
+    paths:
+      - ~/.gradle/caches
+      - ~/.gradle/wrapper
+    key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
 
 jobs:
   run_tests:
@@ -38,7 +43,10 @@ jobs:
     steps:
       - <<: *update_sdk
       - checkout
+      - <<: *restore_cache
+      - <<: *fix_permissions
       - <<: *update_dependencies
+      - <<: *update_cache
       - run:
           name: Run Tests
           command: ./gradlew testProductionDebug
@@ -63,9 +71,6 @@ jobs:
   build_release:
     <<: *config_android
     steps:
-      - <<: *update_sdk
-      - checkout
-      - <<: *update_dependencies
       - run:
           name: Assemble release build
           command: ./gradlew clean assembleRelease --no-daemon --stacktrace
