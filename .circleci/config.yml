@@ -74,6 +74,7 @@ jobs:
           destination: apks/
 
   deploy_release:
+    <<: *config_android
     steps:
       #deploy:
       #  name: Deploy to TestFairy
