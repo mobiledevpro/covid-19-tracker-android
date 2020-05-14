@@ -1,4 +1,4 @@
-version: 2.0
+version: 2.1
 
 config_android: &config_android
   docker:
@@ -105,15 +105,11 @@ jobs:
 workflows:
   version: 2
 
-  #  build-and-test:
-  #    jobs:
-  #      - run_tests
-
-  buid-and-deploy:
+  buid:
     jobs:
       - run_tests
       - build_and_deploy_release:
-          <<: *filter_master_only
+          <<: *filter_tag_version_only
           requires:
             - run_tests
 
