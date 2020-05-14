@@ -71,6 +71,7 @@ jobs:
   build_release:
     <<: *config_android
     steps:
+      - checkout
       - run:
           name: Assemble release build
           command: ./gradlew clean assembleProductionRelease --no-daemon --stacktrace
