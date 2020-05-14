@@ -94,21 +94,27 @@ jobs:
 
 workflows:
   version: 2
+
   build-and-test:
-    jobs:
-      - run_tests: #it runs after tests
+    triggers:
+      - schedule:
           filters:
             branches:
               only:
-                #- master
-                - config-ci-again
-  build-test-and-deploy:
+                - master
+              #- config-ci-again
     jobs:
-      - run_tests: #it runs after tests
+      - run_tests
+
+  build-test-and-deploy:
+    triggers:
+      - schedule:
           filters:
             tags:
               only:
                 - /^v.*/
+    jobs:
+      - run_tests
       - build_and_deploy_release: #it runs after tests
           requires:
             - run_tests
