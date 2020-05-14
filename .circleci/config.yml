@@ -73,7 +73,7 @@ jobs:
     steps:
       - run:
           name: Assemble release build
-          command: ./gradlew clean assembleRelease --no-daemon --stacktrace
+          command: ./gradlew clean assembleProductionRelease --no-daemon --stacktrace
       - store_artifacts:
           path: app/build/outputs/apk/
           destination: apks/
@@ -93,7 +93,7 @@ workflows:
   build:
     jobs:
       - run_tests
-      - build_release:
+      - build_release: #it runs after tests
           requires:
             - run_tests
           filters:
@@ -101,7 +101,7 @@ workflows:
               only:
                 #- master
                 - config-ci-again
-      - deploy_release:
+      - deploy_release: #it runs after build release
           requires:
             - build_release
           filters:
