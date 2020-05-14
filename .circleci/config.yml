@@ -1,42 +1,47 @@
 version: 2.0
 
+config_android: &config_android
+  docker:
+    - image: circleci/android:api-29
+  working_directory:  ~/code
+  environment:
+    JAVA_TOOL_OPTIONS: "-Xmx4096m"
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dkotlin.incremental=false -Dkotlin.compiler.execution.strategy=in-process"
+    TERM: dumb
+
+update_sdk: &update_sdk
+  run:
+    name: Update SDK
+    command: |
+      yes | sdkmanager --licenses || true
+      sdkmanager "platform-tools" "platforms;android-29"
+
+update_dependencies: &update_dependencies
+  restore_cache:
+    - key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+    - run:
+        name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
+        command: sudo chmod +x ./gradlew
+    - run:
+        name: Download Dependencies
+        command: ./gradlew dependencies
+    - save_cache:
+        paths:
+          - ~/.gradle/caches
+          - ~/.gradle/wrapper
+        key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+
+
 jobs:
-  build:
-    working_directory: ~/code
-    docker:
-      - image: circleci/android:api-29
-    environment:
-      JAVA_TOOL_OPTIONS: "-Xmx4096m"
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dkotlin.incremental=false -Dkotlin.compiler.execution.strategy=in-process"
-      TERM: dumb
-    # branches:
-    #   only:
-    #      - /v[0-9]+(\.[0-9]+)*/ #build for tags
-    #      - config-ci
-    #      - master
+  run_tests:
+    <<: *config_android
     steps:
-      - run:
-          name: Update SDK
-          command: |
-            yes | sdkmanager --licenses || true
-            sdkmanager "platform-tools" "platforms;android-29"
+      - <<: *update_sdk
       - checkout
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
-          command: sudo chmod +x ./gradlew
-      - run:
-          name: Download Dependencies
-          command: ./gradlew dependencies
-      - save_cache:
-          paths:
-            - ~/.gradle/caches
-            - ~/.gradle/wrapper
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - <<: *update_dependencies
       - run:
           name: Run Tests
-          command: ./gradlew testProductionRelease
+          command: ./gradlew testProductionDebug
       - run:
           name: Save test results (html page, see Artifacts)
           command: |
@@ -55,15 +60,54 @@ jobs:
           path: test-results
           destination: reports/
 
+  build_release:
+    <<: *config_android
+    steps:
+      - <<: *update_sdk
+      - checkout
+      - <<: *update_dependencies
       - run:
           name: Assemble release build
           command: ./gradlew clean assembleRelease --no-daemon --stacktrace
       - store_artifacts:
           path: app/build/outputs/apk/
           destination: apks/
-      #- deploy:
-      #    name: Deploy to Dropbox
-      #    command: ./build-dropbox-upload.sh
+
+  deploy_release:
+    #deploy:
+    #  name: Deploy to TestFairy
+    #  command: ./build-testfairy-upload.sh
+    deploy:
+      name: Deploy to DropBox
+      command: ./build-dropbox-upload.sh
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - run_tests
+
+  #  build-test-and-release:
+  #    jobs:
+  #      - build_release:
+  #          requires:
+  #            - build-and-test
+  #          filters:
+  #            branches:
+  #              only:
+  #                #- master
+  #                - config-ci-again
+
+  #  build-test-and-deploy:
+  #    jobs:
+  #      - deploy_release:
+  #          requires:
+  #            - build-test-and-release
+  #          filters:
+  #            tags:
+  #              only:
+  #                - /^v.*/
+
 
 
   # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
