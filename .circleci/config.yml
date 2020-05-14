@@ -37,14 +37,18 @@ update_cache: &update_cache
       - ~/.gradle/wrapper
     key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
 
+cache_docker: &cache_docker
+  setup_remote_docker:
+    docker_layer_caching: true
+
 jobs:
   run_tests:
     <<: *config_android
     steps:
       - <<: *update_sdk
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+      # Docker cahcing is not available in free plans
+      #- <<: *cache_docker
       - <<: *restore_cache
       - <<: *fix_permissions
       - <<: *update_dependencies
