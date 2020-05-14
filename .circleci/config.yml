@@ -41,6 +41,16 @@ cache_docker: &cache_docker
   setup_remote_docker:
     docker_layer_caching: true
 
+filter_master_only: &filter_master_only
+  filters:
+    branches:
+      only: master
+
+filter_tag_version_only: &filter_tag_version_only
+  filters:
+    tags:
+      only: /^v.*/
+
 jobs:
   run_tests:
     <<: *config_android
@@ -95,27 +105,12 @@ jobs:
 workflows:
   version: 2
 
-  build-and-test:
-    triggers:
-      - schedule:
-          filters:
-            branches:
-              only:
-                - master
-              #- config-ci-again
+  build:
     jobs:
-      - run_tests
-
-  build-test-and-deploy:
-    triggers:
-      - schedule:
-          filters:
-            tags:
-              only:
-                - /^v.*/
-    jobs:
-      - run_tests
-      - build_and_deploy_release: #it runs after tests
+      - run_tests:
+          <<: *filter_master_only
+      - build_and_deploy_release:
+          <<: *filter_tag_version_only
           requires:
             - run_tests
 
