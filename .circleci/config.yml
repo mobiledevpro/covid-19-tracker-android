@@ -104,10 +104,10 @@ workflows:
       - deploy_release:
           requires:
             - build_release
-            filters:
-              tags:
-                only:
-                  - /^v.*/
+          filters:
+            tags:
+              only:
+                - /^v.*/
 
 
 
