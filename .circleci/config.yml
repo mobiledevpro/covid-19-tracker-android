@@ -74,7 +74,7 @@ jobs:
           path: test-results
           destination: reports/
 
-  build_release:
+  build_and_deploy_release:
     <<: *config_android
     steps:
       - checkout
@@ -84,11 +84,6 @@ jobs:
       - store_artifacts:
           path: app/build/outputs/apk/
           destination: apks/
-
-  deploy_release:
-    <<: *config_android
-    steps:
-      - checkout
       #deploy:
       #  name: Deploy to TestFairy
       #  command: ./build-testfairy-upload.sh
@@ -96,22 +91,20 @@ jobs:
           name: Deploy to DropBox
           command: ./build-dropbox-upload.sh
 
+
 workflows:
   version: 2
   build:
     jobs:
-      - run_tests
-      - build_release: #it runs after tests
-          requires:
-            - run_tests
+      - run_tests: #it runs after tests
           filters:
             branches:
               only:
                 #- master
                 - config-ci-again
-      - deploy_release: #it runs after build release
+      - build_and_deploy_release: #it runs after tests
           requires:
-            - build_release
+            - run_tests
           filters:
             tags:
               only:
