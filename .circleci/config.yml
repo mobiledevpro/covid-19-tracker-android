@@ -43,6 +43,8 @@ jobs:
     steps:
       - <<: *update_sdk
       - checkout
+      - setup_remote_docker:
+          - docker_layer_caching: true
       - <<: *restore_cache
       - <<: *fix_permissions
       - <<: *update_dependencies
@@ -82,6 +84,7 @@ jobs:
   deploy_release:
     <<: *config_android
     steps:
+      - checkout
       #deploy:
       #  name: Deploy to TestFairy
       #  command: ./build-testfairy-upload.sh
