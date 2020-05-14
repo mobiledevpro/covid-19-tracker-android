@@ -94,7 +94,7 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  build-and-test:
     jobs:
       - run_tests: #it runs after tests
           filters:
@@ -102,14 +102,16 @@ workflows:
               only:
                 #- master
                 - config-ci-again
-      - build_and_deploy_release: #it runs after tests
-          requires:
-            - run_tests
+  build-test-and-deploy:
+    jobs:
+      - run_tests: #it runs after tests
           filters:
             tags:
               only:
                 - /^v.*/
-
+      - build_and_deploy_release: #it runs after tests
+          requires:
+            - run_tests
 
 
   # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
