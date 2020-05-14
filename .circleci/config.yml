@@ -107,8 +107,8 @@ workflows:
 
   build:
     jobs:
-      - run_tests:
-         # <<: *filter_master_only
+      - run_tests
+      # <<: *filter_master_only
       - build_and_deploy_release:
           <<: *filter_tag_version_only
           requires:
