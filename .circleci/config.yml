@@ -74,12 +74,13 @@ jobs:
           destination: apks/
 
   deploy_release:
-    #deploy:
-    #  name: Deploy to TestFairy
-    #  command: ./build-testfairy-upload.sh
-    deploy:
-      name: Deploy to DropBox
-      command: ./build-dropbox-upload.sh
+    steps:
+      #deploy:
+      #  name: Deploy to TestFairy
+      #  command: ./build-testfairy-upload.sh
+      - deploy:
+          name: Deploy to DropBox
+          command: ./build-dropbox-upload.sh
 
 workflows:
   version: 2
