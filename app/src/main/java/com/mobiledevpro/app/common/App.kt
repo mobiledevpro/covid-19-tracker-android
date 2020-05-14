@@ -5,11 +5,7 @@ import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.mobiledevpro.app.BuildConfig
-import com.mobiledevpro.app.di.dataLocalModule
-import com.mobiledevpro.app.di.dataModule
-import com.mobiledevpro.app.di.dataRemoteModule
-import com.mobiledevpro.app.di.domainModule
-import com.mobiledevpro.app.di.uiModule
+import com.mobiledevpro.app.di.*
 import com.mobiledevpro.data.LOG_TAG_DEBUG
 import com.testfairy.TestFairy
 import org.koin.android.ext.koin.androidContext
@@ -43,8 +39,12 @@ class App : Application() {
             retrieveFirebaseToken()
         }
 
+        //SDK token from testfairy.com/settings
+        val testFairyAppToken = BuildConfig.TESTFAIRY_APP_TOKEN
+        if (testFairyAppToken.isEmpty())
+            throw RuntimeException("TestFairy SDK token should not be empty!")
         //Beta testing (where release is published)
-        TestFairy.begin(this, "6f9121c053a0dabdfa96dbb31c5c128860c119b3");
+        TestFairy.begin(this, testFairyAppToken)
     }
 
     private fun initKoin() {

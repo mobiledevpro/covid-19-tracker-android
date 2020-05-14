@@ -14,6 +14,9 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+
+        //TestFairy SDK token (stored in system ENV)
+        buildConfigField("String", "TESTFAIRY_APP_TOKEN", "\"" + System.getenv("TESTFAIRY_APP_TOKEN") + "\"")
     }
 
     dexOptions {
