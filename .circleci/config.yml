@@ -93,23 +93,21 @@ workflows:
   build:
     jobs:
       - run_tests
-
-  #      - build_release:
-  #          requires:
-  #            - run_tests
-  #          filters:
-  #            branches:
-  #              only:
-  #                #- master
-  #                - config-ci-again
-
-  #      - deploy_release:
-  #          requires:
-  #            - build_release
-  #          filters:
-  #            tags:
-  #              only:
-  #                - /^v.*/
+      - build_release:
+          requires:
+            - run_tests
+          filters:
+            branches:
+              only:
+                - master
+                #- config-ci-again
+      - deploy_release:
+          requires:
+            - build_release
+            filters:
+              tags:
+                only:
+                  - /^v.*/
 
 
 
