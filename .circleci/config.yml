@@ -105,12 +105,15 @@ jobs:
 workflows:
   version: 2
 
-  build:
+  #  build-and-test:
+  #    jobs:
+  #      - run_tests
+
+  buid-and-deploy:
     jobs:
       - run_tests
-      # <<: *filter_master_only
       - build_and_deploy_release:
-          <<: *filter_tag_version_only
+          <<: *filter_master_only
           requires:
             - run_tests
 
