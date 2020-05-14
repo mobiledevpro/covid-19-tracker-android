@@ -99,8 +99,8 @@ workflows:
           filters:
             branches:
               only:
-                - master
-                #- config-ci-again
+                #- master
+                - config-ci-again
       - deploy_release:
           requires:
             - build_release
