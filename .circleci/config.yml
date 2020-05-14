@@ -44,7 +44,7 @@ jobs:
       - <<: *update_sdk
       - checkout
       - setup_remote_docker:
-          - docker_layer_caching: true
+          docker_layer_caching: true
       - <<: *restore_cache
       - <<: *fix_permissions
       - <<: *update_dependencies
