@@ -83,30 +83,26 @@ jobs:
 
 workflows:
   version: 2
-  build-and-test:
+  build:
     jobs:
       - run_tests
 
-  #  build-test-and-release:
-  #    jobs:
-  #      - build_release:
-  #          requires:
-  #            - build-and-test
-  #          filters:
-  #            branches:
-  #              only:
-  #                #- master
-  #                - config-ci-again
+      - build_release:
+          requires:
+            - run_tests
+          filters:
+            branches:
+              only:
+                #- master
+                - config-ci-again
 
-  #  build-test-and-deploy:
-  #    jobs:
-  #      - deploy_release:
-  #          requires:
-  #            - build-test-and-release
-  #          filters:
-  #            tags:
-  #              only:
-  #                - /^v.*/
+      - deploy_release:
+          requires:
+            - build_release
+          filters:
+            tags:
+              only:
+                - /^v.*/
 
 
 
