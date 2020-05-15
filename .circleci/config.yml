@@ -55,7 +55,6 @@ filter_master_only: &filter_master_only
   filters:
     branches:
       only: master
-      #only: config-ci-again
 
 filter_tag_version_only: &filter_tag_version_only
   filters:
@@ -70,7 +69,7 @@ jobs:
     steps:
       - <<: *update_sdk
       - checkout
-      # Docker cahcing is not available in free plans
+      # Docker caching is not available in free plans
       #- <<: *cache_docker
       - <<: *restore_cache
       - <<: *fix_permissions
@@ -108,6 +107,7 @@ jobs:
           path: app/build/outputs/apk/
           destination: apks/
       - <<: *deploy_to_dropbox
+      #- <<: *deploy_to_testfairy
 
 
 workflows:
