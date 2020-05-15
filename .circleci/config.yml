@@ -48,6 +48,8 @@ filter_master_only: &filter_master_only
 
 filter_tag_version_only: &filter_tag_version_only
   filters:
+    branches:
+      only: config-ci-again
     tags:
       only: /^v.*/
 
@@ -109,7 +111,7 @@ workflows:
     jobs:
       - run_tests
       - build_and_deploy_release:
-          <<: *filter_master_only
+          <<: *filter_tag_version_only
           requires:
             - run_tests
 
