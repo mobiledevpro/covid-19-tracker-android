@@ -48,10 +48,10 @@ filter_master_only: &filter_master_only
 
 filter_tag_version_only: &filter_tag_version_only
   filters:
-    branches:
-      only: config-ci-again
     tags:
       only: /^v.*/
+    branches:
+      ignore: /.*/
 
 jobs:
   run_tests:
