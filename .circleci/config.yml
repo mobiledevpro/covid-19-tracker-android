@@ -37,6 +37,16 @@ update_cache: &update_cache
       - ~/.gradle/wrapper
     key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
 
+deploy_to_dropbox: &deploy_to_dropbox
+  deploy:
+    name: Deploy to DropBox
+    command: ./ci-deploy-dropbox.sh
+
+deploy_to_testfairy: &deploy_to_testfairy
+  deploy:
+    name: Deploy to TestFairy
+    command: ./ci-deploy-testfairy.sh
+
 cache_docker: &cache_docker
   setup_remote_docker:
     docker_layer_caching: true
@@ -87,7 +97,7 @@ jobs:
           path: test-results
           destination: reports/
 
-  build_release:
+  build_n_deploy_release:
     <<: *config_android
     steps:
       - checkout
@@ -97,24 +107,8 @@ jobs:
       - store_artifacts:
           path: app/build/outputs/apk/
           destination: apks/
-      #deploy:
-      #  name: Deploy to TestFairy
-      #  command: ./build-testfairy-upload.sh
-      #- deploy:
-      #    name: Deploy to DropBox
-      #    command: ./build-dropbox-upload.sh
+      <<: *deploy_to_dropbox
 
-  deploy_release:
-    <<: *config_android
-    #working_directory:  ~/code/apks
-    steps:
-      - checkout
-      #deploy:
-      #  name: Deploy to TestFairy
-      #  command: ./build-testfairy-upload.sh
-      - deploy:
-          name: Deploy to DropBox
-          command: ./build-dropbox-upload.sh
 
 workflows:
   version: 2
@@ -128,12 +122,8 @@ workflows:
   # build release and deploy on tags and not branches
   buid-n-deploy:
     jobs:
-      - build_release:
+      - build_n_deploy_release:
           <<: *filter_tag_version_only
-      - deploy_release:
-          <<: *filter_tag_version_only
-          requires:
-            - build_release
 
 
   # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples

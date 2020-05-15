@@ -1,7 +1,7 @@
 #! /bin/sh
 
 #put release apk to dropbox
-APK_FILES="./app/build/outputs/apk/*/*/*-release.apk"
+APK_FILES="${CIRCLE_WORKING_DIRECTORY}/apks/*-release.apk"
 #DROPBOX_TOKEN="see ENV"
 
 for FILE in $APK_FILES
