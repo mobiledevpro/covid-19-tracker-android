@@ -117,7 +117,6 @@ workflows:
   run-tests-only:
     jobs:
       - run_tests:
-          <<: *filter_master_only
 
   # build release and deploy on tags and not branches
   buid-n-deploy:
