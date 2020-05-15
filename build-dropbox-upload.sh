@@ -6,9 +6,12 @@ APK_FILES=./app/build/outputs/apk/*/*/*-release.apk
 
 for FILE in $APK_FILES
 do
-   echo "Found APK: " ${FILE}
 
-   FILE_NAME=$(basename $FILE)
+  [ -s  "${FILE}" ]; echo "File ${FILE} is empty"; exit 1 \
+
+  echo "Found APK: ${FILE}"
+
+   FILE_NAME=$(basename "${FILE}")
 
    curl -X POST https://content.dropboxapi.com/2/files/upload \
     --header "Authorization: Bearer ${DROPBOX_TOKEN}" \
