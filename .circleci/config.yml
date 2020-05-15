@@ -116,7 +116,7 @@ workflows:
   # run tests on every commits to master
   run-tests-only:
     jobs:
-      - run_tests:
+      - run_tests
 
   # build release and deploy on tags and not branches
   buid-n-deploy:
