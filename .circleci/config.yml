@@ -44,8 +44,8 @@ cache_docker: &cache_docker
 filter_master_only: &filter_master_only
   filters:
     branches:
-      #only: master
-      only: config-ci-again
+      only: master
+      #only: config-ci-again
 
 filter_tag_version_only: &filter_tag_version_only
   filters:
@@ -106,8 +106,9 @@ jobs:
 
   deploy_release:
     <<: *config_android
-    working_directory:  ~/code/apks
+    #working_directory:  ~/code/apks
     steps:
+      - checkout
       #deploy:
       #  name: Deploy to TestFairy
       #  command: ./build-testfairy-upload.sh
