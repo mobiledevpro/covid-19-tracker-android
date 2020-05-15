@@ -1,7 +1,9 @@
 #! /bin/sh
 
+#Token from Dropbox Settings.
+#DROPBOX_TOKEN="add this token to Circle CI Environment Variables in the project settings"
+
 APK_FILES="./app/build/outputs/apk/*/*/*-release.apk"
-#DROPBOX_TOKEN="see ENV"
 
 for FILE in $APK_FILES
 do

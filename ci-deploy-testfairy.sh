@@ -1,8 +1,9 @@
 #! /bin/sh
 
-APK_FILES="./app/build/outputs/apk/*/*/*-release.apk"
+# Toke from TestFairy profile settings.
+# TESTFAIRY_API_KEY="add this token to Circle CI Environment Variables in the project settings"
 
-# TESTFAIRY_API_KEY="see system ENV"
+APK_FILES="./app/build/outputs/apk/*/*/*-release.apk"
 
 for FILE in $APK_FILES
 do
