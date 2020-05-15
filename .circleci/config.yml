@@ -87,7 +87,7 @@ jobs:
           path: test-results
           destination: reports/
 
-  build_and_deploy_release:
+  build_release:
     <<: *config_android
     steps:
       - checkout
@@ -100,10 +100,20 @@ jobs:
       #deploy:
       #  name: Deploy to TestFairy
       #  command: ./build-testfairy-upload.sh
+      #- deploy:
+      #    name: Deploy to DropBox
+      #    command: ./build-dropbox-upload.sh
+
+  deploy_release:
+    <<: *config_android
+    working_directory:  ~/code/apks
+    steps:
+      #deploy:
+      #  name: Deploy to TestFairy
+      #  command: ./build-testfairy-upload.sh
       - deploy:
           name: Deploy to DropBox
           command: ./build-dropbox-upload.sh
-
 
 workflows:
   version: 2
@@ -114,15 +124,15 @@ workflows:
       - run_tests:
           <<: *filter_master_only
 
-  # run tests, build release and deploy on tags and not branches
+  # build release and deploy on tags and not branches
   buid-n-deploy:
     jobs:
-      - run_tests:
+      - build_release:
           <<: *filter_tag_version_only
-      - build_and_deploy_release:
+      - deploy_release:
           <<: *filter_tag_version_only
           requires:
-            - run_tests
+            - build_release
 
 
   # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
