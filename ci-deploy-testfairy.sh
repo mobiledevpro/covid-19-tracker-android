@@ -1,7 +1,7 @@
 #! /bin/sh
 
-# Toke from TestFairy profile settings.
-# TESTFAIRY_API_KEY="add this token to Circle CI Environment Variables in the project settings"
+# Token from TestFairy profile settings.
+TESTFAIRY_API_KEY="46f6d2cbcfd5c7eee09450d2063e133c701079d2"
 
 APK_FILES="./app/build/outputs/apk/*/*/*-release.apk"
 
